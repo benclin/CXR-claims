@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Check, AlertTriangle, X, HelpCircle, Search, ArrowRight, Sun, Moon } from "lucide-react";
+import { Check, AlertTriangle, X, HelpCircle, Search, Sun, Moon } from "lucide-react";
 import complianceData from "@/docs/registry/compliance.json";
 import { componentRegistry } from "@/docs/registry/components";
 import { WexInput, WexButton, WexDialog } from "@/components/wex";
@@ -478,16 +478,7 @@ function ComponentDetailContent({ registryKey, data, info, onClose }: ComponentD
     return (
       <>
         <WexDialog.Header>
-          <div className="flex items-center justify-between">
-            <WexDialog.Title>{componentName}</WexDialog.Title>
-            <Link
-              to={componentRoute}
-              onClick={onClose}
-              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
-            >
-              View docs <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+          <WexDialog.Title>{componentName}</WexDialog.Title>
           <WexDialog.Description className="sr-only">
             Accessibility test results for {componentName}
           </WexDialog.Description>
@@ -504,6 +495,16 @@ function ComponentDetailContent({ registryKey, data, info, onClose }: ComponentD
             </p>
           </div>
         </div>
+
+        <div className="pt-3 border-t border-border">
+          <Link
+            to={componentRoute}
+            onClick={onClose}
+            className="text-sm text-primary hover:underline"
+          >
+            View component documentation
+          </Link>
+        </div>
       </>
     );
   }
@@ -518,77 +519,71 @@ function ComponentDetailContent({ registryKey, data, info, onClose }: ComponentD
   return (
     <>
       <WexDialog.Header>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <WexDialog.Title>{componentName}</WexDialog.Title>
-            <StatusBadge status={data.status} />
-          </div>
-          <Link
-            to={componentRoute}
-            onClick={onClose}
-            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
-          >
-            View docs <ArrowRight className="h-3 w-3" />
-          </Link>
+        <div className="flex items-center gap-3">
+          <WexDialog.Title>{componentName}</WexDialog.Title>
+          <StatusBadge status={data.status} />
         </div>
         <WexDialog.Description className="sr-only">
           Accessibility test results for {componentName}
         </WexDialog.Description>
       </WexDialog.Header>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {/* Compact Mode Results + Stats Row */}
         <div className="grid grid-cols-4 gap-2 text-center">
           {/* Light Mode */}
-          <div className={`p-2 rounded-lg border ${data.modes?.light?.status === 'pass' ? 'border-success/30 bg-success/5' : data.modes?.light?.status === 'fail' ? 'border-destructive/30 bg-destructive/5' : 'border-border bg-muted/30'}`}>
-            <Sun className="h-3 w-3 mx-auto mb-1 text-muted-foreground" />
-            <p className="text-xs font-medium">{data.modes?.light?.violations ?? 0}</p>
+          <div className={`p-3 rounded-lg border ${data.modes?.light?.status === 'pass' ? 'border-success/30 bg-success/5' : data.modes?.light?.status === 'fail' ? 'border-destructive/30 bg-destructive/5' : 'border-border bg-muted/30'}`}>
+            <Sun className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+            <p className="text-sm font-medium">{data.modes?.light?.violations ?? 0}</p>
           </div>
           {/* Dark Mode */}
-          <div className={`p-2 rounded-lg border ${data.modes?.dark?.status === 'pass' ? 'border-success/30 bg-success/5' : data.modes?.dark?.status === 'fail' ? 'border-destructive/30 bg-destructive/5' : 'border-border bg-muted/30'}`}>
-            <Moon className="h-3 w-3 mx-auto mb-1 text-muted-foreground" />
-            <p className="text-xs font-medium">{data.modes?.dark?.violations ?? 0}</p>
+          <div className={`p-3 rounded-lg border ${data.modes?.dark?.status === 'pass' ? 'border-success/30 bg-success/5' : data.modes?.dark?.status === 'fail' ? 'border-destructive/30 bg-destructive/5' : 'border-border bg-muted/30'}`}>
+            <Moon className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+            <p className="text-sm font-medium">{data.modes?.dark?.violations ?? 0}</p>
           </div>
           {/* WCAG Level */}
-          <div className="p-2 rounded-lg border border-border bg-muted/30">
-            <p className="text-[10px] text-muted-foreground">Level</p>
-            <p className="text-xs font-medium">{data.levelAchieved || '—'}</p>
+          <div className="p-3 rounded-lg border border-border bg-muted/30">
+            <p className="text-xs text-muted-foreground mb-1">Level</p>
+            <p className="text-sm font-medium">{data.levelAchieved || '—'}</p>
           </div>
-          {/* Variants */}
-          <div className="p-2 rounded-lg border border-border bg-muted/30">
-            <p className="text-[10px] text-muted-foreground">Variants</p>
-            <p className="text-xs font-medium">{variants.length || data.examplesFound}</p>
+          {/* Variants Count */}
+          <div className="p-3 rounded-lg border border-border bg-muted/30">
+            <p className="text-xs text-muted-foreground mb-1">Variants</p>
+            <p className="text-sm font-medium">{variants.length || data.examplesFound}</p>
           </div>
         </div>
 
-        {/* Variants List - only if meaningful */}
+        {/* Variants List */}
         {variants.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {variants.map((variant) => (
-              <code key={variant} className="px-1.5 py-0.5 bg-muted rounded text-[10px] text-foreground">
-                {variant}
-              </code>
-            ))}
+          <div>
+            <p className="text-xs text-muted-foreground mb-2">Tested Variants</p>
+            <div className="flex flex-wrap gap-1.5">
+              {variants.map((variant) => (
+                <code key={variant} className="px-2 py-1 bg-muted rounded text-xs text-foreground">
+                  {variant}
+                </code>
+              ))}
+            </div>
           </div>
         )}
 
-        {/* Issues - Compact Cards */}
+        {/* Issues - More Breathing Room */}
         {data.issues.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-foreground">Issues</p>
+          <div className="space-y-3">
+            <p className="text-sm font-medium text-foreground">Issues</p>
             {data.issues.map((issue) => {
               const issueInfo = ISSUE_REFERENCE[issue];
               return (
-                <div key={issue} className="p-2 rounded border border-border bg-card text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <X className="h-3 w-3 text-destructive flex-shrink-0" />
-                      <code className="font-mono">{issue}</code>
+                <div key={issue} className="p-3 rounded-lg border border-border bg-card">
+                  <div className="flex items-center justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <X className="h-4 w-4 text-destructive flex-shrink-0" />
+                      <code className="text-sm font-mono">{issue}</code>
                     </div>
                     {issueInfo && <FixabilityBadge fixable={issueInfo.fixable} label={issueInfo.fixableLabel} />}
                   </div>
                   {issueInfo && (
-                    <p className="mt-1.5 text-muted-foreground pl-4">{issueInfo.guidance}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed pl-6">{issueInfo.guidance}</p>
                   )}
                 </div>
               );
@@ -596,10 +591,19 @@ function ComponentDetailContent({ registryKey, data, info, onClose }: ComponentD
           </div>
         )}
 
-        {/* Compact Footer Note */}
-        <p className="text-[10px] text-muted-foreground text-center pt-2 border-t border-border">
-          Tested {testedDate} · Automated axe-core analysis · Not a compliance certification
-        </p>
+        {/* Footer with link and metadata */}
+        <div className="flex items-center justify-between pt-3 border-t border-border">
+          <Link
+            to={componentRoute}
+            onClick={onClose}
+            className="text-sm text-primary hover:underline"
+          >
+            View component docs
+          </Link>
+          <p className="text-xs text-muted-foreground">
+            Tested {testedDate}
+          </p>
+        </div>
       </div>
     </>
   );
