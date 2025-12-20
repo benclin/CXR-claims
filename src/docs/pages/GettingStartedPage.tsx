@@ -1,6 +1,9 @@
 import { Section } from "@/docs/components/Section";
 import { CodeBlock } from "@/docs/components/CodeBlock";
 import { Guidance } from "@/docs/components/ProseBlock";
+import { WexAlert, WexCard } from "@/components/wex";
+import { Package, Zap, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 /**
  * Getting Started page
@@ -20,6 +23,62 @@ export default function GettingStartedPage() {
 
       <div className="space-y-12">
         <Section
+          title="Choose Your Integration"
+          description="The WEX Design System offers two packages for different needs."
+        >
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
+            <WexCard className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Package className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <WexCard.Title className="text-base mb-1">
+                    @wex/components
+                  </WexCard.Title>
+                  <WexCard.Description className="text-sm mb-2">
+                    Full component library with WEX-branded variants and namespace patterns. 
+                    Recommended for most teams.
+                  </WexCard.Description>
+                  <span className="inline-flex items-center text-xs font-medium text-success bg-success/10 px-2 py-0.5 rounded">
+                    Recommended
+                  </span>
+                </div>
+              </div>
+            </WexCard>
+            <WexCard className="p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-info/10">
+                  <Zap className="h-5 w-5 text-info" />
+                </div>
+                <div>
+                  <WexCard.Title className="text-base mb-1">
+                    @wex/design-tokens
+                  </WexCard.Title>
+                  <WexCard.Description className="text-sm mb-2">
+                    Theme-only package with CSS variables and Tailwind preset. 
+                    For teams that need more control.
+                  </WexCard.Description>
+                  <span className="inline-flex items-center text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded">
+                    Advanced
+                  </span>
+                </div>
+              </div>
+            </WexCard>
+          </div>
+          
+          <div className="flex items-center gap-2 text-sm">
+            <Link 
+              to="/architecture" 
+              className="text-primary hover:underline inline-flex items-center gap-1"
+            >
+              Learn about WEX architecture
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+        </Section>
+
+        <Section
           title="Prerequisites"
           description="The WEX design system requires the following dependencies."
         >
@@ -32,14 +91,21 @@ export default function GettingStartedPage() {
 
         <Section
           title="Installation"
-          description="Components are currently part of this repository. Copy what you need."
+          description="Install the WEX component package for the easiest integration."
         >
           <div className="space-y-4">
+            <WexAlert intent="info">
+              <WexAlert.Description>
+                Package publication is coming soon. For now, components are available 
+                directly in this repository.
+              </WexAlert.Description>
+            </WexAlert>
+            
             <p className="text-muted-foreground">
               WEX components live in{" "}
-              <code className="bg-muted px-1 rounded">src/components/ui/</code>.
+              <code className="bg-muted px-1.5 py-0.5 rounded text-sm">src/components/wex/</code>.
               Token files are in{" "}
-              <code className="bg-muted px-1 rounded">src/styles/</code>.
+              <code className="bg-muted px-1.5 py-0.5 rounded text-sm">src/styles/</code>.
             </p>
 
             <CodeBlock
@@ -47,8 +113,8 @@ export default function GettingStartedPage() {
 import './styles/wex.tokens.css';
 import './styles/wex.shadcn-bridge.css';
 
-// Component import
-import { WexButton } from '@/components/ui/wex-button';`}
+// Component import (from the wex barrel export)
+import { WexButton, WexCard, WexDialog } from '@/components/wex';`}
             />
           </div>
         </Section>
@@ -58,18 +124,34 @@ import { WexButton } from '@/components/ui/wex-button';`}
           description="Import and use components in your React code."
         >
           <CodeBlock
-            code={`import { WexButton } from '@/components/ui/wex-button';
+            code={`import { WexButton, WexCard, WexDialog } from '@/components/wex';
 
 function MyComponent() {
   return (
     <div>
+      {/* Simple component */}
       <WexButton intent="primary" onClick={() => alert('Clicked!')}>
         Click Me
       </WexButton>
+      
+      {/* Compound component with namespace pattern */}
+      <WexCard>
+        <WexCard.Header>
+          <WexCard.Title>Card Title</WexCard.Title>
+          <WexCard.Description>Card description here.</WexCard.Description>
+        </WexCard.Header>
+        <WexCard.Content>
+          Content goes here.
+        </WexCard.Content>
+      </WexCard>
     </div>
   );
 }`}
           />
+          <Guidance>
+            WEX components use a namespace pattern for compound components. 
+            This keeps imports clean and groups related sub-components together.
+          </Guidance>
         </Section>
 
         <Section

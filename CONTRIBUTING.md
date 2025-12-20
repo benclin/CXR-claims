@@ -47,6 +47,81 @@ All components must comply with [WEX_COMPONENT_RULES.md](WEX_COMPONENT_RULES.md)
 
 ---
 
+## Understanding the WEX Wrapper Architecture
+
+Before building components, understand why and how WEX wraps shadcn/ui components.
+
+### Why We Wrap shadcn Components
+
+WEX doesn't fork shadcn—it wraps it. This approach provides:
+
+1. **Namespace Pattern**: Cleaner imports with `WexDialog.Content` instead of separate `DialogContent` imports
+2. **WEX Variants**: Custom `intent` props (success, warning, info) that enforce brand compliance
+3. **Curated Updates**: The WEX team vets upstream changes before they reach app teams
+4. **Consistency**: All teams use identical component APIs and behaviors
+
+### The Namespace Pattern
+
+For compound components (Dialog, Sheet, Card, etc.), we use Object.assign to create a namespace:
+
+```tsx
+// This allows: <WexDialog.Content> instead of <DialogContent>
+export const WexDialog = Object.assign(WexDialogRoot, {
+  Content: DialogContent,
+  Header: DialogHeader,
+  // ...
+});
+```
+
+### Critical: Object.assign with Shared Radix Primitives
+
+**This is the most important technical detail for contributors.**
+
+Some shadcn components share the same underlying Radix primitive:
+
+- `Dialog` and `Sheet` both use `@radix-ui/react-dialog`
+- They share the **same Root object reference**
+
+If you do this:
+
+```tsx
+// ❌ WRONG - Mutates shared primitive
+export const WexDialog = Object.assign(Dialog, { Content: DialogContent });
+export const WexSheet = Object.assign(Sheet, { Content: SheetContent });
+// Sheet overwrites Dialog's Content because they're the same object!
+```
+
+Instead, create a **new wrapper function** to avoid mutation:
+
+```tsx
+// ✅ CORRECT - Creates isolated object
+const WexDialogRoot = Object.assign(
+  // New function that wraps the original
+  ((props: React.ComponentProps<typeof Dialog>) => <Dialog {...props} />) as typeof Dialog,
+  {
+    Content: DialogContent,
+    Header: DialogHeader,
+    // ...
+  }
+);
+export const WexDialog = WexDialogRoot;
+```
+
+This pattern:
+1. Creates a new function (not mutating the original)
+2. Assigns namespace properties to the new function
+3. Keeps each component's namespace isolated
+
+### Components Requiring This Pattern
+
+Apply the wrapper function pattern when:
+- The component uses a Radix primitive that might be shared
+- You're wrapping: `Dialog`, `Sheet`, `AlertDialog`, `Popover`, `DropdownMenu`, `ContextMenu`
+
+For components with unique primitives (Button, Card, Badge), the simpler Object.assign is safe.
+
+---
+
 ## Step-by-Step: Building a WEX Component
 
 ### 1. File Naming Convention
@@ -124,6 +199,7 @@ export { WexComponentName, wexComponentVariants };
 For components with sub-parts (like Card, Dialog, etc.):
 
 ```tsx
+import * as React from "react";
 import {
   BaseComponent,
   ComponentPart1,
@@ -142,6 +218,28 @@ import {
  * </WexComponentName>
  */
 
+// For components using shared Radix primitives (Dialog, Sheet, etc.),
+// use the wrapper function pattern to avoid mutation:
+const WexComponentNameRoot: typeof BaseComponent & {
+  Part1: typeof ComponentPart1;
+  Part2: typeof ComponentPart2;
+} = Object.assign(
+  // Create new function - do NOT mutate BaseComponent directly
+  ((props: React.ComponentProps<typeof BaseComponent>) => (
+    <BaseComponent {...props} />
+  )) as typeof BaseComponent,
+  {
+    Part1: ComponentPart1,
+    Part2: ComponentPart2,
+  }
+);
+
+export const WexComponentName = WexComponentNameRoot;
+```
+
+For components that do NOT share Radix primitives (Card, Tabs, etc.), the simpler pattern is acceptable:
+
+```tsx
 export const WexComponentName = Object.assign(BaseComponent, {
   Part1: ComponentPart1,
   Part2: ComponentPart2,

@@ -16,6 +16,23 @@ export default function ChangelogPage() {
 
       <div className="space-y-8">
         <ChangelogEntry
+          version="0.10.0"
+          date="December 21, 2024"
+          title="Architecture Documentation & Dialog Fix"
+          changes={[
+            "Fix: Resolved Dialog/Sheet component conflict caused by shared Radix primitive mutation",
+            "Fix: Created wrapper function pattern to isolate namespace properties per component",
+            "Docs: Added Architecture page explaining WEX component strategy and enterprise value",
+            "Docs: Architecture page includes dependency model diagram and update path explanation",
+            "Docs: Package comparison table for @wex/components vs @wex/design-tokens",
+            "Docs: Updated CONTRIBUTING.md with Object.assign gotcha and correct wrapper pattern",
+            "Docs: Added 'Understanding the WEX Wrapper Architecture' section to contributor guide",
+            "Docs: Updated Getting Started page with package options and link to Architecture",
+            "Navigation: Added Architecture link under Resources section",
+          ]}
+        />
+
+        <ChangelogEntry
           version="0.9.0"
           date="December 21, 2024"
           title="Contributing Components Guide"

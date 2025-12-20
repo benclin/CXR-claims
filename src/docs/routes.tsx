@@ -10,6 +10,7 @@ const AccessibilityPage = React.lazy(() => import("@/docs/pages/AccessibilityPag
 const StoryPage = React.lazy(() => import("@/docs/pages/StoryPage"));
 const UnitTestsPage = React.lazy(() => import("@/docs/pages/UnitTestsPage"));
 const ContributingPage = React.lazy(() => import("@/docs/pages/ContributingPage"));
+const ArchitecturePage = React.lazy(() => import("@/docs/pages/ArchitecturePage"));
 
 // Foundation pages
 const TokensPage = React.lazy(() => import("@/docs/pages/foundations/TokensPage"));
@@ -102,6 +103,7 @@ export function DocsRoutes() {
           <Route path="story" element={<StoryPage />} />
           <Route path="unit-tests" element={<UnitTestsPage />} />
           <Route path="contributing" element={<ContributingPage />} />
+          <Route path="architecture" element={<ArchitecturePage />} />
 
           {/* Foundation pages */}
           <Route path="foundations/tokens" element={<TokensPage />} />

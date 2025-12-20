@@ -48,6 +48,7 @@ export function SidebarNav() {
 
       {/* Resources Section - Level 2 pages */}
       <NavSection title="Resources" icon={<BookOpen className="h-3.5 w-3.5" />} color="rose">
+        <DocsNavLink to="/architecture" level={2}>Architecture</DocsNavLink>
         <DocsNavLink to="/contributing" level={2}>Contributing</DocsNavLink>
         <DocsNavLink to="/unit-tests" level={2}>Unit Tests</DocsNavLink>
         <DocsNavLink to="/changelog" level={2}>Changelog</DocsNavLink>
