@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { DocsNavLink } from "@/docs/components/NavLink";
 import { componentRegistry } from "@/docs/registry/components";
 import { foundationRegistry } from "@/docs/registry/foundations";
-import { Home, Users, Layers, LayoutGrid, BookOpen, ChevronDown } from "lucide-react";
+import { Home, Users, Layers, LayoutGrid, BookOpen, ChevronDown, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -71,6 +71,7 @@ export function SidebarNav() {
       <NavSection title="Resources" icon={<BookOpen className="h-3.5 w-3.5" />} color="rose">
         <DocsNavLink to="/architecture" level={2}>Architecture</DocsNavLink>
         <DocsNavLink to="/contributing" level={2}>Contributing</DocsNavLink>
+        <DocsNavLink to="/theme-builder" level={2}>Theme Builder</DocsNavLink>
         <DocsNavLink to="/unit-tests" level={2}>Unit Tests</DocsNavLink>
         <DocsNavLink to="/changelog" level={2}>Changelog</DocsNavLink>
       </NavSection>
