@@ -25,20 +25,11 @@ export function DocsLayout() {
       {isHome && (
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
           {/* Primary Blob - Subtle Blue */}
-          <div 
-            className="animate-mesh absolute -left-[10%] -top-[10%] h-[1200px] w-[1200px] rounded-full opacity-[0.05]"
-            style={{ backgroundColor: '#0052CC', filter: 'blur(140px)' }}
-          />
+          <div className="animate-mesh absolute -left-[10%] -top-[10%] h-[1200px] w-[1200px] rounded-full bg-[#0052CC] opacity-[0.05] blur-[140px]" />
           {/* Accent Blob - Subtle Cyan */}
-          <div 
-            className="animate-mesh-slow absolute -right-[15%] top-[5%] h-[1100px] w-[1100px] rounded-full opacity-[0.04]"
-            style={{ backgroundColor: '#00B8D9', filter: 'blur(160px)' }}
-          />
+          <div className="animate-mesh-slow absolute -right-[15%] top-[5%] h-[1100px] w-[1100px] rounded-full bg-[#00B8D9] opacity-[0.04] blur-[160px]" />
           {/* Soft Middle Blob - Subtle Blue */}
-          <div 
-            className="animate-mesh-delayed absolute left-[10%] top-[40%] h-[900px] w-[900px] rounded-full opacity-[0.03]"
-            style={{ backgroundColor: '#0052CC', filter: 'blur(140px)' }}
-          />
+          <div className="animate-mesh-delayed absolute left-[10%] top-[40%] h-[900px] w-[900px] rounded-full bg-[#0052CC] opacity-[0.03] blur-[140px]" />
         </div>
       )}
 
