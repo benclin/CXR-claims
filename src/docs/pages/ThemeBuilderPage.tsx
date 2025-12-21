@@ -203,7 +203,7 @@ export default function ThemeBuilderPage() {
       <div className="flex-1 flex overflow-hidden">
         {/* LEFT: Live Preview (scrollable) */}
         <div className="flex-1 overflow-y-auto p-6 border-r border-border">
-          <div className="max-w-3xl space-y-6">
+          <div className="space-y-6">
             <h2 className="text-lg font-semibold text-foreground">Live Preview</h2>
             
             {/* Component Previews */}
