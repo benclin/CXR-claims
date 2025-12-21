@@ -249,6 +249,15 @@ const TOKEN_GROUPS = [
     ),
   },
   {
+    id: "foreground",
+    label: "Foreground Colors",
+    description: "Text on colored backgrounds (auto-derived)",
+    tokens: SEMANTIC_TOKENS.filter(t => 
+      t.name.includes("-foreground") || t.name.includes("-contrast")
+    ),
+    readOnly: true,
+  },
+  {
     id: "surface",
     label: "Surfaces",
     description: "Backgrounds and borders",
