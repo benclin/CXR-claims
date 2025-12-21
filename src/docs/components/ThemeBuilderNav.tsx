@@ -418,13 +418,27 @@ function TokenRow({
 }: TokenRowProps) {
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
-  // Get current color for swatch
+  // Get current color for swatch - compute HSL directly from token data for reliability
   const getSwatchColor = () => {
     if (value) {
-      // It's a palette reference like "blue-700" - wrap in hsl() since CSS vars are raw values
-      return `hsl(var(--wex-palette-${value}))`;
+      // Parse palette reference like "blue-700" or "white"/"black"
+      if (value === "white") return "hsl(0 0% 100%)";
+      if (value === "black") return "hsl(0 0% 0%)";
+      
+      const match = value.match(/^(\w+)-(\d+)$/);
+      if (match) {
+        const [, rampName, shadeStr] = match;
+        const shade = parseInt(shadeStr, 10);
+        const ramp = PALETTE_RAMPS.find((r) => r.name === rampName);
+        if (ramp) {
+          const shadeData = ramp.shades.find((s) => s.shade === shade);
+          if (shadeData) {
+            return `hsl(${ramp.hue} ${ramp.saturation}% ${shadeData.lightness}%)`;
+          }
+        }
+      }
     }
-    // Fall back to the token's default value
+    // Fall back to the token's default HSL value
     const hsl =
       editMode === "light"
         ? token.lightValue
