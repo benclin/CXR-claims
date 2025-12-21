@@ -222,34 +222,27 @@ export function TokenRowWithPicker({
   const displayValue = formatPaletteValue(value);
   
   return (
-    <div className={cn("flex items-center justify-between py-1", className)}>
-      {/* Label and value */}
-      <div className="flex flex-col">
-        <span className="text-sm font-medium">{label}</span>
-        <span className="text-xs text-muted-foreground font-mono">
-          {displayValue}
-        </span>
-      </div>
-      
-      {/* Swatch - clickable to open picker */}
-      <PaletteSwatchPicker value={value} onSelect={onChange}>
-        <button 
-          type="button"
-          className="group flex items-center gap-1.5 rounded-md p-1 hover:bg-muted/50 transition-colors cursor-pointer"
-          title={`Edit ${label}`}
-        >
-          <SwatchDisplay value={value} size="md" className="ring-1 ring-border/30 group-hover:ring-border" />
-          <svg 
-            className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-muted-foreground transition-colors" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-          </svg>
-        </button>
-      </PaletteSwatchPicker>
-    </div>
+    <PaletteSwatchPicker value={value} onSelect={onChange}>
+      <button 
+        type="button"
+        className={cn(
+          "w-full flex items-center justify-between py-2 px-1 rounded-md transition-colors cursor-pointer hover:bg-muted/30",
+          className
+        )}
+        title={`Edit ${label}`}
+      >
+        {/* Label and value */}
+        <div className="flex flex-col items-start">
+          <span className="text-sm font-medium">{label}</span>
+          <span className="text-xs text-muted-foreground font-mono">
+            {displayValue}
+          </span>
+        </div>
+        
+        {/* Swatch */}
+        <SwatchDisplay value={value} size="md" className="ring-1 ring-border/50" />
+      </button>
+    </PaletteSwatchPicker>
   );
 }
 
