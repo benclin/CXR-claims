@@ -12,7 +12,7 @@
 import * as React from "react";
 import { useThemeBuilder } from "@/docs/context/ThemeBuilderContext";
 import { useThemeOverrides } from "@/docs/hooks/useThemeOverrides";
-import { PALETTE_RAMPS, SEMANTIC_TOKENS } from "@/docs/data/tokenRegistry";
+import { PALETTE_RAMPS, SEMANTIC_TOKENS, SURFACE_TOKENS, TEXT_TOKENS, type TokenDefinition } from "@/docs/data/tokenRegistry";
 import { 
   WexButton, 
   WexCard,
@@ -235,23 +235,54 @@ function PaletteMode({ onResetPalette }: PaletteModeProps) {
 // Semantic Mode Workspace
 // ============================================================================
 
+// Token groups for organized display
+const TOKEN_GROUPS = [
+  {
+    id: "intent",
+    label: "Intent Colors",
+    description: "Primary action and status colors",
+    tokens: SEMANTIC_TOKENS.filter(t => 
+      t.references && 
+      !t.name.includes("-hover") && 
+      !t.name.includes("-foreground") &&
+      !t.name.includes("-contrast")
+    ),
+  },
+  {
+    id: "surface",
+    label: "Surfaces",
+    description: "Backgrounds and borders",
+    tokens: SURFACE_TOKENS,
+  },
+  {
+    id: "text",
+    label: "Text",
+    description: "Text and label colors",
+    tokens: TEXT_TOKENS,
+  },
+];
+
 function SemanticMode() {
   const { editMode } = useThemeBuilder();
   const { setToken } = useThemeOverrides();
   const [selectedToken, setSelectedToken] = React.useState<string | null>(null);
   
-  // Get semantic tokens that reference palettes
-  const editableTokens = SEMANTIC_TOKENS.filter(t => t.references);
+  // Get all editable tokens (flattened from groups)
+  const allEditableTokens = React.useMemo(() => 
+    TOKEN_GROUPS.flatMap(g => g.tokens),
+    []
+  );
   
-  // Track current assignments
+  // Track current assignments - for tokens with palette references
   const [assignments, setAssignments] = React.useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
-    editableTokens.forEach(t => {
-      const ref = editMode === "light" ? t.references : (t.darkReferences || t.references);
-      if (ref) {
-        // Extract "blue-700" from "--wex-palette-blue-700"
-        const match = ref.match(/--wex-palette-(\w+-\d+)/);
-        initial[t.name] = match ? match[1] : "";
+    allEditableTokens.forEach(t => {
+      if (t.references) {
+        const ref = editMode === "light" ? t.references : (t.darkReferences || t.references);
+        if (ref) {
+          const match = ref.match(/--wex-palette-(\w+-\d+)/);
+          initial[t.name] = match ? match[1] : "";
+        }
       }
     });
     return initial;
@@ -260,17 +291,19 @@ function SemanticMode() {
   // Update when mode changes
   React.useEffect(() => {
     const updated: Record<string, string> = {};
-    editableTokens.forEach(t => {
-      const ref = editMode === "light" ? t.references : (t.darkReferences || t.references);
-      if (ref) {
-        const match = ref.match(/--wex-palette-(\w+-\d+)/);
-        updated[t.name] = match ? match[1] : "";
+    allEditableTokens.forEach(t => {
+      if (t.references) {
+        const ref = editMode === "light" ? t.references : (t.darkReferences || t.references);
+        if (ref) {
+          const match = ref.match(/--wex-palette-(\w+-\d+)/);
+          updated[t.name] = match ? match[1] : "";
+        }
       }
     });
     setAssignments(updated);
-  }, [editMode]);
+  }, [editMode, allEditableTokens]);
   
-  // Handle assignment change
+  // Handle assignment change for palette-referenced tokens
   const handleAssignmentChange = React.useCallback((tokenName: string, paletteValue: string) => {
     const paletteToken = `--wex-palette-${paletteValue}`;
     
@@ -303,31 +336,101 @@ function SemanticMode() {
           </p>
         </div>
 
-        <WexCard>
-          <WexCard.Content className="p-2 space-y-1">
-            {editableTokens.map(token => (
+        {TOKEN_GROUPS.map(group => (
+          <TokenGroupCard
+            key={group.id}
+            label={group.label}
+            description={group.description}
+            tokens={group.tokens}
+            assignments={assignments}
+            selectedToken={selectedToken}
+            onSelect={setSelectedToken}
+            onChange={handleAssignmentChange}
+            editMode={editMode}
+          />
+        ))}
+      </div>
+
+      {/* Right: Filtered Live Preview */}
+      <FilteredLivePreview selectedToken={selectedToken} />
+    </div>
+  );
+}
+
+// Token group card component
+interface TokenGroupCardProps {
+  label: string;
+  description: string;
+  tokens: TokenDefinition[];
+  assignments: Record<string, string>;
+  selectedToken: string | null;
+  onSelect: (token: string) => void;
+  onChange: (token: string, value: string) => void;
+  editMode: "light" | "dark";
+}
+
+function TokenGroupCard({
+  label,
+  description,
+  tokens,
+  assignments,
+  selectedToken,
+  onSelect,
+  onChange,
+  editMode,
+}: TokenGroupCardProps) {
+  return (
+    <WexCard>
+      <WexCard.Header className="py-3 px-4">
+        <WexCard.Title className="text-sm">{label}</WexCard.Title>
+        <WexCard.Description className="text-xs">{description}</WexCard.Description>
+      </WexCard.Header>
+      <WexCard.Content className="p-2 pt-0 space-y-1">
+        {tokens.map(token => {
+          // For tokens with palette references, use the picker
+          if (token.references) {
+            return (
               <div
                 key={token.name}
                 className={cn(
                   "rounded-md transition-colors",
                   selectedToken === token.name && "bg-muted/50"
                 )}
-                onClick={() => setSelectedToken(token.name)}
+                onClick={() => onSelect(token.name)}
               >
                 <TokenRowWithPicker
                   label={token.label}
-                  value={assignments[token.name] || "blue-500"}
-                  onChange={(value) => handleAssignmentChange(token.name, value)}
+                  value={assignments[token.name] || "slate-500"}
+                  onChange={(value) => onChange(token.name, value)}
                 />
               </div>
-            ))}
-          </WexCard.Content>
-        </WexCard>
-      </div>
-
-      {/* Right: Filtered Live Preview */}
-      <FilteredLivePreview selectedToken={selectedToken} />
-    </div>
+            );
+          }
+          
+          // For surface/text tokens without palette refs, show current value
+          const currentValue = editMode === "light" ? token.lightValue : (token.darkValue || token.lightValue);
+          return (
+            <div
+              key={token.name}
+              className={cn(
+                "flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors",
+                selectedToken === token.name && "bg-muted/50"
+              )}
+              onClick={() => onSelect(token.name)}
+            >
+              <div 
+                className="w-6 h-6 rounded-sm border border-border/50 flex-shrink-0"
+                style={{ backgroundColor: `hsl(${currentValue})` }}
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">{token.label}</span>
+                <span className="text-xs text-muted-foreground font-mono">{currentValue}</span>
+              </div>
+            </div>
+          );
+        })}
+      </WexCard.Content>
+    </WexCard>
   );
 }
 
