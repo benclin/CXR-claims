@@ -47,23 +47,23 @@
   --accent-foreground: var(--wex-text);
 
   /* ===== DESTRUCTIVE (with state) ===== */
-  --destructive: var(--wex-danger-bg);
-  --destructive-foreground: var(--wex-danger-fg);
-  --destructive-hover: var(--wex-danger-hover);
+  --destructive: var(--wex-destructive);
+  --destructive-foreground: var(--wex-destructive-foreground);
+  --destructive-hover: var(--wex-destructive-hover);
 
   /* ===== SUCCESS (with state) ===== */
-  --success: var(--wex-success-bg);
-  --success-foreground: var(--wex-success-fg);
+  --success: var(--wex-success);
+  --success-foreground: var(--wex-success-foreground);
   --success-hover: var(--wex-success-hover);
 
   /* ===== WARNING (with state) ===== */
-  --warning: var(--wex-warning-bg);
-  --warning-foreground: var(--wex-warning-fg);
+  --warning: var(--wex-warning);
+  --warning-foreground: var(--wex-warning-foreground);
   --warning-hover: var(--wex-warning-hover);
 
   /* ===== INFO (with state) ===== */
-  --info: var(--wex-info-bg);
-  --info-foreground: var(--wex-info-fg);
+  --info: var(--wex-info);
+  --info-foreground: var(--wex-info-foreground);
   --info-hover: var(--wex-info-hover);
 
   /* ===== BORDERS & INPUTS ===== */

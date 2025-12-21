@@ -96,23 +96,23 @@ export default function ColorsPage() {
                 />
                 <ContrastPairing
                   label="Danger Foreground on Danger Background"
-                  fgVar="--wex-danger-fg"
-                  bgVar="--wex-danger-bg"
+                  fgVar="--wex-destructive-foreground"
+                  bgVar="--wex-destructive"
                 />
                 <ContrastPairing
                   label="Success Foreground on Success Background"
-                  fgVar="--wex-success-fg"
-                  bgVar="--wex-success-bg"
+                  fgVar="--wex-success-foreground"
+                  bgVar="--wex-success"
                 />
                 <ContrastPairing
                   label="Warning Foreground on Warning Background"
-                  fgVar="--wex-warning-fg"
-                  bgVar="--wex-warning-bg"
+                  fgVar="--wex-warning-foreground"
+                  bgVar="--wex-warning"
                 />
                 <ContrastPairing
                   label="Info Foreground on Info Background"
-                  fgVar="--wex-info-fg"
-                  bgVar="--wex-info-bg"
+                  fgVar="--wex-info-foreground"
+                  bgVar="--wex-info"
                 />
               </div>
             </div>
@@ -161,25 +161,25 @@ export default function ColorsPage() {
               <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Danger / Destructive</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <TokenSwatchWithContrast
-                  token="--wex-danger-bg"
+                  token="--wex-destructive"
                   name="Danger Background"
                   value="350 62% 54%"
                   usage="Destructive actions, errors"
-                  contrastFgVar="--wex-danger-fg"
+                  contrastFgVar="--wex-destructive-foreground"
                 />
                 <TokenSwatch
-                  token="--wex-danger-fg"
+                  token="--wex-destructive-foreground"
                   name="Danger Foreground"
                   value="0 0% 100%"
                   usage="Text on danger backgrounds"
-                  contrastBgVar="--wex-danger-bg"
+                  contrastBgVar="--wex-destructive"
                 />
                 <TokenSwatch
-                  token="--wex-danger-hover"
+                  token="--wex-destructive-hover"
                   name="Danger Hover"
                   value="350 62% 48%"
                   usage="Hover state for destructive actions"
-                  contrastFgVar="--wex-danger-fg"
+                  contrastFgVar="--wex-destructive-foreground"
                 />
               </div>
             </div>
@@ -189,19 +189,19 @@ export default function ColorsPage() {
               <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Success</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <TokenSwatchWithContrast
-                  token="--wex-success-bg"
+                  token="--wex-success"
                   name="Success Background"
                   value="142 76% 36%"
                   valueDark="142 76% 40%"
                   usage="Positive feedback, confirmations"
-                  contrastFgVar="--wex-success-fg"
+                  contrastFgVar="--wex-success-foreground"
                 />
                 <TokenSwatch
-                  token="--wex-success-fg"
+                  token="--wex-success-foreground"
                   name="Success Foreground"
                   value="0 0% 100%"
                   usage="Text on success backgrounds"
-                  contrastBgVar="--wex-success-bg"
+                  contrastBgVar="--wex-success"
                 />
                 <TokenSwatch
                   token="--wex-success-hover"
@@ -209,7 +209,7 @@ export default function ColorsPage() {
                   value="142 76% 30%"
                   valueDark="142 76% 34%"
                   usage="Hover state for success actions"
-                  contrastFgVar="--wex-success-fg"
+                  contrastFgVar="--wex-success-foreground"
                 />
               </div>
             </div>
@@ -219,19 +219,19 @@ export default function ColorsPage() {
               <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Warning</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <TokenSwatchWithContrast
-                  token="--wex-warning-bg"
+                  token="--wex-warning"
                   name="Warning Background"
                   value="38 92% 50%"
                   valueDark="38 92% 55%"
                   usage="Caution states, attention needed"
-                  contrastFgVar="--wex-warning-fg"
+                  contrastFgVar="--wex-warning-foreground"
                 />
                 <TokenSwatch
-                  token="--wex-warning-fg"
+                  token="--wex-warning-foreground"
                   name="Warning Foreground"
                   value="0 0% 0%"
                   usage="Text on warning backgrounds"
-                  contrastBgVar="--wex-warning-bg"
+                  contrastBgVar="--wex-warning"
                 />
                 <TokenSwatch
                   token="--wex-warning-hover"
@@ -239,7 +239,7 @@ export default function ColorsPage() {
                   value="38 92% 44%"
                   valueDark="38 92% 48%"
                   usage="Hover state for warning actions"
-                  contrastFgVar="--wex-warning-fg"
+                  contrastFgVar="--wex-warning-foreground"
                 />
               </div>
             </div>
@@ -249,19 +249,19 @@ export default function ColorsPage() {
               <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Info</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <TokenSwatchWithContrast
-                  token="--wex-info-bg"
+                  token="--wex-info"
                   name="Info Background"
                   value="198 87% 47%"
                   valueDark="198 87% 55%"
                   usage="Informational messages"
-                  contrastFgVar="--wex-info-fg"
+                  contrastFgVar="--wex-info-foreground"
                 />
                 <TokenSwatch
-                  token="--wex-info-fg"
+                  token="--wex-info-foreground"
                   name="Info Foreground"
                   value="0 0% 100%"
                   usage="Text on info backgrounds"
-                  contrastBgVar="--wex-info-bg"
+                  contrastBgVar="--wex-info"
                 />
                 <TokenSwatch
                   token="--wex-info-hover"
@@ -269,7 +269,7 @@ export default function ColorsPage() {
                   value="198 87% 40%"
                   valueDark="198 87% 48%"
                   usage="Hover state for info actions"
-                  contrastFgVar="--wex-info-fg"
+                  contrastFgVar="--wex-info-foreground"
                 />
               </div>
             </div>
@@ -406,22 +406,22 @@ export default function ColorsPage() {
                 </tr>
                 <tr className="border-b border-border">
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">--destructive</code></td>
-                  <td className="py-2 px-2">--wex-danger-bg</td>
+                  <td className="py-2 px-2">--wex-destructive</td>
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">bg-destructive</code></td>
                 </tr>
                 <tr className="border-b border-border bg-success/10">
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">--success</code></td>
-                  <td className="py-2 px-2">--wex-success-bg</td>
+                  <td className="py-2 px-2">--wex-success</td>
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">bg-success</code></td>
                 </tr>
                 <tr className="border-b border-border bg-warning/10">
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">--warning</code></td>
-                  <td className="py-2 px-2">--wex-warning-bg</td>
+                  <td className="py-2 px-2">--wex-warning</td>
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">bg-warning</code></td>
                 </tr>
                 <tr className="border-b border-border bg-info/10">
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">--info</code></td>
-                  <td className="py-2 px-2">--wex-info-bg</td>
+                  <td className="py-2 px-2">--wex-info</td>
                   <td className="py-2 px-2"><code className="bg-muted px-1 rounded">bg-info</code></td>
                 </tr>
                 <tr className="border-b border-border">

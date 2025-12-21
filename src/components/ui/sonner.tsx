@@ -63,7 +63,7 @@ const Toaster = ({ position = "bottom-right", ...props }: WexToasterProps) => {
           success:
             "group-[.toaster]:bg-success group-[.toaster]:text-success-foreground group-[.toaster]:border-success [&_[data-description]]:text-success-foreground/90",
           // Error/Destructive toast: red background with WHITE text (fixes contrast issue)
-          // Note: We explicitly use text-destructive-foreground which maps to --wex-danger-fg (white)
+          // Note: We explicitly use text-destructive-foreground which maps to --wex-destructive-foreground (white)
           error:
             "group-[.toaster]:bg-destructive group-[.toaster]:text-destructive-foreground group-[.toaster]:border-destructive [&_[data-description]]:text-destructive-foreground/90",
           // Warning toast: amber background with black text (high contrast)

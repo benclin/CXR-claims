@@ -46,53 +46,53 @@ const CASCADE_RULES: CascadeRule[] = [
     ],
   },
   {
-    baseToken: "--wex-danger-bg",
+    baseToken: "--wex-destructive",
     derivedTokens: [
       {
-        token: "--wex-danger-hover",
+        token: "--wex-destructive-hover",
         derive: (hsl) => ({ ...hsl, l: Math.max(0, hsl.l - 10) }),
       },
       {
-        token: "--wex-danger-fg",
+        token: "--wex-destructive-foreground",
         derive: (hsl) => (hsl.l > 50 ? { h: 0, s: 0, l: 10 } : { h: 0, s: 0, l: 100 }),
       },
     ],
   },
   {
-    baseToken: "--wex-success-bg",
+    baseToken: "--wex-success",
     derivedTokens: [
       {
         token: "--wex-success-hover",
         derive: (hsl) => ({ ...hsl, l: Math.max(0, hsl.l - 10) }),
       },
       {
-        token: "--wex-success-fg",
+        token: "--wex-success-foreground",
         derive: (hsl) => (hsl.l > 50 ? { h: 0, s: 0, l: 10 } : { h: 0, s: 0, l: 100 }),
       },
     ],
   },
   {
-    baseToken: "--wex-warning-bg",
+    baseToken: "--wex-warning",
     derivedTokens: [
       {
         token: "--wex-warning-hover",
         derive: (hsl) => ({ ...hsl, l: Math.max(0, hsl.l - 10) }),
       },
       {
-        token: "--wex-warning-fg",
+        token: "--wex-warning-foreground",
         derive: (hsl) => (hsl.l > 50 ? { h: 0, s: 0, l: 10 } : { h: 0, s: 0, l: 100 }),
       },
     ],
   },
   {
-    baseToken: "--wex-info-bg",
+    baseToken: "--wex-info",
     derivedTokens: [
       {
         token: "--wex-info-hover",
         derive: (hsl) => ({ ...hsl, l: Math.max(0, hsl.l - 10) }),
       },
       {
-        token: "--wex-info-fg",
+        token: "--wex-info-foreground",
         derive: (hsl) => (hsl.l > 50 ? { h: 0, s: 0, l: 10 } : { h: 0, s: 0, l: 100 }),
       },
     ],

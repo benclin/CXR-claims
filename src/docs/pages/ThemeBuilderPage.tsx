@@ -115,17 +115,17 @@ const SEMANTIC_TOKENS = [
   { token: "--wex-primary", label: "Primary", tailwind: "bg-primary" },
   { token: "--wex-primary-contrast", label: "Primary Contrast", tailwind: "text-primary-foreground" },
   { token: "--wex-primary-hover", label: "Primary Hover", tailwind: "hover:bg-primary/90" },
-  { token: "--wex-danger-bg", label: "Danger BG", tailwind: "bg-destructive" },
-  { token: "--wex-danger-fg", label: "Danger FG", tailwind: "text-destructive-foreground" },
-  { token: "--wex-danger-hover", label: "Danger Hover", tailwind: "hover:bg-destructive/90" },
-  { token: "--wex-success-bg", label: "Success BG", tailwind: "bg-success" },
-  { token: "--wex-success-fg", label: "Success FG", tailwind: "text-success-foreground" },
+  { token: "--wex-destructive", label: "Destructive", tailwind: "bg-destructive" },
+  { token: "--wex-destructive-foreground", label: "Destructive Foreground", tailwind: "text-destructive-foreground" },
+  { token: "--wex-destructive-hover", label: "Destructive Hover", tailwind: "hover:bg-destructive/90" },
+  { token: "--wex-success", label: "Success", tailwind: "bg-success" },
+  { token: "--wex-success-foreground", label: "Success Foreground", tailwind: "text-success-foreground" },
   { token: "--wex-success-hover", label: "Success Hover", tailwind: "hover:bg-success/90" },
-  { token: "--wex-warning-bg", label: "Warning BG", tailwind: "bg-warning" },
-  { token: "--wex-warning-fg", label: "Warning FG", tailwind: "text-warning-foreground" },
+  { token: "--wex-warning", label: "Warning", tailwind: "bg-warning" },
+  { token: "--wex-warning-foreground", label: "Warning Foreground", tailwind: "text-warning-foreground" },
   { token: "--wex-warning-hover", label: "Warning Hover", tailwind: "hover:bg-warning/90" },
-  { token: "--wex-info-bg", label: "Info BG", tailwind: "bg-info" },
-  { token: "--wex-info-fg", label: "Info FG", tailwind: "text-info-foreground" },
+  { token: "--wex-info", label: "Info", tailwind: "bg-info" },
+  { token: "--wex-info-foreground", label: "Info Foreground", tailwind: "text-info-foreground" },
   { token: "--wex-info-hover", label: "Info Hover", tailwind: "hover:bg-info/90" },
 ];
 
@@ -592,7 +592,7 @@ function ComponentPreview({ componentKey }: { componentKey: string }) {
             <LabeledExample label="Secondary" tokens={["--wex-surface-subtle", "--wex-text"]}>
               <WexButton intent="secondary">Secondary</WexButton>
             </LabeledExample>
-            <LabeledExample label="Destructive" tokens={["--wex-danger-bg", "--wex-danger-fg"]}>
+            <LabeledExample label="Destructive" tokens={["--wex-destructive", "--wex-destructive-foreground"]}>
               <WexButton intent="destructive">Destructive</WexButton>
             </LabeledExample>
             <LabeledExample label="Outline" tokens={["--wex-content-border", "--wex-text"]}>
@@ -622,16 +622,16 @@ function ComponentPreview({ componentKey }: { componentKey: string }) {
           <LabeledExample label="Secondary" tokens={["--wex-surface-subtle"]}>
             <WexBadge intent="secondary">Secondary</WexBadge>
           </LabeledExample>
-          <LabeledExample label="Destructive" tokens={["--wex-danger-bg", "--wex-danger-fg"]}>
+          <LabeledExample label="Destructive" tokens={["--wex-destructive", "--wex-destructive-foreground"]}>
             <WexBadge intent="destructive">Destructive</WexBadge>
           </LabeledExample>
-          <LabeledExample label="Success" tokens={["--wex-success-bg", "--wex-success-fg"]}>
+          <LabeledExample label="Success" tokens={["--wex-success", "--wex-success-foreground"]}>
             <WexBadge intent="success">Success</WexBadge>
           </LabeledExample>
-          <LabeledExample label="Warning" tokens={["--wex-warning-bg", "--wex-warning-fg"]}>
+          <LabeledExample label="Warning" tokens={["--wex-warning", "--wex-warning-foreground"]}>
             <WexBadge intent="warning">Warning</WexBadge>
           </LabeledExample>
-          <LabeledExample label="Info" tokens={["--wex-info-bg", "--wex-info-fg"]}>
+          <LabeledExample label="Info" tokens={["--wex-info", "--wex-info-foreground"]}>
             <WexBadge intent="info">Info</WexBadge>
           </LabeledExample>
           <LabeledExample label="Outline" tokens={["--wex-content-border"]}>
@@ -649,25 +649,25 @@ function ComponentPreview({ componentKey }: { componentKey: string }) {
               <WexAlert.Description>Default alert styling.</WexAlert.Description>
             </WexAlert>
           </LabeledExample>
-          <LabeledExample label="Success" tokens={["--wex-success-bg", "--wex-success-fg"]}>
+          <LabeledExample label="Success" tokens={["--wex-success", "--wex-success-foreground"]}>
             <WexAlert intent="success">
               <CheckCircle className="h-4 w-4" />
               <WexAlert.Title>Success</WexAlert.Title>
             </WexAlert>
           </LabeledExample>
-          <LabeledExample label="Warning" tokens={["--wex-warning-bg", "--wex-warning-fg"]}>
+          <LabeledExample label="Warning" tokens={["--wex-warning", "--wex-warning-foreground"]}>
             <WexAlert intent="warning">
               <AlertTriangle className="h-4 w-4" />
               <WexAlert.Title>Warning</WexAlert.Title>
             </WexAlert>
           </LabeledExample>
-          <LabeledExample label="Destructive" tokens={["--wex-danger-bg", "--wex-danger-fg"]}>
+          <LabeledExample label="Destructive" tokens={["--wex-destructive", "--wex-destructive-foreground"]}>
             <WexAlert intent="destructive">
               <AlertTriangle className="h-4 w-4" />
               <WexAlert.Title>Error</WexAlert.Title>
             </WexAlert>
           </LabeledExample>
-          <LabeledExample label="Info" tokens={["--wex-info-bg", "--wex-info-fg"]}>
+          <LabeledExample label="Info" tokens={["--wex-info", "--wex-info-foreground"]}>
             <WexAlert intent="info">
               <Info className="h-4 w-4" />
               <WexAlert.Title>Informational</WexAlert.Title>

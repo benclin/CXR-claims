@@ -43,24 +43,24 @@
   /* ===== FOCUS RING (1 token) ===== */
   --wex-focus-ring-color: 208 100% 32%;
 
-  /* ===== DANGER (3 tokens) ===== */
-  --wex-danger-bg: 350 62% 54%;
-  --wex-danger-fg: 0 0% 100%;
-  --wex-danger-hover: 350 62% 48%;
+  /* ===== DESTRUCTIVE (3 tokens) ===== */
+  --wex-destructive: 350 62% 54%;
+  --wex-destructive-foreground: 0 0% 100%;
+  --wex-destructive-hover: 350 62% 48%;
 
   /* ===== SUCCESS (3 tokens) ===== */
-  --wex-success-bg: 142 76% 36%;
-  --wex-success-fg: 0 0% 100%;
+  --wex-success: 142 76% 36%;
+  --wex-success-foreground: 0 0% 100%;
   --wex-success-hover: 142 76% 30%;
 
   /* ===== WARNING (3 tokens) ===== */
-  --wex-warning-bg: 38 92% 50%;
-  --wex-warning-fg: 0 0% 0%;
+  --wex-warning: 38 92% 50%;
+  --wex-warning-foreground: 0 0% 0%;
   --wex-warning-hover: 38 92% 44%;
 
   /* ===== INFO (3 tokens) ===== */
-  --wex-info-bg: 198 87% 47%;
-  --wex-info-fg: 0 0% 100%;
+  --wex-info: 198 87% 47%;
+  --wex-info-foreground: 0 0% 100%;
   --wex-info-hover: 198 87% 40%;
 
   /* ===== HIGHLIGHT (4 tokens) =====
@@ -175,24 +175,24 @@
   /* ===== FOCUS RING (dark override) ===== */
   --wex-focus-ring-color: 203 68% 47%;
 
-  /* ===== DANGER (dark overrides) ===== */
-  --wex-danger-bg: 350 62% 54%;
-  --wex-danger-fg: 0 0% 100%;
-  --wex-danger-hover: 350 62% 48%;
+  /* ===== DESTRUCTIVE (dark overrides) ===== */
+  --wex-destructive: 350 62% 54%;
+  --wex-destructive-foreground: 0 0% 100%;
+  --wex-destructive-hover: 350 62% 48%;
 
   /* ===== SUCCESS (dark overrides) ===== */
-  --wex-success-bg: 142 76% 40%;
-  --wex-success-fg: 0 0% 100%;
+  --wex-success: 142 76% 40%;
+  --wex-success-foreground: 0 0% 100%;
   --wex-success-hover: 142 76% 34%;
 
   /* ===== WARNING (dark overrides) ===== */
-  --wex-warning-bg: 38 92% 55%;
-  --wex-warning-fg: 0 0% 0%;
+  --wex-warning: 38 92% 55%;
+  --wex-warning-foreground: 0 0% 0%;
   --wex-warning-hover: 38 92% 48%;
 
   /* ===== INFO (dark overrides) ===== */
-  --wex-info-bg: 198 87% 55%;
-  --wex-info-fg: 0 0% 100%;
+  --wex-info: 198 87% 55%;
+  --wex-info-foreground: 0 0% 100%;
   --wex-info-hover: 198 87% 48%;
 
   /* ===== HIGHLIGHT (dark overrides) ===== */

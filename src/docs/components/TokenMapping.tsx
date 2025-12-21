@@ -107,43 +107,43 @@ export const TOKEN_MAPPINGS: Record<string, TokenMappingData> = {
     tailwindUtilities: ["hover:bg-primary/90"],
     components: ["WexButton (default)"],
   },
-  "--wex-danger-bg": {
-    token: "--wex-danger-bg",
+  "--wex-destructive": {
+    token: "--wex-destructive",
     tailwindUtilities: ["bg-destructive", "border-destructive"],
     components: ["WexButton (destructive)", "WexBadge (destructive)", "WexAlert (destructive)"],
   },
-  "--wex-danger-fg": {
-    token: "--wex-danger-fg",
+  "--wex-destructive-foreground": {
+    token: "--wex-destructive-foreground",
     tailwindUtilities: ["text-destructive-foreground", "text-destructive"],
     components: ["WexButton (destructive)", "WexAlert (destructive)"],
   },
-  "--wex-success-bg": {
-    token: "--wex-success-bg",
+  "--wex-success": {
+    token: "--wex-success",
     tailwindUtilities: ["bg-success", "border-success"],
     components: ["WexBadge (success)", "WexAlert (success)"],
   },
-  "--wex-success-fg": {
-    token: "--wex-success-fg",
+  "--wex-success-foreground": {
+    token: "--wex-success-foreground",
     tailwindUtilities: ["text-success", "text-success-foreground"],
     components: ["WexBadge (success)", "WexAlert (success)"],
   },
-  "--wex-warning-bg": {
-    token: "--wex-warning-bg",
+  "--wex-warning": {
+    token: "--wex-warning",
     tailwindUtilities: ["bg-warning", "border-warning"],
     components: ["WexBadge (warning)", "WexAlert (warning)"],
   },
-  "--wex-warning-fg": {
-    token: "--wex-warning-fg",
+  "--wex-warning-foreground": {
+    token: "--wex-warning-foreground",
     tailwindUtilities: ["text-warning", "text-warning-foreground"],
     components: ["WexBadge (warning)", "WexAlert (warning)"],
   },
-  "--wex-info-bg": {
-    token: "--wex-info-bg",
+  "--wex-info": {
+    token: "--wex-info",
     tailwindUtilities: ["bg-info", "border-info"],
     components: ["WexBadge (info)", "WexAlert (info)"],
   },
-  "--wex-info-fg": {
-    token: "--wex-info-fg",
+  "--wex-info-foreground": {
+    token: "--wex-info-foreground",
     tailwindUtilities: ["text-info", "text-info-foreground"],
     components: ["WexBadge (info)", "WexAlert (info)"],
   },
@@ -182,8 +182,8 @@ export const TOKEN_MAPPINGS: Record<string, TokenMappingData> = {
     tailwindUtilities: ["ring-ring"],
     components: ["All focusable elements"],
   },
-  "--wex-danger-hover": {
-    token: "--wex-danger-hover",
+  "--wex-destructive-hover": {
+    token: "--wex-destructive-hover",
     tailwindUtilities: ["hover:bg-destructive-hover"],
     components: ["WexButton (destructive)"],
   },
