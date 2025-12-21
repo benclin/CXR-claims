@@ -9,7 +9,7 @@ import React from "react";
 import { Section } from "@/docs/components/Section";
 import { CodeBlock } from "@/docs/components/CodeBlock";
 import { WexAlert, WexCard } from "@/components/wex";
-import { FileCode, GitBranch, CheckCircle, BookOpen, TestTube, Send } from "lucide-react";
+import { GitBranch, CheckCircle, BookOpen, Send } from "lucide-react";
 
 export default function ContributingPage() {
   return (

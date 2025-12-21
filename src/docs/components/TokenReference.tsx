@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Section } from "./Section";
 import { WexAlert } from "@/components/wex";
 import { Palette } from "lucide-react";
@@ -99,7 +98,7 @@ export function TokenReference({ tokens, className }: TokenReferenceProps) {
  * Helper function to create token rows for components with standard intent variants
  * (default, destructive, success, warning, info)
  */
-export function createIntentTokens(componentName: string): TokenRow[] {
+export function createIntentTokens(_componentName: string): TokenRow[] {
   return [
     // Default
     { element: "Default", property: "Background", token: "--background" },

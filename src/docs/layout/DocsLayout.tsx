@@ -1,14 +1,18 @@
+import * as React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { SidebarNav } from "./SidebarNav";
 import { ScrollToTop } from "@/docs/components/ScrollToTop";
+import { ThemeBuilderNav } from "@/docs/components/ThemeBuilderNav";
+import { TokenMapModal } from "@/docs/components/TokenMapModal";
 
 /**
  * Main layout shell for docs site
  * - Header at top with theme toggle
  * - Fixed sidebar on left
  * - Scrollable main content area
+ * - Theme Builder mode: replaces sidebar with ThemeBuilderNav
  */
 // Pages that need full-width layout (no max-width constraint)
 const FULL_WIDTH_PAGES = ["/theme-builder"];
@@ -16,7 +20,11 @@ const FULL_WIDTH_PAGES = ["/theme-builder"];
 export function DocsLayout() {
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isThemeBuilder = location.pathname === "/theme-builder";
   const isFullWidth = FULL_WIDTH_PAGES.includes(location.pathname);
+  
+  // Token Map modal state
+  const [tokenMapOpen, setTokenMapOpen] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
@@ -40,11 +48,19 @@ export function DocsLayout() {
       <Header />
       
       {/* Sidebar - hidden on home page for full-bleed landing experience */}
+      {/* Theme Builder gets a different sidebar nav */}
       {!isHome && (
         <Sidebar>
-          <SidebarNav />
+          {isThemeBuilder ? (
+            <ThemeBuilderNav onOpenTokenMap={() => setTokenMapOpen(true)} />
+          ) : (
+            <SidebarNav />
+          )}
         </Sidebar>
       )}
+      
+      {/* Token Map Modal */}
+      <TokenMapModal open={tokenMapOpen} onOpenChange={setTokenMapOpen} />
       
       <main 
         className={`relative z-10 min-h-[calc(100vh-3.5rem)] overflow-x-hidden ${

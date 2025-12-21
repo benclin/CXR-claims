@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import { WexButton, WexCard, WexBadge, WexSeparator } from "@/components/wex";
+import { WexButton, WexCard, WexSeparator } from "@/components/wex";
 import {
   Palette,
   Shield,
   Eye,
   Users,
   ArrowRight,
-  BookOpen,
   Layers,
   Accessibility,
-  Check,
   Sparkles,
 } from "lucide-react";
 

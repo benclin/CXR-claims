@@ -5,9 +5,8 @@
  * Shows pass/fail counts, test duration, and individual test files
  */
 
-import React from "react";
 import { CheckCircle, XCircle, Clock, Layers, Wrench, RefreshCw, Info, FileText } from "lucide-react";
-import { WexCard, WexBadge, WexTabs, WexAlert } from "@/components/wex";
+import { WexCard, WexTabs, WexAlert } from "@/components/wex";
 import { Section } from "@/docs/components/Section";
 import { CodeBlock } from "@/docs/components/CodeBlock";
 

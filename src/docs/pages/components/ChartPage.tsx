@@ -9,6 +9,16 @@ import {
   Bar,
   BarChart,
   Line,
+  LineChart,
+  Pie,
+  PieChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Cell,
+  Area,
+  AreaChart,
+} from "recharts";
 
 // Token mappings for WexChart
 const chartTokens: TokenRow[] = [
@@ -21,16 +31,6 @@ const chartTokens: TokenRow[] = [
   { element: "Tooltip", property: "Border", token: "--border" },
   { element: "Axis", property: "Color", token: "--muted-foreground" },
 ];
-  LineChart,
-  Pie,
-  PieChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Cell,
-  Area,
-  AreaChart,
-} from "recharts";
 import { sampleData, chartColorVars } from "@/docs/utils/chartColors";
 
 export default function ChartPage() {

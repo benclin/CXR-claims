@@ -5,7 +5,6 @@
  * Tailwind utility classes and component usage.
  */
 
-import * as React from "react";
 import { WexBadge } from "@/components/wex";
 import { cn } from "@/lib/utils";
 

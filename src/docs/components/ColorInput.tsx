@@ -206,19 +206,8 @@ interface CompactColorInputProps {
 }
 
 export function CompactColorInput({ step, value, onChange }: CompactColorInputProps) {
-  const [hexValue, setHexValue] = React.useState("");
-  
-  React.useEffect(() => {
-    const hex = tokenToHex(value);
-    if (hex) {
-      setHexValue(hex);
-    }
-  }, [value]);
-
   const handleColorPickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const hex = e.target.value;
-    setHexValue(hex.toUpperCase());
-    
     const hsl = hexToToken(hex);
     if (hsl) {
       onChange(hsl);
