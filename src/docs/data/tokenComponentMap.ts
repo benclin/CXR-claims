@@ -998,7 +998,7 @@ export const BORDER_USAGES: ComponentUsage[] = [
     state: "default",
     renderability: "easy",
     tailwindClasses: ["border"],
-    description: "Card border",
+    description: "Card border (uses border-border)",
   },
   {
     component: "WexSeparator",
@@ -1007,14 +1007,6 @@ export const BORDER_USAGES: ComponentUsage[] = [
     renderability: "easy",
     tailwindClasses: ["bg-border"],
     description: "Separator line",
-  },
-  {
-    component: "WexInput",
-    variant: "default",
-    state: "default",
-    renderability: "easy",
-    tailwindClasses: ["border-input"],
-    description: "Input border",
   },
   {
     component: "WexTable",
@@ -1039,6 +1031,101 @@ export const BORDER_USAGES: ComponentUsage[] = [
     renderability: "easy",
     tailwindClasses: ["bg-border"],
     description: "Resizable handle",
+  },
+];
+
+// =============================================================================
+// INPUT BORDER TOKEN MAPPINGS (--wex-input-border → border-input)
+// =============================================================================
+
+export const INPUT_BORDER_USAGES: ComponentUsage[] = [
+  {
+    component: "WexInput",
+    variant: "default",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Input field border",
+  },
+  {
+    component: "WexInput",
+    variant: "default",
+    state: "disabled",
+    renderability: "easy",
+    tailwindClasses: ["border-input", "opacity-50"],
+    description: "Disabled input border",
+  },
+  {
+    component: "WexInput",
+    variant: "default",
+    state: "focus",
+    renderability: "hard",
+    tailwindClasses: ["border-input", "ring-ring"],
+    description: "Input border visible with focus ring",
+  },
+  {
+    component: "Textarea",
+    variant: "default",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Textarea border",
+  },
+  {
+    component: "WexSelect",
+    variant: "trigger",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Select trigger border",
+  },
+  {
+    component: "WexButton",
+    variant: "outline",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Outline button border",
+  },
+  {
+    component: "WexButton",
+    variant: "outline",
+    state: "disabled",
+    renderability: "easy",
+    tailwindClasses: ["border-input", "opacity-50"],
+    description: "Disabled outline button border",
+  },
+  {
+    component: "Toggle",
+    variant: "outline",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Outline toggle border",
+  },
+  {
+    component: "InputOTP",
+    variant: "slot",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "OTP input slot border",
+  },
+  {
+    component: "Calendar",
+    variant: "dropdown",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Calendar dropdown border",
+  },
+  {
+    component: "InputGroup",
+    variant: "default",
+    state: "default",
+    renderability: "easy",
+    tailwindClasses: ["border-input"],
+    description: "Input group container border",
   },
 ];
 
@@ -1105,11 +1192,16 @@ export const TOKEN_COMPONENT_MAP: TokenComponentMapping[] = [
     usages: FOCUS_RING_USAGES,
   },
 
-  // Border token
+  // Border tokens
   {
     token: "--wex-content-border",
-    label: "Border",
+    label: "Content Border",
     usages: BORDER_USAGES,
+  },
+  {
+    token: "--wex-input-border",
+    label: "Input Border",
+    usages: INPUT_BORDER_USAGES,
   },
 ];
 

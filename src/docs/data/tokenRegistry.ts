@@ -442,9 +442,9 @@ export const SURFACE_TOKENS: TokenDefinition[] = [
     darkValue: "210 20% 28%",
     references: "--wex-palette-slate-400",
     darkReferences: "--wex-palette-slate-700",
-    usedBy: ["WexInput", "WexSelect", "WexTextarea"],
+    usedBy: ["WexInput", "WexSelect", "WexTextarea", "WexButton (outline)", "Toggle (outline)", "InputOTP", "Calendar dropdown"],
     tailwindUtilities: ["border-input"],
-    description: "Border color for form inputs",
+    description: "Border color for form inputs and outline buttons",
   },
 ];
 

@@ -37,8 +37,8 @@
   --wex-primary-contrast: 0 0% 100%;
   --wex-primary-hover: var(--wex-palette-blue-800);
 
-  /* ===== INPUT (1 token) ===== */
-  --wex-input-border: 204 9% 68%;
+  /* ===== INPUT (1 token) - Now references palette ===== */
+  --wex-input-border: var(--wex-palette-slate-400);
 
   /* ===== FOCUS RING (1 token) ===== */
   --wex-focus-ring-color: var(--wex-palette-blue-700);
@@ -186,8 +186,8 @@
   --wex-primary-contrast: 216 10% 90%;
   --wex-primary-hover: var(--wex-palette-blue-600);
 
-  /* ===== INPUT (dark override) ===== */
-  --wex-input-border: 206 32% 21%;
+  /* ===== INPUT (dark override) - Now references palette ===== */
+  --wex-input-border: var(--wex-palette-slate-700);
 
   /* ===== FOCUS RING (dark override) ===== */
   --wex-focus-ring-color: var(--wex-palette-blue-500);

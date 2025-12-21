@@ -82,6 +82,7 @@ export function FilteredLivePreview({
         {selectedToken === "--wex-content-bg" && <SurfaceBackgroundPreview />}
         {selectedToken === "--wex-surface-subtle" && <SurfaceSubtlePreview />}
         {selectedToken === "--wex-content-border" && <BorderPreview />}
+        {selectedToken === "--wex-input-border" && <InputBorderPreview />}
         {selectedToken === "--wex-text" && <TextPreview />}
         {selectedToken === "--wex-text-muted" && <TextMutedPreview />}
         {selectedToken === "--wex-focus-ring-color" && <FocusRingPreview />}
@@ -549,17 +550,64 @@ function BorderPreview() {
         </WexCard>
       </PreviewSection>
 
-      {/* Input */}
-      <PreviewSection label="Input Border">
-        <WexInput placeholder="Input with border..." />
-      </PreviewSection>
-
       {/* Separator */}
       <PreviewSection label="Separator">
         <div className="space-y-2">
           <p className="text-sm">Content above</p>
           <WexSeparator />
           <p className="text-sm">Content below</p>
+        </div>
+      </PreviewSection>
+    </div>
+  );
+}
+
+// =============================================================================
+// INPUT BORDER TOKEN PREVIEW
+// =============================================================================
+
+function InputBorderPreview() {
+  return (
+    <div className="space-y-4">
+      {/* Input - default, focused states */}
+      <PreviewSection label="Input (default, disabled)">
+        <div className="space-y-2">
+          <WexInput placeholder="Default input..." />
+          <WexInput placeholder="Disabled input..." disabled />
+        </div>
+      </PreviewSection>
+
+      {/* Textarea */}
+      <PreviewSection label="Textarea">
+        <textarea 
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+          placeholder="Textarea with border-input..."
+        />
+      </PreviewSection>
+
+      {/* Outline buttons */}
+      <PreviewSection label="Outline Buttons (border-input)">
+        <div className="flex flex-wrap gap-2">
+          <WexButton intent="outline" size="sm">Outline Button</WexButton>
+          <WexButton intent="outline" size="sm" disabled>Disabled</WexButton>
+        </div>
+      </PreviewSection>
+
+      {/* Toggle outline variant */}
+      <PreviewSection label="Toggle Outline (border-input)">
+        <div className="flex gap-2">
+          <WexToggle variant="outline">Toggle</WexToggle>
+          <WexToggle variant="outline" defaultPressed>Pressed</WexToggle>
+        </div>
+      </PreviewSection>
+
+      {/* Focus state note */}
+      <PreviewSection label="Focus State">
+        <div className="p-3 rounded-md bg-muted/30 border border-dashed">
+          <p className="text-xs text-muted-foreground italic">
+            Click an input above to see the focus ring (ring-ring token).
+            The border-input color remains visible around focused elements.
+          </p>
         </div>
       </PreviewSection>
     </div>
