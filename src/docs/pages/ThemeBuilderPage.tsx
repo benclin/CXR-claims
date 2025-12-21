@@ -440,7 +440,7 @@ export default function ThemeBuilderPage() {
               onClick={() => setShowResetDialog(true)}
               disabled={!hasOverrides}
             >
-              <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
+              <RotateCcw className="h-4 w-4" />
               Reset
             </WexButton>
             <WexButton 
@@ -448,7 +448,7 @@ export default function ThemeBuilderPage() {
               onClick={handleExport}
               disabled={!hasOverrides}
             >
-              <Download className="w-3.5 h-3.5 mr-1.5" />
+              <Download className="h-4 w-4" />
               Export
             </WexButton>
           </div>
