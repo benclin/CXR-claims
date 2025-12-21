@@ -409,11 +409,14 @@ function TokenGroupCard({
           
           // For surface/text tokens without palette refs, show current value
           const currentValue = editMode === "light" ? token.lightValue : (token.darkValue || token.lightValue);
+          // Format HSL nicely, e.g., "206 32% 21%" → "HSL(206, 32%, 21%)"
+          const formattedValue = `HSL(${currentValue.replace(/\s+/g, ", ")})`;
+          
           return (
             <div
               key={token.name}
               className={cn(
-                "flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors",
+                "flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors cursor-pointer hover:bg-muted/30",
                 selectedToken === token.name && "bg-muted/50"
               )}
               onClick={() => onSelect(token.name)}
@@ -424,7 +427,7 @@ function TokenGroupCard({
               />
               <div className="flex flex-col">
                 <span className="text-sm font-medium">{token.label}</span>
-                <span className="text-xs text-muted-foreground font-mono">{currentValue}</span>
+                <span className="text-xs text-muted-foreground font-mono">{formattedValue}</span>
               </div>
             </div>
           );

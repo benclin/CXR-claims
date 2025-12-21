@@ -153,7 +153,13 @@ export function ThemeBuilderProvider({ children, lastVisitedPage }: ThemeBuilder
   const [selectedToken, setSelectedToken] = React.useState<string | null>(null);
   
   // Editing mode (light/dark) - also toggles document class
-  const [editMode, setEditModeState] = React.useState<"light" | "dark">("light");
+  const [editMode, setEditModeState] = React.useState<"light" | "dark">(() => {
+    // Initialize from current DOM state
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+    }
+    return "light";
+  });
   
   // Store original theme to restore on exit
   const originalTheme = React.useRef<"light" | "dark">("light");
@@ -163,6 +169,24 @@ export function ThemeBuilderProvider({ children, lastVisitedPage }: ThemeBuilder
     originalTheme.current = document.documentElement.classList.contains("dark") 
       ? "dark" 
       : "light";
+  }, []);
+  
+  // Listen for DOM class changes (e.g., from header theme toggle) and sync editMode
+  React.useEffect(() => {
+    if (typeof document === "undefined") return;
+    
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDark = document.documentElement.classList.contains("dark");
+          const newMode = isDark ? "dark" : "light";
+          setEditModeState(newMode);
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
   }, []);
   
   // Custom setEditMode that also applies dark class to document

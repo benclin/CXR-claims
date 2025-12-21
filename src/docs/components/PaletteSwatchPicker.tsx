@@ -163,12 +163,24 @@ interface TokenRowWithPickerProps {
   className?: string;
 }
 
+/**
+ * Format a palette value like "blue-700" to "Blue 700"
+ */
+function formatPaletteValue(value: string): string {
+  const match = value.match(/^(\w+)-(\d+)$/);
+  if (!match) return value;
+  const [, name, shade] = match;
+  return `${name.charAt(0).toUpperCase() + name.slice(1)} ${shade}`;
+}
+
 export function TokenRowWithPicker({
   label,
   value,
   onChange,
   className,
 }: TokenRowWithPickerProps) {
+  const displayValue = formatPaletteValue(value);
+  
   return (
     <div className={cn("flex items-center gap-3", className)}>
       <PaletteSwatchPicker value={value} onSelect={onChange}>
@@ -180,7 +192,7 @@ export function TokenRowWithPicker({
           <div className="flex flex-col items-start">
             <span className="text-sm font-medium">{label}</span>
             <span className="text-xs text-muted-foreground font-mono">
-              {value}
+              {displayValue}
             </span>
           </div>
           <span className="text-xs text-muted-foreground/50 group-hover:text-muted-foreground ml-auto">

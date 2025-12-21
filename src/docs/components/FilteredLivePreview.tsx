@@ -224,16 +224,12 @@ function PrimaryPreview() {
         <WexProgress value={65} className="w-full" />
       </PreviewSection>
 
-      {/* Switch */}
-      <PreviewSection label="Switch (checked, unchecked, disabled)">
+      {/* Switch - only checked uses primary (unchecked uses bg-input) */}
+      <PreviewSection label="Switch (checked only uses primary)">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <WexSwitch defaultChecked id="sw-checked" />
-            <label htmlFor="sw-checked" className="text-xs">On</label>
-          </div>
-          <div className="flex items-center gap-2">
-            <WexSwitch id="sw-unchecked" />
-            <label htmlFor="sw-unchecked" className="text-xs">Off</label>
+            <label htmlFor="sw-checked" className="text-xs">On (bg-primary)</label>
           </div>
           <div className="flex items-center gap-2">
             <WexSwitch disabled defaultChecked id="sw-disabled" />
@@ -307,6 +303,16 @@ function PrimaryPreview() {
         <div className="flex items-center gap-3 p-3 rounded-md border bg-primary/5 border-primary">
           <WexCheckbox defaultChecked id="field-cb" />
           <label htmlFor="field-cb" className="text-sm">Selected field with primary highlight</label>
+        </div>
+      </PreviewSection>
+
+      {/* Focus Ring - uses same color as primary */}
+      <PreviewSection label="Focus Ring (same color as primary)">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-8 rounded-md border-2 ring-2 ring-ring ring-offset-2 ring-offset-background" />
+          <div className="text-xs text-muted-foreground">
+            Focus ring uses same Blue 700 palette shade
+          </div>
         </div>
       </PreviewSection>
     </div>

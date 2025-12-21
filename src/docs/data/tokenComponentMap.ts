@@ -92,7 +92,7 @@ export const PRIMARY_USAGES: ComponentUsage[] = [
     description: "Default badge background",
   },
 
-  // SWITCH
+  // SWITCH - only checked state uses primary (unchecked uses bg-input, not primary)
   {
     component: "WexSwitch",
     variant: "default",
@@ -100,14 +100,6 @@ export const PRIMARY_USAGES: ComponentUsage[] = [
     renderability: "easy",
     tailwindClasses: ["data-[state=checked]:bg-primary"],
     description: "Checked switch background",
-  },
-  {
-    component: "WexSwitch",
-    variant: "default",
-    state: "unchecked",
-    renderability: "easy",
-    tailwindClasses: ["bg-input"],
-    description: "Unchecked switch uses input color (not primary)",
   },
 
   // CHECKBOX

@@ -11,7 +11,8 @@
     "test:a11y": "npx playwright test tests/a11y && node scripts/generate-a11y-report.js",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
-    "test:unit:report": "vitest run --reporter=json --outputFile=src/docs/registry/unit-tests.json && node scripts/generate-unit-test-report.js"
+    "test:unit:report": "vitest run --reporter=json --outputFile=src/docs/registry/unit-tests.json && node scripts/generate-unit-test-report.js",
+    "generate:token-map": "npx tsx scripts/generate-token-map.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

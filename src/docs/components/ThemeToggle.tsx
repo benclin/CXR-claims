@@ -1,13 +1,52 @@
 import * as React from "react";
 import { WexButton } from "@/components/wex";
-import { toggleTheme, type Theme } from "@/docs/utils/theme";
+import { toggleTheme, setTheme, type Theme } from "@/docs/utils/theme";
+
+// Optional context for Theme Builder sync
+const ThemeToggleContext = React.createContext<{
+  onThemeChange?: (theme: Theme) => void;
+} | null>(null);
+
+/**
+ * Provider for syncing ThemeToggle with Theme Builder
+ * Wrap ThemeBuilderPage with this to have header toggle update editMode
+ */
+export function ThemeToggleSyncProvider({ 
+  children, 
+  onThemeChange 
+}: { 
+  children: React.ReactNode; 
+  onThemeChange: (theme: Theme) => void;
+}) {
+  return (
+    <ThemeToggleContext.Provider value={{ onThemeChange }}>
+      {children}
+    </ThemeToggleContext.Provider>
+  );
+}
+
+/**
+ * Hook to set theme and sync with Theme Builder if available
+ */
+export function useSyncedTheme() {
+  const context = React.useContext(ThemeToggleContext);
+  
+  const setThemeAndSync = React.useCallback((theme: Theme) => {
+    setTheme(theme);
+    context?.onThemeChange?.(theme);
+  }, [context]);
+  
+  return { setThemeAndSync };
+}
 
 /**
  * Dark mode toggle button
  * Uses WexButton ghost variant for consistent styling
+ * Syncs with Theme Builder editMode when wrapped in ThemeToggleSyncProvider
  */
 export function ThemeToggle() {
   const [currentTheme, setCurrentTheme] = React.useState<Theme>("light");
+  const context = React.useContext(ThemeToggleContext);
 
   React.useEffect(() => {
     // Initialize state from DOM on mount
@@ -15,9 +54,26 @@ export function ThemeToggle() {
     setCurrentTheme(isDark ? "dark" : "light");
   }, []);
 
+  // Listen for external theme changes (e.g., from Theme Builder)
+  React.useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDark = document.documentElement.classList.contains("dark");
+          setCurrentTheme(isDark ? "dark" : "light");
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
   const handleToggle = () => {
     const newTheme = toggleTheme();
     setCurrentTheme(newTheme);
+    // Notify Theme Builder if we're in that context
+    context?.onThemeChange?.(newTheme);
   };
 
   return (
