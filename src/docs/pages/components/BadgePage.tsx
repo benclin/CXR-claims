@@ -5,31 +5,28 @@ import { CodeBlock } from "@/docs/components/CodeBlock";
 import { TokenReference, type TokenRow } from "@/docs/components/TokenReference";
 import { WexBadge } from "@/components/wex";
 
-// Token mappings for WexBadge variants
+// Layer 3 component tokens for WexBadge variants
 const badgeTokens: TokenRow[] = [
-  // Default (Primary)
-  { element: "Default", property: "Background", token: "--primary" },
-  { element: "Default", property: "Text", token: "--primary-foreground" },
-  { element: "Default", property: "Hover", token: "--primary (80% opacity)" },
-  // Secondary
-  { element: "Secondary", property: "Background", token: "--secondary" },
-  { element: "Secondary", property: "Text", token: "--secondary-foreground" },
-  // Outline
-  { element: "Outline", property: "Background", token: "(transparent)" },
-  { element: "Outline", property: "Text", token: "--foreground" },
-  { element: "Outline", property: "Border", token: "--border" },
-  // Destructive
-  { element: "Destructive", property: "Background", token: "--destructive" },
-  { element: "Destructive", property: "Text", token: "--destructive-foreground" },
-  // Success
-  { element: "Success", property: "Background", token: "--success" },
-  { element: "Success", property: "Text", token: "--success-foreground" },
-  // Warning
-  { element: "Warning", property: "Background", token: "--warning" },
-  { element: "Warning", property: "Text", token: "--warning-foreground" },
+  // Neutral (Default)
+  { element: "Neutral", property: "Background", token: "--wex-component-badge-neutral-bg" },
+  { element: "Neutral", property: "Text", token: "--wex-component-badge-neutral-fg" },
+  { element: "Neutral", property: "Border", token: "--wex-component-badge-neutral-border" },
   // Info
-  { element: "Info", property: "Background", token: "--info" },
-  { element: "Info", property: "Text", token: "--info-foreground" },
+  { element: "Info", property: "Background", token: "--wex-component-badge-info-bg" },
+  { element: "Info", property: "Text", token: "--wex-component-badge-info-fg" },
+  { element: "Info", property: "Border", token: "--wex-component-badge-info-border" },
+  // Success
+  { element: "Success", property: "Background", token: "--wex-component-badge-success-bg" },
+  { element: "Success", property: "Text", token: "--wex-component-badge-success-fg" },
+  { element: "Success", property: "Border", token: "--wex-component-badge-success-border" },
+  // Warning
+  { element: "Warning", property: "Background", token: "--wex-component-badge-warning-bg" },
+  { element: "Warning", property: "Text", token: "--wex-component-badge-warning-fg" },
+  { element: "Warning", property: "Border", token: "--wex-component-badge-warning-border" },
+  // Destructive
+  { element: "Destructive", property: "Background", token: "--wex-component-badge-destructive-bg" },
+  { element: "Destructive", property: "Text", token: "--wex-component-badge-destructive-fg" },
+  { element: "Destructive", property: "Border", token: "--wex-component-badge-destructive-border" },
 ];
 
 export default function BadgePage() {

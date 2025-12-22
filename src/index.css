@@ -20,38 +20,38 @@
    ============================================================
    Sonner has internal styling with high specificity.
    These overrides ensure proper text contrast for all toast variants.
-   Uses semantic tokens only (no raw colors).
+   Uses Layer 3 component tokens for granular theming.
    ============================================================ */
 @layer components {
-  /* Error/Destructive toast - white text on red background */
+  /* Error/Destructive toast - Layer 3 tokens */
   [data-sonner-toast][data-type="error"] {
-    --normal-bg: hsl(var(--destructive));
-    --normal-border: hsl(var(--destructive));
-    --normal-text: hsl(var(--destructive-foreground));
+    --normal-bg: hsl(var(--wex-component-toast-destructive-bg));
+    --normal-border: hsl(var(--wex-component-toast-destructive-border));
+    --normal-text: hsl(var(--wex-component-toast-destructive-fg));
     background: var(--normal-bg) !important;
     border-color: var(--normal-border) !important;
     color: var(--normal-text) !important;
   }
   [data-sonner-toast][data-type="error"] [data-title],
   [data-sonner-toast][data-type="error"] [data-description] {
-    color: hsl(var(--destructive-foreground)) !important;
+    color: hsl(var(--wex-component-toast-destructive-fg)) !important;
   }
 
-  /* Success toast - white text on green background */
+  /* Success toast - Layer 3 tokens */
   [data-sonner-toast][data-type="success"] {
-    --normal-bg: hsl(var(--success));
-    --normal-border: hsl(var(--success));
-    --normal-text: hsl(var(--success-foreground));
+    --normal-bg: hsl(var(--wex-component-toast-success-bg));
+    --normal-border: hsl(var(--wex-component-toast-success-border));
+    --normal-text: hsl(var(--wex-component-toast-success-fg));
     background: var(--normal-bg) !important;
     border-color: var(--normal-border) !important;
     color: var(--normal-text) !important;
   }
   [data-sonner-toast][data-type="success"] [data-title],
   [data-sonner-toast][data-type="success"] [data-description] {
-    color: hsl(var(--success-foreground)) !important;
+    color: hsl(var(--wex-component-toast-success-fg)) !important;
   }
 
-  /* Warning toast - black text on amber background */
+  /* Warning toast - Layer 2 (no dedicated Layer 3 tokens yet) */
   [data-sonner-toast][data-type="warning"] {
     --normal-bg: hsl(var(--warning));
     --normal-border: hsl(var(--warning));
@@ -65,18 +65,18 @@
     color: hsl(var(--warning-foreground)) !important;
   }
 
-  /* Info toast - white text on blue background */
+  /* Info toast - Layer 3 tokens */
   [data-sonner-toast][data-type="info"] {
-    --normal-bg: hsl(var(--info));
-    --normal-border: hsl(var(--info));
-    --normal-text: hsl(var(--info-foreground));
+    --normal-bg: hsl(var(--wex-component-toast-info-bg));
+    --normal-border: hsl(var(--wex-component-toast-info-border));
+    --normal-text: hsl(var(--wex-component-toast-info-fg));
     background: var(--normal-bg) !important;
     border-color: var(--normal-border) !important;
     color: var(--normal-text) !important;
   }
   [data-sonner-toast][data-type="info"] [data-title],
   [data-sonner-toast][data-type="info"] [data-description] {
-    color: hsl(var(--info-foreground)) !important;
+    color: hsl(var(--wex-component-toast-info-fg)) !important;
   }
 }
 

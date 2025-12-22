@@ -8,12 +8,14 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexTabs, WexCard, WexButton, WexInput, WexLabel } from "@/components/wex";
 
 // Token mappings for WexTabs
+// Layer 3 component tokens
 const tabsTokens: TokenRow[] = [
-  { element: "Tab List", property: "Background", token: "--muted" },
-  { element: "Trigger", property: "Text", token: "--muted-foreground" },
-  { element: "Trigger (active)", property: "Background", token: "--background" },
-  { element: "Trigger (active)", property: "Text", token: "--foreground" },
-  { element: "Focus Ring", property: "Color", token: "--ring" },
+  { element: "Trigger", property: "Text", token: "--wex-component-tabs-trigger-fg" },
+  { element: "Trigger (Hover)", property: "Background", token: "--wex-component-tabs-trigger-hover-bg" },
+  { element: "Trigger (Active)", property: "Text", token: "--wex-component-tabs-trigger-active-fg" },
+  { element: "Indicator", property: "Color", token: "--wex-component-tabs-indicator" },
+  { element: "Divider", property: "Border", token: "--wex-component-tabs-divider" },
+  { element: "Focus Ring", property: "Color", token: "--wex-component-tabs-focus-ring" },
 ];
 
 export default function TabsPage() {

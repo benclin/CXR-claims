@@ -5,14 +5,19 @@ import { CodeBlock } from "@/docs/components/CodeBlock";
 import { TokenReference, type TokenRow } from "@/docs/components/TokenReference";
 import { WexInput, WexLabel } from "@/components/wex";
 
-// Token mappings for WexInput
+// Token mappings for WexInput - Layer 3 component tokens
 const inputTokens: TokenRow[] = [
-  { element: "Input", property: "Background", token: "--background" },
-  { element: "Input", property: "Border", token: "--input" },
-  { element: "Input", property: "Text", token: "--foreground" },
-  { element: "Input", property: "Placeholder", token: "--muted-foreground" },
-  { element: "Focus Ring", property: "Color", token: "--ring" },
-  { element: "Disabled", property: "Opacity", token: "50%" },
+  { element: "Input", property: "Background", token: "--wex-component-input-bg" },
+  { element: "Input", property: "Text", token: "--wex-component-input-fg" },
+  { element: "Input", property: "Placeholder", token: "--wex-component-input-placeholder" },
+  { element: "Input", property: "Border", token: "--wex-component-input-border" },
+  { element: "Input", property: "Border (Hover)", token: "--wex-component-input-border-hover" },
+  { element: "Input", property: "Border (Focus)", token: "--wex-component-input-border-focus" },
+  { element: "Focus Ring", property: "Color", token: "--wex-component-input-focus-ring" },
+  { element: "Disabled", property: "Background", token: "--wex-component-input-disabled-bg" },
+  { element: "Disabled", property: "Text", token: "--wex-component-input-disabled-fg" },
+  { element: "Disabled", property: "Border", token: "--wex-component-input-disabled-border" },
+  { element: "Disabled", property: "Opacity", token: "--wex-component-input-disabled-opacity" },
 ];
 
 export default function InputPage() {

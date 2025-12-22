@@ -8,14 +8,17 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexDialog, WexButton, WexInput, WexLabel } from "@/components/wex";
 
 // Token mappings for WexDialog
+// Layer 3 component tokens
 const dialogTokens: TokenRow[] = [
-  { element: "Overlay", property: "Background", token: "--background (80% opacity)" },
-  { element: "Content", property: "Background", token: "--background" },
-  { element: "Content", property: "Border", token: "--border" },
-  { element: "Content", property: "Shadow", token: "--shadow (lg)" },
-  { element: "Title", property: "Text", token: "--foreground" },
-  { element: "Description", property: "Text", token: "--muted-foreground" },
-  { element: "Close Button", property: "Color", token: "--muted-foreground" },
+  { element: "Overlay", property: "Background", token: "--wex-component-dialog-overlay-bg" },
+  { element: "Overlay", property: "Opacity", token: "--wex-component-dialog-overlay-opacity" },
+  { element: "Content", property: "Background", token: "--wex-component-dialog-bg" },
+  { element: "Content", property: "Text", token: "--wex-component-dialog-fg" },
+  { element: "Content", property: "Border", token: "--wex-component-dialog-border" },
+  { element: "Header/Title", property: "Text", token: "--wex-component-dialog-header-fg" },
+  { element: "Description", property: "Text", token: "--wex-component-dialog-footer-fg" },
+  { element: "Close Button", property: "Hover BG", token: "--wex-component-dialog-close-hover-bg" },
+  { element: "Focus Ring", property: "Color", token: "--wex-component-dialog-focus-ring" },
 ];
 
 export default function DialogPage() {

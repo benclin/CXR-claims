@@ -7,27 +7,29 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexButton } from "@/components/wex";
 import { toast } from "sonner";
 
-// Token mappings for Toast (Sonner) variants
+// Layer 3 component tokens for Toast (Sonner) variants
 const toastTokens: TokenRow[] = [
   // Default
   { element: "Default", property: "Background", token: "--background" },
   { element: "Default", property: "Text", token: "--foreground" },
   { element: "Default", property: "Border", token: "--border" },
-  // Success
-  { element: "Success", property: "Background", token: "--success" },
-  { element: "Success", property: "Text", token: "--success-foreground" },
-  // Error
-  { element: "Error", property: "Background", token: "--destructive" },
-  { element: "Error", property: "Text", token: "--destructive-foreground" },
-  // Warning
+  // Info (Layer 3)
+  { element: "Info", property: "Background", token: "--wex-component-toast-info-bg" },
+  { element: "Info", property: "Text", token: "--wex-component-toast-info-fg" },
+  { element: "Info", property: "Border", token: "--wex-component-toast-info-border" },
+  // Success (Layer 3)
+  { element: "Success", property: "Background", token: "--wex-component-toast-success-bg" },
+  { element: "Success", property: "Text", token: "--wex-component-toast-success-fg" },
+  { element: "Success", property: "Border", token: "--wex-component-toast-success-border" },
+  // Destructive (Layer 3)
+  { element: "Error", property: "Background", token: "--wex-component-toast-destructive-bg" },
+  { element: "Error", property: "Text", token: "--wex-component-toast-destructive-fg" },
+  { element: "Error", property: "Border", token: "--wex-component-toast-destructive-border" },
+  // Warning (Layer 2 - no dedicated Layer 3 tokens yet)
   { element: "Warning", property: "Background", token: "--warning" },
   { element: "Warning", property: "Text", token: "--warning-foreground" },
-  // Info
-  { element: "Info", property: "Background", token: "--info" },
-  { element: "Info", property: "Text", token: "--info-foreground" },
-  // Action Button
-  { element: "Action Button", property: "Background", token: "--primary" },
-  { element: "Action Button", property: "Text", token: "--primary-foreground" },
+  // Close Button
+  { element: "Close Button", property: "Hover BG", token: "--wex-component-toast-close-hover-bg" },
 ];
 
 export default function ToastPage() {

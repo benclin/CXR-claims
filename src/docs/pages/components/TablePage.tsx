@@ -8,13 +8,17 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexTable, WexBadge, WexButton, WexCheckbox } from "@/components/wex";
 
 // Token mappings for WexTable
+// Layer 3 component tokens
 const tableTokens: TokenRow[] = [
-  { element: "Header", property: "Background", token: "--muted (50% opacity)" },
-  { element: "Header", property: "Text", token: "--muted-foreground" },
-  { element: "Row", property: "Border", token: "--border" },
-  { element: "Row (hover)", property: "Background", token: "--muted (50% opacity)" },
-  { element: "Cell", property: "Text", token: "--foreground" },
-  { element: "Footer", property: "Background", token: "--muted (50% opacity)" },
+  { element: "Header", property: "Background", token: "--wex-component-table-header-bg" },
+  { element: "Header", property: "Text", token: "--wex-component-table-header-fg" },
+  { element: "Row", property: "Background", token: "--wex-component-table-row-bg" },
+  { element: "Row (Hover)", property: "Background", token: "--wex-component-table-row-hover-bg" },
+  { element: "Row (Selected)", property: "Background", token: "--wex-component-table-selected-bg" },
+  { element: "Row (Selected)", property: "Text", token: "--wex-component-table-selected-fg" },
+  { element: "Cell", property: "Text", token: "--wex-component-table-cell-fg" },
+  { element: "Border", property: "Color", token: "--wex-component-table-border" },
+  { element: "Focus Ring", property: "Color", token: "--wex-component-table-focus-ring" },
 ];
 
 const invoices = [

@@ -17,19 +17,45 @@ const wexBadgeVariants = cva(
   {
     variants: {
       intent: {
-        default:
-          "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
+        // NEUTRAL - Layer 3 tokens
+        default: [
+          "bg-wex-badge-neutral-bg",
+          "text-wex-badge-neutral-fg",
+          "border-wex-badge-neutral-border",
+        ].join(" "),
+        // SECONDARY - Layer 2 (no dedicated Layer 3 tokens)
         secondary:
           "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
+        // DESTRUCTIVE - Layer 3 tokens
+        destructive: [
+          "shadow",
+          "bg-wex-badge-destructive-bg",
+          "text-wex-badge-destructive-fg",
+          "border-wex-badge-destructive-border",
+        ].join(" "),
+        // OUTLINE - Layer 2
         outline: "text-foreground",
-        success:
-          "border-transparent bg-success text-success-foreground shadow hover:bg-success/80",
-        warning:
-          "border-transparent bg-warning text-warning-foreground shadow hover:bg-warning/80",
-        info:
-          "border-transparent bg-info text-info-foreground shadow hover:bg-info/80",
+        // SUCCESS - Layer 3 tokens
+        success: [
+          "shadow",
+          "bg-wex-badge-success-bg",
+          "text-wex-badge-success-fg",
+          "border-wex-badge-success-border",
+        ].join(" "),
+        // WARNING - Layer 3 tokens
+        warning: [
+          "shadow",
+          "bg-wex-badge-warning-bg",
+          "text-wex-badge-warning-fg",
+          "border-wex-badge-warning-border",
+        ].join(" "),
+        // INFO - Layer 3 tokens
+        info: [
+          "shadow",
+          "bg-wex-badge-info-bg",
+          "text-wex-badge-info-fg",
+          "border-wex-badge-info-border",
+        ].join(" "),
       },
     },
     defaultVariants: {

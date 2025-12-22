@@ -43,7 +43,7 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      "border-t border-wex-table-border bg-wex-table-header-bg font-medium [&>tr]:last:border-b-0",
       className
     )}
     {...props}
@@ -58,7 +58,11 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      // Layer 3 tokens - row styling
+      "border-b border-wex-table-border transition-colors",
+      "bg-wex-table-row-bg",
+      "hover:bg-wex-table-row-hover-bg",
+      "data-[state=selected]:bg-wex-table-selected-bg data-[state=selected]:text-wex-table-selected-fg",
       className
     )}
     {...props}
@@ -73,7 +77,10 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      // Layer 3 tokens - header styling
+      "h-10 px-2 text-left align-middle font-medium",
+      "bg-wex-table-header-bg text-wex-table-header-fg",
+      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}
@@ -88,7 +95,9 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      // Layer 3 tokens - cell styling
+      "p-2 align-middle text-wex-table-cell-fg",
+      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}

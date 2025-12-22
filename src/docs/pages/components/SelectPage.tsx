@@ -6,15 +6,17 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexLabel, WexSelect } from "@/components/wex";
 
 // Token mappings for WexSelect
+// Layer 3 component tokens
 const selectTokens: TokenRow[] = [
-  { element: "Trigger", property: "Background", token: "--background" },
-  { element: "Trigger", property: "Border", token: "--input" },
-  { element: "Trigger", property: "Text", token: "--foreground" },
-  { element: "Content", property: "Background", token: "--popover" },
-  { element: "Content", property: "Border", token: "--border" },
-  { element: "Item", property: "Hover Background", token: "--accent" },
-  { element: "Item", property: "Text", token: "--popover-foreground" },
-  { element: "Focus Ring", property: "Color", token: "--ring" },
+  { element: "Trigger", property: "Background", token: "--wex-component-select-trigger-bg" },
+  { element: "Trigger", property: "Text", token: "--wex-component-select-trigger-fg" },
+  { element: "Trigger", property: "Border", token: "--wex-component-select-trigger-border" },
+  { element: "Trigger", property: "Focus Ring", token: "--wex-component-select-trigger-focus-ring" },
+  { element: "Content", property: "Background", token: "--wex-component-select-content-bg" },
+  { element: "Item", property: "Hover Background", token: "--wex-component-select-item-hover-bg" },
+  { element: "Item (Selected)", property: "Background", token: "--wex-component-select-item-selected-bg" },
+  { element: "Item (Selected)", property: "Text", token: "--wex-component-select-item-selected-fg" },
+  { element: "Disabled", property: "Opacity", token: "--wex-component-select-disabled-opacity" },
 ];
 
 export default function SelectPage() {

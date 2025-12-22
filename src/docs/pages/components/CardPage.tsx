@@ -15,12 +15,13 @@ import {
 import { Bell, CreditCard, Settings, User } from "lucide-react";
 
 // Token mappings for WexCard
+// Layer 3 component tokens
 const cardTokens: TokenRow[] = [
-  { element: "Container", property: "Background", token: "--card" },
-  { element: "Container", property: "Border", token: "--border" },
-  { element: "Container", property: "Shadow", token: "--shadow (sm)" },
-  { element: "Title", property: "Text", token: "--card-foreground" },
-  { element: "Description", property: "Text", token: "--muted-foreground" },
+  { element: "Container", property: "Background", token: "--wex-component-card-bg" },
+  { element: "Container", property: "Text", token: "--wex-component-card-fg" },
+  { element: "Container", property: "Border", token: "--wex-component-card-border" },
+  { element: "Header/Title", property: "Text", token: "--wex-component-card-header-fg" },
+  { element: "Footer", property: "Text", token: "--wex-component-card-footer-fg" },
 ];
 
 export default function CardPage() {

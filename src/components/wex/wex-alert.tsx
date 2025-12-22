@@ -15,19 +15,36 @@ import { cn } from "@/lib/utils";
  */
 
 const wexAlertVariants = cva(
-  "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3.5 [&>svg]:text-foreground [&>svg~*]:pl-7",
+  "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3.5 [&>svg~*]:pl-7",
   {
     variants: {
       intent: {
-        default: "bg-background text-foreground",
-        destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
-        success:
-          "border-success/50 bg-success/10 text-success dark:border-success [&>svg]:text-success",
+        // DEFAULT - Layer 2
+        default: "bg-background text-foreground [&>svg]:text-foreground",
+        // DESTRUCTIVE - Layer 3 tokens (tinted style)
+        destructive: [
+          "bg-wex-alert-destructive-bg",
+          "text-wex-alert-destructive-fg",
+          "border-wex-alert-destructive-border",
+          "[&>svg]:text-wex-alert-destructive-icon",
+        ].join(" "),
+        // SUCCESS - Layer 3 tokens (tinted style)
+        success: [
+          "bg-wex-alert-success-bg",
+          "text-wex-alert-success-fg",
+          "border-wex-alert-success-border",
+          "[&>svg]:text-wex-alert-success-icon",
+        ].join(" "),
+        // WARNING - Layer 2 (no dedicated Layer 3 tokens yet)
         warning:
           "border-warning/50 bg-warning/10 text-warning-foreground dark:border-warning [&>svg]:text-warning",
-        info:
-          "border-info/50 bg-info/10 text-info dark:border-info [&>svg]:text-info",
+        // INFO - Layer 3 tokens (tinted style)
+        info: [
+          "bg-wex-alert-info-bg",
+          "text-wex-alert-info-fg",
+          "border-wex-alert-info-border",
+          "[&>svg]:text-wex-alert-info-icon",
+        ].join(" "),
       },
     },
     defaultVariants: {

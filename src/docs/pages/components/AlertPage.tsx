@@ -7,32 +7,30 @@ import { TokenReference, type TokenRow } from "@/docs/components/TokenReference"
 import { WexAlert } from "@/components/wex";
 import { AlertCircle, Info, Terminal, AlertTriangle, CheckCircle } from "lucide-react";
 
-// Token mappings for WexAlert variants
+// Layer 3 component tokens for WexAlert variants
 const alertTokens: TokenRow[] = [
   // Default
   { element: "Default", property: "Background", token: "--background" },
   { element: "Default", property: "Text", token: "--foreground" },
   { element: "Default", property: "Border", token: "--border" },
-  // Destructive
-  { element: "Destructive", property: "Background", token: "(transparent)" },
-  { element: "Destructive", property: "Text", token: "--destructive" },
-  { element: "Destructive", property: "Border", token: "--destructive" },
-  { element: "Destructive", property: "Icon", token: "--destructive" },
-  // Success
-  { element: "Success", property: "Background", token: "--success (10% opacity)" },
-  { element: "Success", property: "Text", token: "--success" },
-  { element: "Success", property: "Border", token: "--success" },
-  { element: "Success", property: "Icon", token: "--success" },
-  // Warning
+  // Info (Layer 3)
+  { element: "Info", property: "Background", token: "--wex-component-alert-info-bg" },
+  { element: "Info", property: "Text", token: "--wex-component-alert-info-fg" },
+  { element: "Info", property: "Border", token: "--wex-component-alert-info-border" },
+  { element: "Info", property: "Icon", token: "--wex-component-alert-info-icon" },
+  // Success (Layer 3)
+  { element: "Success", property: "Background", token: "--wex-component-alert-success-bg" },
+  { element: "Success", property: "Text", token: "--wex-component-alert-success-fg" },
+  { element: "Success", property: "Border", token: "--wex-component-alert-success-border" },
+  { element: "Success", property: "Icon", token: "--wex-component-alert-success-icon" },
+  // Destructive (Layer 3)
+  { element: "Destructive", property: "Background", token: "--wex-component-alert-destructive-bg" },
+  { element: "Destructive", property: "Text", token: "--wex-component-alert-destructive-fg" },
+  { element: "Destructive", property: "Border", token: "--wex-component-alert-destructive-border" },
+  { element: "Destructive", property: "Icon", token: "--wex-component-alert-destructive-icon" },
+  // Warning (Layer 2 - no dedicated Layer 3 tokens yet)
   { element: "Warning", property: "Background", token: "--warning (10% opacity)" },
   { element: "Warning", property: "Text", token: "--warning-foreground" },
-  { element: "Warning", property: "Border", token: "--warning" },
-  { element: "Warning", property: "Icon", token: "--warning" },
-  // Info
-  { element: "Info", property: "Background", token: "--info (10% opacity)" },
-  { element: "Info", property: "Text", token: "--info" },
-  { element: "Info", property: "Border", token: "--info" },
-  { element: "Info", property: "Icon", token: "--info" },
 ];
 
 export default function AlertPage() {
