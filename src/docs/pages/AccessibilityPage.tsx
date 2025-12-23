@@ -17,12 +17,19 @@ import { WexInput, WexDialog, WexTabs } from "@/components/wex";
  * FRAMING: Uses "signal" language only - NOT compliance certification
  */
 
+interface ExampleResult {
+  status: "pass" | "fail";
+  violations: number;
+  issues: string[];
+}
+
 interface ModeResult {
   status: "pass" | "partial" | "fail" | "no_examples" | "pending";
   levelAchieved?: string | null;
   violations: number;
   issues: string[];
   examplesFound: number;
+  examples?: Record<string, ExampleResult>;
 }
 
 interface ComplianceEntry {
@@ -661,12 +668,51 @@ function ComponentDetailContent({ registryKey, data, info, onClose }: ComponentD
         {variants.length > 0 && (
           <div>
             <p className="text-xs text-muted-foreground mb-2">Tested Variants</p>
-            <div className="flex flex-wrap gap-1.5">
-              {variants.map((variant) => (
-                <code key={variant} className="px-2 py-1 bg-muted rounded text-xs text-foreground">
-                  {variant}
-                </code>
-              ))}
+            <div className="flex flex-wrap gap-2">
+              {variants.map((variant) => {
+                const lightResult = data.modes?.light?.examples?.[variant];
+                const darkResult = data.modes?.dark?.examples?.[variant];
+                
+                const lightPass = lightResult?.status === "pass";
+                const darkPass = darkResult?.status === "pass";
+                
+                return (
+                  <div 
+                    key={variant} 
+                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded border border-border bg-card text-xs"
+                  >
+                    <span className="font-mono text-foreground">{variant}</span>
+                    <span className="flex items-center gap-0.5 ml-1">
+                      {/* Light mode indicator */}
+                      <span title={`Light: ${lightResult?.status || 'unknown'}`} className="flex items-center">
+                        <Sun className="h-3 w-3 text-muted-foreground" />
+                        {lightResult ? (
+                          lightPass ? (
+                            <Check className="h-3 w-3 text-success -ml-0.5" />
+                          ) : (
+                            <X className="h-3 w-3 text-destructive -ml-0.5" />
+                          )
+                        ) : (
+                          <HelpCircle className="h-2.5 w-2.5 text-muted-foreground -ml-0.5" />
+                        )}
+                      </span>
+                      {/* Dark mode indicator */}
+                      <span title={`Dark: ${darkResult?.status || 'unknown'}`} className="flex items-center ml-1">
+                        <Moon className="h-3 w-3 text-muted-foreground" />
+                        {darkResult ? (
+                          darkPass ? (
+                            <Check className="h-3 w-3 text-success -ml-0.5" />
+                          ) : (
+                            <X className="h-3 w-3 text-destructive -ml-0.5" />
+                          )
+                        ) : (
+                          <HelpCircle className="h-2.5 w-2.5 text-muted-foreground -ml-0.5" />
+                        )}
+                      </span>
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

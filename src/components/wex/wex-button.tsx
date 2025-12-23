@@ -193,6 +193,23 @@ const WexButton = React.forwardRef<HTMLButtonElement, WexButtonProps>(
     const Comp = asChild ? Slot : "button";
     const isDisabled = disabled || loading;
     
+    // When using asChild, Slot expects exactly ONE child element.
+    // We cannot render the loading spinner alongside children when asChild is true.
+    // Loading spinner is only shown for regular button mode.
+    const renderChildren = () => {
+      if (asChild) {
+        // asChild mode: pass children directly to Slot (must be single element)
+        return children;
+      }
+      // Regular button mode: can include loading spinner
+      return (
+        <>
+          {loading && <Loader2 className="animate-spin" />}
+          {children}
+        </>
+      );
+    };
+    
     return (
       <Comp
         className={cn(wexButtonVariants({ intent, size, rounded, className }))}
@@ -201,8 +218,7 @@ const WexButton = React.forwardRef<HTMLButtonElement, WexButtonProps>(
         aria-busy={loading}
         {...props}
       >
-        {loading && <Loader2 className="animate-spin" />}
-        {children}
+        {renderChildren()}
       </Comp>
     );
   }
