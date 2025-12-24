@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Check, AlertTriangle, X, HelpCircle, ChevronDown, ChevronUp, FlaskConical, Sun, Moon } from "lucide-react";
+import { Check, AlertTriangle, X, HelpCircle, ChevronDown, ChevronUp, FlaskConical, Sun, Moon, Eye } from "lucide-react";
 import { useA11yCompliance, useA11yExampleResults, type ComplianceResult } from "@/docs/hooks/useA11yCompliance";
+import { useComponentContrastPairs, formatRatio, type ContrastPairResult } from "@/docs/hooks/useComponentContrastPairs";
 
 /**
  * A11yResultsSection - Accessibility results summary for component pages
@@ -56,7 +57,9 @@ interface ResultsSectionProps {
 function ResultsSection({ compliance, registryKey }: ResultsSectionProps) {
   const { status, violations, issues, testedAt, modes } = compliance;
   const [showVariants, setShowVariants] = React.useState(false);
+  const [showContrastDetails, setShowContrastDetails] = React.useState(false);
   const exampleResults = useA11yExampleResults(registryKey);
+  const contrastData = useComponentContrastPairs(registryKey);
 
   const statusConfig = getStatusConfig(status);
   
@@ -73,7 +76,7 @@ function ResultsSection({ compliance, registryKey }: ResultsSectionProps) {
     issue.includes("name")
   );
   
-  const contrastPassed = !hasContrastIssue;
+  const contrastPassed = !hasContrastIssue && contrastData.allPass;
   const ariaPassed = !hasAriaIssue;
   
   // Count variants tested
@@ -83,6 +86,7 @@ function ResultsSection({ compliance, registryKey }: ResultsSectionProps) {
   ).length;
   
   const hasExampleResults = exampleResults.length > 0;
+  const hasContrastPairs = contrastData.totalCount > 0;
   
   // Format date
   const testedDate = testedAt ? new Date(testedAt).toLocaleDateString() : null;
@@ -125,7 +129,12 @@ function ResultsSection({ compliance, registryKey }: ResultsSectionProps) {
       {/* Checks and violations row */}
       <div className="flex items-center justify-between p-3 border-b border-border">
         <div className="flex items-center gap-4">
-          <CheckIndicator passed={contrastPassed} label="Contrast" />
+          <ContrastIndicator 
+            passed={contrastPassed} 
+            pairCount={contrastData.totalCount}
+            lowestRatio={contrastData.lowestRatio}
+            lowestRating={contrastData.lowestRating}
+          />
           <CheckIndicator passed={ariaPassed} label="ARIA" />
         </div>
         <div className="text-sm">
@@ -136,6 +145,31 @@ function ResultsSection({ compliance, registryKey }: ResultsSectionProps) {
           )}
         </div>
       </div>
+
+      {/* Contrast details toggle */}
+      {hasContrastPairs && (
+        <button
+          onClick={() => setShowContrastDetails(!showContrastDetails)}
+          className="w-full flex items-center justify-between p-3 text-xs text-muted-foreground hover:bg-muted/50 transition-colors border-b border-border"
+        >
+          <span className="flex items-center gap-1.5">
+            <Eye className="h-3.5 w-3.5" />
+            Contrast details ({contrastData.passCount}/{contrastData.totalCount} pairs pass)
+          </span>
+          {showContrastDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+      )}
+
+      {/* Contrast pair details */}
+      {showContrastDetails && hasContrastPairs && (
+        <div className="px-3 py-2 border-b border-border bg-muted/20">
+          <div className="space-y-1.5">
+            {contrastData.results.map((result, index) => (
+              <ContrastPairRow key={index} result={result} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Variant details toggle */}
       {hasExampleResults && (
@@ -189,6 +223,85 @@ function CheckIndicator({ passed, label }: CheckIndicatorProps) {
       {label}
     </span>
   );
+}
+
+interface ContrastIndicatorProps {
+  passed: boolean;
+  pairCount: number;
+  lowestRatio: number | null;
+  lowestRating: string | null;
+}
+
+function ContrastIndicator({ passed, pairCount, lowestRatio, lowestRating }: ContrastIndicatorProps) {
+  // If no pairs defined for this component, show neutral indicator
+  if (pairCount === 0) {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+        <HelpCircle className="h-4 w-4" />
+        Contrast
+      </span>
+    );
+  }
+
+  return (
+    <span className={`inline-flex items-center gap-1.5 text-sm ${passed ? "text-success" : "text-destructive"}`}>
+      {passed ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
+      <span>Contrast</span>
+      {lowestRatio !== null && (
+        <span className="text-xs text-muted-foreground font-normal">
+          (min: {formatRatio(lowestRatio)} {lowestRating})
+        </span>
+      )}
+    </span>
+  );
+}
+
+interface ContrastPairRowProps {
+  result: ContrastPairResult;
+}
+
+function ContrastPairRow({ result }: ContrastPairRowProps) {
+  const { pair, ratio, rating, passes } = result;
+  
+  const ratingBadgeClass = getRatingBadgeClass(rating);
+  
+  return (
+    <div className="flex items-center justify-between text-xs py-1">
+      <div className="flex items-center gap-2">
+        {passes ? (
+          <Check className="h-3 w-3 text-success" />
+        ) : (
+          <X className="h-3 w-3 text-destructive" />
+        )}
+        <span className={passes ? "text-foreground" : "text-destructive"}>
+          {pair.name}
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className={`font-mono ${passes ? "text-muted-foreground" : "text-destructive"}`}>
+          {formatRatio(ratio)}
+        </span>
+        <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${ratingBadgeClass}`}>
+          {rating}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function getRatingBadgeClass(rating: string): string {
+  switch (rating) {
+    case "AAA":
+      return "bg-success/10 text-success";
+    case "AA":
+      return "bg-success/10 text-success";
+    case "AA-large":
+      return "bg-warning/10 text-warning";
+    case "Fail":
+      return "bg-destructive/10 text-destructive";
+    default:
+      return "bg-muted text-muted-foreground";
+  }
 }
 
 interface VariantChipProps {

@@ -269,6 +269,8 @@ export interface ContrastPair {
   background: string;
   /** Maps to PreviewCard title in FilteredLivePreview for per-card indicators */
   previewCard?: string;
+  /** Registry key for filtering pairs by component page (e.g., "button", "badge") */
+  registryKey?: string;
 }
 
 export const CONTRAST_PAIRS: ContrastPair[] = [
@@ -281,6 +283,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Buttons",
+    registryKey: "button",
   },
   {
     name: "Destructive Button Text",
@@ -288,6 +291,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--destructive-foreground",
     background: "--destructive",
     previewCard: "Buttons",
+    registryKey: "button",
   },
 
   // ==========================================================================
@@ -299,6 +303,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Badge",
+    registryKey: "badge",
   },
   {
     name: "Success Badge Text",
@@ -306,6 +311,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--success-foreground",
     background: "--success",
     previewCard: "Badge",
+    registryKey: "badge",
   },
   {
     name: "Warning Badge Text",
@@ -313,6 +319,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--warning-foreground",
     background: "--warning",
     previewCard: "Badge",
+    registryKey: "badge",
   },
   {
     name: "Info Badge Text",
@@ -320,6 +327,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--info-foreground",
     background: "--info",
     previewCard: "Badge",
+    registryKey: "badge",
   },
 
   // ==========================================================================
@@ -331,6 +339,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary",
     background: "--muted",
     previewCard: "Progress",
+    registryKey: "progress",
   },
 
   // ==========================================================================
@@ -342,6 +351,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Switch",
+    registryKey: "switch",
   },
 
   // ==========================================================================
@@ -353,6 +363,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Checkbox",
+    registryKey: "checkbox",
   },
 
   // ==========================================================================
@@ -364,6 +375,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Radio Group",
+    registryKey: "radio-group",
   },
 
   // ==========================================================================
@@ -375,6 +387,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary",
     background: "--muted",
     previewCard: "Slider",
+    registryKey: "slider",
   },
 
   // ==========================================================================
@@ -386,6 +399,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--muted",
     background: "--background",
     previewCard: "Skeleton",
+    registryKey: "skeleton",
   },
 
   // ==========================================================================
@@ -408,6 +422,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Calendar",
+    registryKey: "calendar",
   },
 
   // ==========================================================================
@@ -419,6 +434,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--destructive",
     background: "--background",
     previewCard: "Alert",
+    registryKey: "alert",
   },
   {
     name: "Success Alert Text",
@@ -426,6 +442,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--success",
     background: "--background",
     previewCard: "Alert",
+    registryKey: "alert",
   },
   {
     name: "Warning Alert Text",
@@ -433,6 +450,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--warning",
     background: "--background",
     previewCard: "Alert",
+    registryKey: "alert",
   },
   {
     name: "Info Alert Text",
@@ -440,6 +458,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--info",
     background: "--background",
     previewCard: "Alert",
+    registryKey: "alert",
   },
 
   // ==========================================================================
@@ -462,6 +481,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexCard.Title",
     foreground: "--card-foreground",
     background: "--card",
+    registryKey: "card",
   },
 
   // ==========================================================================
@@ -473,6 +493,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary",
     background: "--background",
     previewCard: "Spinner",
+    registryKey: "spinner",
   },
 
   // ==========================================================================
@@ -484,6 +505,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Button Group",
+    registryKey: "button-group",
   },
 
   // ==========================================================================
@@ -495,6 +517,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--primary-foreground",
     background: "--primary",
     previewCard: "Pagination",
+    registryKey: "pagination",
   },
 
   // ==========================================================================
@@ -506,6 +529,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--muted-foreground",
     background: "--muted",
     previewCard: "Avatar (fallback = bg-muted)",
+    registryKey: "avatar",
   },
 
   // ==========================================================================
@@ -517,6 +541,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--muted-foreground",
     background: "--background",
     previewCard: "Textarea",
+    registryKey: "textarea",
   },
 
   // ==========================================================================
@@ -528,6 +553,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--muted-foreground",
     background: "--background",
     previewCard: "Select (trigger = border-input)",
+    registryKey: "select",
   },
 
   // ==========================================================================
@@ -539,6 +565,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--foreground",
     background: "--background",
     previewCard: "Tabs (bg-muted list)",
+    registryKey: "tabs",
   },
 
   // ==========================================================================
@@ -550,6 +577,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--accent-foreground",
     background: "--accent",
     previewCard: "Toggle (on = bg-accent)",
+    registryKey: "toggle",
   },
 
   // ==========================================================================
@@ -561,6 +589,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--success-foreground",
     background: "--success",
     previewCard: "Toast Preview",
+    registryKey: "sonner",
   },
   {
     name: "Warning Toast Text",
@@ -568,6 +597,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--warning-foreground",
     background: "--warning",
     previewCard: "Toast Preview",
+    registryKey: "sonner",
   },
   {
     name: "Info Toast Text",
@@ -575,6 +605,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     foreground: "--info-foreground",
     background: "--info",
     previewCard: "Toast Preview",
+    registryKey: "sonner",
   },
 
   // ==========================================================================
@@ -587,6 +618,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexAccordion",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "accordion",
   },
 
   // Carousel
@@ -595,6 +627,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexCarousel",
     foreground: "--foreground",
     background: "--muted",
+    registryKey: "carousel",
   },
 
   // Chart (text labels)
@@ -603,6 +636,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexChart",
     foreground: "--muted-foreground",
     background: "--background",
+    registryKey: "chart",
   },
 
   // Drawer
@@ -611,6 +645,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexDrawer",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "drawer",
   },
 
   // Empty state
@@ -619,6 +654,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexEmpty",
     foreground: "--muted-foreground",
     background: "--background",
+    registryKey: "empty",
   },
 
   // Hover Card
@@ -627,6 +663,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexHoverCard",
     foreground: "--popover-foreground",
     background: "--popover",
+    registryKey: "hover-card",
   },
 
   // Input Group
@@ -635,6 +672,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexInputGroup",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "input-group",
   },
 
   // Input OTP
@@ -643,6 +681,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexInputOTP",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "input-otp",
   },
 
   // Menubar
@@ -651,6 +690,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexMenubar",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "menubar",
   },
 
   // Sidebar
@@ -659,6 +699,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexSidebar",
     foreground: "--sidebar-foreground",
     background: "--sidebar",
+    registryKey: "sidebar",
   },
 
   // Table
@@ -667,6 +708,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexTable",
     foreground: "--foreground",
     background: "--background",
+    registryKey: "table",
   },
 
   // Toggle Group
@@ -675,6 +717,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexToggleGroup",
     foreground: "--accent-foreground",
     background: "--accent",
+    registryKey: "toggle-group",
   },
 
   // Tooltip
@@ -683,6 +726,262 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
     component: "WexTooltip",
     foreground: "--popover-foreground",
     background: "--popover",
+    registryKey: "tooltip",
+  },
+
+  // ==========================================================================
+  // INPUT
+  // ==========================================================================
+  {
+    name: "Input Text",
+    component: "WexInput",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "input",
+  },
+  {
+    name: "Input Placeholder",
+    component: "WexInput (placeholder)",
+    foreground: "--muted-foreground",
+    background: "--background",
+    registryKey: "input",
+  },
+
+  // ==========================================================================
+  // DIALOG
+  // ==========================================================================
+  {
+    name: "Dialog Content Text",
+    component: "WexDialog",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "dialog",
+  },
+
+  // ==========================================================================
+  // POPOVER
+  // ==========================================================================
+  {
+    name: "Popover Content Text",
+    component: "WexPopover",
+    foreground: "--popover-foreground",
+    background: "--popover",
+    registryKey: "popover",
+  },
+
+  // ==========================================================================
+  // SHEET
+  // ==========================================================================
+  {
+    name: "Sheet Content Text",
+    component: "WexSheet",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "sheet",
+  },
+
+  // ==========================================================================
+  // DROPDOWN MENU
+  // ==========================================================================
+  {
+    name: "Dropdown Menu Item Text",
+    component: "WexDropdownMenu",
+    foreground: "--popover-foreground",
+    background: "--popover",
+    registryKey: "dropdown-menu",
+  },
+
+  // ==========================================================================
+  // CONTEXT MENU
+  // ==========================================================================
+  {
+    name: "Context Menu Item Text",
+    component: "WexContextMenu",
+    foreground: "--popover-foreground",
+    background: "--popover",
+    registryKey: "context-menu",
+  },
+
+  // ==========================================================================
+  // COMMAND
+  // ==========================================================================
+  {
+    name: "Command Item Text",
+    component: "WexCommand",
+    foreground: "--popover-foreground",
+    background: "--popover",
+    registryKey: "command",
+  },
+
+  // ==========================================================================
+  // NAVIGATION MENU
+  // ==========================================================================
+  {
+    name: "Navigation Menu Item Text",
+    component: "WexNavigationMenu",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "navigation-menu",
+  },
+
+  // ==========================================================================
+  // BREADCRUMB
+  // ==========================================================================
+  {
+    name: "Breadcrumb Link Text",
+    component: "WexBreadcrumb",
+    foreground: "--muted-foreground",
+    background: "--background",
+    registryKey: "breadcrumb",
+  },
+
+  // ==========================================================================
+  // LABEL
+  // ==========================================================================
+  {
+    name: "Label Text",
+    component: "WexLabel",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "label",
+  },
+
+  // ==========================================================================
+  // FORM / FIELD
+  // ==========================================================================
+  {
+    name: "Form Label Text",
+    component: "WexForm/WexField",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "form",
+  },
+  {
+    name: "Form Description Text",
+    component: "WexForm/WexField (description)",
+    foreground: "--muted-foreground",
+    background: "--background",
+    registryKey: "form",
+  },
+  {
+    name: "Field Label Text",
+    component: "WexField",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "field",
+  },
+  {
+    name: "Field Description Text",
+    component: "WexField (description)",
+    foreground: "--muted-foreground",
+    background: "--background",
+    registryKey: "field",
+  },
+
+  // ==========================================================================
+  // COLLAPSIBLE
+  // ==========================================================================
+  {
+    name: "Collapsible Trigger Text",
+    component: "WexCollapsible",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "collapsible",
+  },
+
+  // ==========================================================================
+  // SCROLL AREA
+  // ==========================================================================
+  {
+    name: "Scroll Area Content Text",
+    component: "WexScrollArea",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "scroll-area",
+  },
+
+  // ==========================================================================
+  // SEPARATOR
+  // ==========================================================================
+  {
+    name: "Separator on Background",
+    component: "WexSeparator",
+    foreground: "--border",
+    background: "--background",
+    registryKey: "separator",
+  },
+
+  // ==========================================================================
+  // RESIZABLE
+  // ==========================================================================
+  {
+    name: "Resizable Handle",
+    component: "WexResizable",
+    foreground: "--border",
+    background: "--background",
+    registryKey: "resizable",
+  },
+
+  // ==========================================================================
+  // ASPECT RATIO (typically contains images, but container text)
+  // ==========================================================================
+  {
+    name: "Aspect Ratio Content Text",
+    component: "WexAspectRatio",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "aspect-ratio",
+  },
+
+  // ==========================================================================
+  // ALERT DIALOG
+  // ==========================================================================
+  {
+    name: "Alert Dialog Content Text",
+    component: "WexAlertDialog",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "alert-dialog",
+  },
+
+  // ==========================================================================
+  // DATA TABLE
+  // ==========================================================================
+  {
+    name: "Data Table Cell Text",
+    component: "WexDataTable",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "data-table",
+  },
+  {
+    name: "Data Table Header Text",
+    component: "WexDataTable (header)",
+    foreground: "--muted-foreground",
+    background: "--muted",
+    registryKey: "data-table",
+  },
+
+  // ==========================================================================
+  // DATE PICKER
+  // ==========================================================================
+  {
+    name: "Date Picker Selected Date",
+    component: "WexDatePicker (selected)",
+    foreground: "--primary-foreground",
+    background: "--primary",
+    registryKey: "date-picker",
+  },
+
+  // ==========================================================================
+  // COMBOBOX
+  // ==========================================================================
+  {
+    name: "Combobox Trigger Text",
+    component: "WexCombobox",
+    foreground: "--foreground",
+    background: "--background",
+    registryKey: "combobox",
   },
 ];
 
