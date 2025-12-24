@@ -1,7 +1,10 @@
+import { CodeBlock } from "@/docs/components/CodeBlock";
+
 /**
  * Token Architecture Documentation Page
  * 
- * Explains the 4-layer token system used in the WEX Design System.
+ * Consolidated page explaining the 4-layer token system used in the WEX Design System.
+ * Merged from TokensPage.tsx and TokenArchitecturePage.tsx
  */
 export default function TokenArchitecturePage() {
   return (
@@ -9,7 +12,7 @@ export default function TokenArchitecturePage() {
       {/* Header */}
       <div className="space-y-4">
         <h1 className="font-display text-4xl font-bold tracking-tight">
-          Token Architecture
+          Design Tokens
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl">
           The WEX Design System uses a 4-layer token architecture to provide
@@ -20,7 +23,7 @@ export default function TokenArchitecturePage() {
 
       {/* Overview */}
       <section className="space-y-6">
-        <h2 className="font-display text-2xl font-semibold">Overview</h2>
+        <h2 className="font-display text-2xl font-semibold">Architecture Overview</h2>
         <p className="text-muted-foreground max-w-3xl">
           Our token system is designed to solve the "primary bleed" problem
           common in design systems—where a single <code className="bg-muted px-1.5 py-0.5 rounded text-sm">--primary</code> token
@@ -32,7 +35,7 @@ export default function TokenArchitecturePage() {
             layer={1}
             title="Primitives & Semantics"
             file="wex.tokens.css"
-            description="Raw palette values and semantic tokens. The source of truth."
+            description="Palette ramps (50-900) and semantic tokens that reference them."
             examples={["--wex-palette-blue-700", "--wex-primary", "--wex-text"]}
           />
           <LayerCard
@@ -57,6 +60,68 @@ export default function TokenArchitecturePage() {
             examples={["bg-primary", "bg-wex-button-primary-bg"]}
           />
         </div>
+      </section>
+
+      {/* Token Flow */}
+      <section className="space-y-6">
+        <h2 className="font-display text-2xl font-semibold">Token Flow</h2>
+        <p className="text-muted-foreground max-w-3xl">
+          Tokens cascade from primitive palette values through semantic tokens to component usage.
+          This layered approach ensures consistency while enabling granular theming.
+        </p>
+
+        <div className="rounded-lg border border-border bg-muted/50 p-6 font-mono text-sm">
+          <div className="space-y-3">
+            <p>
+              <span className="text-muted-foreground font-sans">1. Palette (primitives):</span>{" "}
+              <code className="text-primary">--wex-palette-blue-700: 208 100% 32%</code>
+            </p>
+            <p>
+              <span className="text-muted-foreground font-sans">2. Semantic (references palette):</span>{" "}
+              <code className="text-primary">--wex-primary: var(--wex-palette-blue-700)</code>
+            </p>
+            <p>
+              <span className="text-muted-foreground font-sans">3. Bridge (maps to shadcn):</span>{" "}
+              <code className="text-primary">--primary: var(--wex-primary)</code>
+            </p>
+            <p>
+              <span className="text-muted-foreground font-sans">4. Component (optional granular):</span>{" "}
+              <code className="text-primary">--wex-component-button-primary-bg: var(--wex-primary)</code>
+            </p>
+            <p>
+              <span className="text-muted-foreground font-sans">5. Tailwind utility:</span>{" "}
+              <code className="text-primary">bg-primary → hsl(var(--primary))</code>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Token Example */}
+      <section className="space-y-6">
+        <h2 className="font-display text-2xl font-semibold">Token Definition Example</h2>
+        <p className="text-muted-foreground max-w-3xl">
+          Here's how tokens are defined in <code className="bg-muted px-1 rounded">wex.tokens.css</code>.
+          Note how semantic tokens reference palette steps, not raw HSL values.
+        </p>
+        <CodeBlock
+          code={`:root {
+  /* Layer 1a: Palette primitives */
+  --wex-palette-blue-700: 208 100% 32%;
+  --wex-palette-blue-800: 208 100% 26%;
+  
+  /* Layer 1b: Semantic tokens (reference palette) */
+  --wex-primary: var(--wex-palette-blue-700);
+  --wex-primary-hover: var(--wex-palette-blue-800);
+  --wex-primary-contrast: 0 0% 100%;
+}
+
+.dark {
+  /* Dark mode uses lighter palette steps for contrast */
+  --wex-primary: var(--wex-palette-blue-500);
+  --wex-primary-hover: var(--wex-palette-blue-600);
+  --wex-primary-contrast: 216 10% 90%;
+}`}
+        />
       </section>
 
       {/* Layer 3 Deep Dive */}
@@ -194,6 +259,23 @@ export default function TokenArchitecturePage() {
         </div>
       </section>
 
+      {/* Future: Style Dictionary */}
+      <section className="space-y-6">
+        <h2 className="font-display text-2xl font-semibold">Future: Style Dictionary</h2>
+        <div className="bg-muted/30 border border-border rounded-lg p-6 space-y-4">
+          <p className="text-muted-foreground">
+            Currently, <code className="bg-muted px-1.5 py-0.5 rounded">wex.tokens.css</code> is
+            hand-authored. In a future phase, this file will become a generated
+            output from Style Dictionary, with the source of truth being JSON
+            token files.
+          </p>
+          <p className="text-muted-foreground">
+            The bridge file (<code className="bg-muted px-1.5 py-0.5 rounded">wex.shadcn-bridge.css</code>) 
+            will remain hand-authored, as semantic mapping decisions require human intent.
+          </p>
+        </div>
+      </section>
+
       {/* Why This Matters */}
       <section className="space-y-6">
         <h2 className="font-display text-2xl font-semibold">Why This Matters</h2>
@@ -322,4 +404,3 @@ function BenefitCard({ title, description }: BenefitCardProps) {
     </div>
   );
 }
-

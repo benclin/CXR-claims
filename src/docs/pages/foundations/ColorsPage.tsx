@@ -119,12 +119,17 @@ export default function ColorsPage() {
           </div>
         </Section>
 
-        {/* Brand Palette Section */}
+        {/* Semantic Tokens Section */}
         <Section
-          title="Brand Palette (Source of Truth)"
-          description="Core WEX brand colors defined in wex.tokens.css. These are the source tokens that power the design system."
+          title="Semantic Tokens (Source of Truth)"
+          description="Core WEX semantic tokens defined in wex.tokens.css. These reference palette steps for consistency."
         >
-          <div className="space-y-6">
+          <Guidance>
+            Semantic tokens reference palette steps (e.g., <code className="bg-muted px-1 rounded">var(--wex-palette-blue-700)</code>) 
+            rather than raw HSL values. This enables consistent theming across light and dark modes.
+          </Guidance>
+
+          <div className="space-y-6 mt-6">
             {/* Primary */}
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Primary</h3>
@@ -132,8 +137,8 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-primary"
                   name="Primary"
-                  value="208 100% 32%"
-                  valueDark="203 68% 47%"
+                  value="var(--wex-palette-blue-700)"
+                  valueDark="var(--wex-palette-blue-500)"
                   usage="Main brand color, primary actions"
                   contrastFgVar="--wex-primary-contrast"
                 />
@@ -148,8 +153,8 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-primary-hover"
                   name="Primary Hover"
-                  value="208 100% 26%"
-                  valueDark="201 73% 41%"
+                  value="var(--wex-palette-blue-800)"
+                  valueDark="var(--wex-palette-blue-600)"
                   usage="Hover state for primary actions"
                   contrastFgVar="--wex-primary-contrast"
                 />
@@ -163,7 +168,7 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-destructive"
                   name="Danger Background"
-                  value="350 62% 54%"
+                  value="var(--wex-palette-red-500)"
                   usage="Destructive actions, errors"
                   contrastFgVar="--wex-destructive-foreground"
                 />
@@ -177,7 +182,7 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-destructive-hover"
                   name="Danger Hover"
-                  value="350 62% 48%"
+                  value="var(--wex-palette-red-600)"
                   usage="Hover state for destructive actions"
                   contrastFgVar="--wex-destructive-foreground"
                 />
@@ -191,8 +196,8 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-success"
                   name="Success Background"
-                  value="142 76% 36%"
-                  valueDark="142 76% 40%"
+                  value="var(--wex-palette-green-600)"
+                  valueDark="var(--wex-palette-green-500)"
                   usage="Positive feedback, confirmations"
                   contrastFgVar="--wex-success-foreground"
                 />
@@ -206,8 +211,8 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-success-hover"
                   name="Success Hover"
-                  value="142 76% 30%"
-                  valueDark="142 76% 34%"
+                  value="var(--wex-palette-green-700)"
+                  valueDark="var(--wex-palette-green-600)"
                   usage="Hover state for success actions"
                   contrastFgVar="--wex-success-foreground"
                 />
@@ -221,8 +226,8 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-warning"
                   name="Warning Background"
-                  value="38 92% 50%"
-                  valueDark="38 92% 55%"
+                  value="var(--wex-palette-amber-500)"
+                  valueDark="var(--wex-palette-amber-400)"
                   usage="Caution states, attention needed"
                   contrastFgVar="--wex-warning-foreground"
                 />
@@ -236,8 +241,8 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-warning-hover"
                   name="Warning Hover"
-                  value="38 92% 44%"
-                  valueDark="38 92% 48%"
+                  value="var(--wex-palette-amber-600)"
+                  valueDark="var(--wex-palette-amber-500)"
                   usage="Hover state for warning actions"
                   contrastFgVar="--wex-warning-foreground"
                 />
@@ -251,8 +256,8 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-info"
                   name="Info Background"
-                  value="198 87% 47%"
-                  valueDark="198 87% 55%"
+                  value="var(--wex-palette-cyan-500)"
+                  valueDark="var(--wex-palette-cyan-400)"
                   usage="Informational messages"
                   contrastFgVar="--wex-info-foreground"
                 />
@@ -266,8 +271,8 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-info-hover"
                   name="Info Hover"
-                  value="198 87% 40%"
-                  valueDark="198 87% 48%"
+                  value="var(--wex-palette-cyan-600)"
+                  valueDark="var(--wex-palette-cyan-500)"
                   usage="Hover state for info actions"
                   contrastFgVar="--wex-info-foreground"
                 />
@@ -281,24 +286,24 @@ export default function ColorsPage() {
                 <TokenSwatchWithContrast
                   token="--wex-content-bg"
                   name="Content Background"
-                  value="0 0% 100%"
-                  valueDark="210 31% 13%"
+                  value="var(--wex-palette-white)"
+                  valueDark="var(--wex-palette-slate-900)"
                   usage="Page and card backgrounds"
                   contrastFgVar="--wex-text"
                 />
                 <TokenSwatch
                   token="--wex-content-border"
                   name="Content Border"
-                  value="216 10% 90%"
-                  valueDark="206 32% 21%"
+                  value="var(--wex-palette-slate-200)"
+                  valueDark="var(--wex-palette-slate-700)"
                   usage="Borders, secondary surfaces"
                   contrastFgVar="--wex-text"
                 />
                 <TokenSwatchWithContrast
                   token="--wex-surface-subtle"
                   name="Surface Subtle"
-                  value="216 10% 96%"
-                  valueDark="206 28% 18%"
+                  value="var(--wex-palette-slate-100)"
+                  valueDark="var(--wex-palette-slate-800)"
                   usage="Subtle backgrounds, accent, muted"
                   contrastFgVar="--wex-text"
                 />
@@ -312,16 +317,16 @@ export default function ColorsPage() {
                 <TokenSwatch
                   token="--wex-text"
                   name="Text"
-                  value="206 32% 21%"
-                  valueDark="0 0% 100%"
+                  value="var(--wex-palette-slate-800)"
+                  valueDark="var(--wex-palette-white)"
                   usage="Primary text color"
                   contrastBgVar="--wex-content-bg"
                 />
                 <TokenSwatch
                   token="--wex-text-muted"
                   name="Text Muted"
-                  value="208 14% 37%"
-                  valueDark="216 10% 90%"
+                  value="var(--wex-palette-slate-600)"
+                  valueDark="var(--wex-palette-slate-200)"
                   usage="Secondary/muted text"
                   contrastBgVar="--wex-content-bg"
                 />

@@ -5,16 +5,10 @@ import type { FoundationRegistryEntry } from "./types";
  */
 export const foundationRegistry: FoundationRegistryEntry[] = [
   {
-    name: "Tokens",
-    route: "/foundations/tokens",
-    importPath: "@/docs/pages/foundations/TokensPage",
-    description: "Design token reference and architecture",
-  },
-  {
-    name: "Token Architecture",
+    name: "Design Tokens",
     route: "/foundations/token-architecture",
     importPath: "@/docs/pages/foundations/TokenArchitecturePage",
-    description: "4-layer token system and component slots",
+    description: "4-layer token architecture and component slots",
   },
   {
     name: "Colors",

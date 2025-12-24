@@ -95,7 +95,7 @@ export default function OverviewPage() {
           </WexCard>
         </Link>
 
-        <Link to="/foundations/tokens" className="group">
+        <Link to="/foundations/token-architecture" className="group">
           <WexCard className={`h-full p-4 ${glassCard}`}>
             {/* Subtle Shine Effect */}
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 group-hover/card:translate-x-full" />
@@ -215,7 +215,7 @@ export default function OverviewPage() {
           <div className="space-y-4">
             <h4 className="text-sm font-bold uppercase tracking-widest text-foreground">Foundations</h4>
             <ul className="space-y-2">
-              <li><Link to="/foundations/tokens" className="text-sm text-muted-foreground transition-colors hover:text-brand-red">Design Tokens</Link></li>
+              <li><Link to="/foundations/token-architecture" className="text-sm text-muted-foreground transition-colors hover:text-brand-red">Design Tokens</Link></li>
               <li><Link to="/foundations/colors" className="text-sm text-muted-foreground transition-colors hover:text-brand-red">Color Palette</Link></li>
               <li><Link to="/foundations/typography" className="text-sm text-muted-foreground transition-colors hover:text-brand-red">Typography</Link></li>
             </ul>
