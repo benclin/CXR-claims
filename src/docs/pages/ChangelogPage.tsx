@@ -16,6 +16,33 @@ export default function ChangelogPage() {
 
       <div className="space-y-8">
         <ChangelogEntry
+          version="0.23.0"
+          date="December 29, 2025"
+          title="Float Label Component & Extended Test Coverage"
+          changes={[
+            "Components: Added WexFloatLabel - floating label input matching PrimeNG 'in' variant",
+            "Components: Float label supports leftIcon and rightIcon props for visual context",
+            "Components: Float label includes all sizes (sm, md, lg), disabled, and invalid states",
+            "Tokens: Added floatlabel tokens (label-fg, label-focus-fg, label-filled-fg, label-bg)",
+            "Testing: Expanded 8 under-tested components from 1-2 tests to 10-18 tests each",
+            "Testing: WexSidebar expanded from 1 to 18 tests (structure, menus, groups, trigger)",
+            "Testing: WexInputOTP expanded from 1 to 15 tests (rendering, input, controlled, disabled)",
+            "Testing: WexSonner expanded from 1 to 14 tests (toast types, dismissal, promise)",
+            "Testing: WexForm expanded from 2 to 15 tests (validation, submission, field types)",
+            "Testing: WexContextMenu expanded from 1 to 12 tests (interaction, variants, sub-menus)",
+            "Testing: WexBreadcrumb expanded from 2 to 13 tests (links, separators, ellipsis)",
+            "Testing: WexPagination expanded from 2 to 12 tests (navigation, active state)",
+            "Testing: WexHoverCard expanded from 2 to 11 tests (interactions, trigger variations)",
+            "Testing: Added 31 unit tests for WexFloatLabel (rendering, icons, accessibility)",
+            "Testing: Total tests increased to 877 with 97% pass rate",
+            "A11y: Float label passes all accessibility tests (4 examples tested in light/dark)",
+            "Infra: Added JSDOM mocks for elementFromPoint, hasPointerCapture, setPointerCapture",
+            "Docs: Added Float Label documentation page with icon examples",
+            "Docs: Cross-linked Float Label from Input page",
+          ]}
+        />
+
+        <ChangelogEntry
           version="0.22.0"
           date="December 29, 2025"
           title="Comprehensive Unit Test Suite"
