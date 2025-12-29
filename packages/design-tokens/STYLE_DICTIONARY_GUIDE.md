@@ -1,6 +1,8 @@
-# WEX Design Tokens - Package Creation Guide
+# Style Dictionary Build Guide
 
-This guide documents the complete process for creating and publishing the `@wex/design-tokens` NPM package from the WEX Design System.
+This guide documents how to set up Style Dictionary for multi-platform token generation. Use this when you need to output tokens for platforms beyond web (iOS, Android, etc.) or want a programmatic token build system.
+
+> **Note:** The current `@wex/design-tokens` package uses pre-built CSS files. This guide describes an alternative approach using Style Dictionary for more advanced use cases.
 
 ---
 
