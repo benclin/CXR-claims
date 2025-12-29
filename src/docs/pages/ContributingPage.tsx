@@ -207,23 +207,67 @@ export const WexComponent = Object.assign(BaseComponent, {
       <Section title="Testing Requirements" className="mb-12">
         <div className="space-y-4">
           <p className="text-muted-foreground">
-            Create a unit test file at{" "}
-            <code className="px-1.5 py-0.5 bg-muted rounded text-xs">tests/components/wex-&#123;name&#125;.test.tsx</code>:
+            Create a comprehensive unit test file at{" "}
+            <code className="px-1.5 py-0.5 bg-muted rounded text-xs">tests/components/wex-&#123;name&#125;.test.tsx</code>.
+            Use the template at <code className="px-1.5 py-0.5 bg-muted rounded text-xs">tests/components/_template.test.tsx</code> as a starting point.
           </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 my-4">
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">Rendering</p>
+              <p className="text-xs text-muted-foreground">Mount, props, children</p>
+            </div>
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">Interactions</p>
+              <p className="text-xs text-muted-foreground">Click, toggle, focus</p>
+            </div>
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">Keyboard</p>
+              <p className="text-xs text-muted-foreground">Arrow, Tab, Enter, Esc</p>
+            </div>
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">States</p>
+              <p className="text-xs text-muted-foreground">Disabled, loading, controlled</p>
+            </div>
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">Accessibility</p>
+              <p className="text-xs text-muted-foreground">ARIA roles, labels</p>
+            </div>
+            <div className="p-3 rounded-lg border border-border bg-muted/30">
+              <p className="text-sm font-medium">Edge Cases</p>
+              <p className="text-xs text-muted-foreground">Rapid actions, limits</p>
+            </div>
+          </div>
+
           <CodeBlock
             code={`import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, it, expect, vi } from "vitest";
 import { WexComponent } from "@/components/wex";
 
 describe("WexComponent", () => {
-  it("renders without crashing", () => {
-    render(<WexComponent>Content</WexComponent>);
-    expect(screen.getByText("Content")).toBeInTheDocument();
+  describe("Rendering", () => {
+    it("renders without crashing", () => {
+      render(<WexComponent>Content</WexComponent>);
+      expect(screen.getByText("Content")).toBeInTheDocument();
+    });
   });
 
-  it("accepts className prop", () => {
-    render(<WexComponent className="custom">Content</WexComponent>);
-    expect(screen.getByText("Content")).toHaveClass("custom");
+  describe("Interactions", () => {
+    it("calls onClick handler", async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+      render(<WexComponent onClick={handleClick}>Click</WexComponent>);
+      await user.click(screen.getByText("Click"));
+      expect(handleClick).toHaveBeenCalled();
+    });
+  });
+
+  describe("Accessibility", () => {
+    it("has correct role", () => {
+      render(<WexComponent>Content</WexComponent>);
+      expect(screen.getByRole("button")).toBeInTheDocument();
+    });
   });
 });`}
             language="tsx"

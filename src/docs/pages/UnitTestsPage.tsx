@@ -125,39 +125,59 @@ function CategoryCard({
   );
 }
 
+function getTestDepthLabel(count: number): { label: string; color: string } {
+  if (count >= 30) return { label: "Comprehensive", color: "bg-green-500/20 text-green-700 dark:text-green-400" };
+  if (count >= 15) return { label: "Extended", color: "bg-blue-500/20 text-blue-700 dark:text-blue-400" };
+  if (count >= 5) return { label: "Standard", color: "bg-muted text-muted-foreground" };
+  return { label: "Basic", color: "bg-muted/50 text-muted-foreground" };
+}
+
 function FilesList({ files, categoryKey }: { files: CategoryData["files"]; categoryKey: keyof typeof categoryConfig }) {
   const config = categoryConfig[categoryKey];
   const sorted = [...files].sort((a, b) => {
-    // Failed first, then by name
+    // Failed first, then by test count (descending), then by name
     if (a.status !== b.status) {
       return a.status === "failed" ? -1 : 1;
+    }
+    if (a.passed !== b.passed) {
+      return b.passed - a.passed; // Higher test count first
     }
     return a.name.localeCompare(b.name);
   });
 
   return (
     <div className="grid gap-2">
-      {sorted.map((file) => (
-        <div 
-          key={file.path} 
-          className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card hover:bg-muted/30 transition-colors"
-        >
-          <div className={`p-1.5 rounded ${config.bgColor}`}>
-            <FileText className={`h-3.5 w-3.5 ${config.color}`} />
+      {sorted.map((file) => {
+        const depth = getTestDepthLabel(file.passed);
+        return (
+          <div 
+            key={file.path} 
+            className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card hover:bg-muted/30 transition-colors"
+          >
+            <div className={`p-1.5 rounded ${config.bgColor}`}>
+              <FileText className={`h-3.5 w-3.5 ${config.color}`} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <p className="font-mono text-sm truncate text-foreground">{file.name}</p>
+                {file.passed >= 15 && (
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${depth.color}`}>
+                    {depth.label}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {file.passed} test{file.passed !== 1 ? 's' : ''} • {formatDuration(file.duration)}
+              </p>
+            </div>
+            {file.status === "passed" ? (
+              <CheckCircle className="h-4 w-4 text-success shrink-0" />
+            ) : (
+              <XCircle className="h-4 w-4 text-destructive shrink-0" />
+            )}
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-mono text-sm truncate text-foreground">{file.name}</p>
-            <p className="text-xs text-muted-foreground">
-              {file.passed} test{file.passed !== 1 ? 's' : ''} • {formatDuration(file.duration)}
-            </p>
-          </div>
-          {file.status === "passed" ? (
-            <CheckCircle className="h-4 w-4 text-success shrink-0" />
-          ) : (
-            <XCircle className="h-4 w-4 text-destructive shrink-0" />
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -218,17 +238,51 @@ export default function UnitTestsPage() {
       <Section title="Test Coverage Notes" className="mb-16">
         <WexAlert>
           <Info className="h-4 w-4" />
-          <WexAlert.Title>Current Test Scope</WexAlert.Title>
+          <WexAlert.Title>Comprehensive Test Coverage</WexAlert.Title>
           <WexAlert.Description>
-            These tests focus on <strong>basic rendering and prop forwarding</strong> for each component. 
-            They verify that components mount without errors, accept expected props, and render accessible elements. 
-            More comprehensive tests covering interactions, edge cases, and accessibility compliance are planned for future iterations.
+            These tests provide <strong>comprehensive coverage</strong> including rendering, prop forwarding, 
+            user interactions, keyboard navigation, state management, form integration, and accessibility attributes. 
+            Core interactive components (Button, Input, Checkbox, Switch, Dialog, Sheet, Tabs, Accordion, Select, 
+            Combobox, Dropdown, Tooltip, Popover, Radio Group, Slider) have extensive test suites covering 
+            click handlers, keyboard events, controlled/uncontrolled modes, disabled states, and ARIA compliance.
           </WexAlert.Description>
         </WexAlert>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">Interactions</p>
+            <p className="text-xs text-muted-foreground">Click, toggle, open/close behaviors</p>
+          </div>
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">Keyboard Navigation</p>
+            <p className="text-xs text-muted-foreground">Arrow keys, Tab, Enter, Escape</p>
+          </div>
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">State Management</p>
+            <p className="text-xs text-muted-foreground">Controlled/uncontrolled, callbacks</p>
+          </div>
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">Form Integration</p>
+            <p className="text-xs text-muted-foreground">Name, value, required attributes</p>
+          </div>
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">Accessibility</p>
+            <p className="text-xs text-muted-foreground">ARIA roles, labels, states</p>
+          </div>
+          <div className="p-4 rounded-lg border border-border bg-muted/30">
+            <p className="text-sm font-medium mb-1">Edge Cases</p>
+            <p className="text-xs text-muted-foreground">Rapid actions, empty states, limits</p>
+          </div>
+        </div>
       </Section>
 
       {/* Category Breakdown */}
       <Section title="Test Categories" className="mb-16">
+        <p className="text-muted-foreground mb-6">
+          Tests are organized into three categories. Component tests cover rendering, interactions, 
+          keyboard navigation, and accessibility. Utility tests validate helper functions. Hook tests 
+          verify custom React hooks.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CategoryCard 
             title="Components" 
@@ -250,19 +304,25 @@ export default function UnitTestsPage() {
 
       {/* Test Files */}
       <Section title="Test Files" className="mb-16">
+        <p className="text-muted-foreground mb-6">
+          Individual test files sorted by coverage depth. Files with <span className="px-1.5 py-0.5 rounded text-xs bg-green-500/20 text-green-700 dark:text-green-400 font-medium">Comprehensive</span> coverage 
+          (30+ tests) include interactions, keyboard navigation, state management, and accessibility tests.
+          <span className="px-1.5 py-0.5 rounded text-xs bg-blue-500/20 text-blue-700 dark:text-blue-400 font-medium ml-1">Extended</span> coverage 
+          (15+ tests) includes most test categories.
+        </p>
         <WexTabs defaultValue="components" className="w-full">
           <WexTabs.List className="mb-6">
             <WexTabs.Trigger value="components" className="gap-2">
               <Layers className="h-4 w-4 text-blue-500" />
-              Components ({data.categories.components.files.length})
+              Components ({data.categories.components.total} tests)
             </WexTabs.Trigger>
             <WexTabs.Trigger value="utils" className="gap-2">
               <Wrench className="h-4 w-4 text-amber-500" />
-              Utilities ({data.categories.utils.files.length})
+              Utilities ({data.categories.utils.total} tests)
             </WexTabs.Trigger>
             <WexTabs.Trigger value="hooks" className="gap-2">
               <RefreshCw className="h-4 w-4 text-violet-500" />
-              Hooks ({data.categories.hooks.files.length})
+              Hooks ({data.categories.hooks.total} tests)
             </WexTabs.Trigger>
             {data.failures.length > 0 && (
               <WexTabs.Trigger value="failures" className="text-destructive gap-2">

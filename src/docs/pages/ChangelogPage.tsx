@@ -16,6 +16,37 @@ export default function ChangelogPage() {
 
       <div className="space-y-8">
         <ChangelogEntry
+          version="0.22.0"
+          date="December 29, 2025"
+          title="Comprehensive Unit Test Suite"
+          changes={[
+            "Testing: Expanded unit tests from 257 to 745 tests (189% increase)",
+            "Testing: 719 tests passing with 97% pass rate",
+            "Testing: Added interaction tests - click handlers, toggle behaviors, open/close",
+            "Testing: Added keyboard navigation tests - Arrow keys, Tab, Enter, Escape",
+            "Testing: Added state management tests - controlled/uncontrolled modes, callbacks",
+            "Testing: Added form integration tests - name, value, required attributes",
+            "Testing: Added accessibility tests - ARIA roles, labels, states",
+            "Testing: Added edge case tests - rapid actions, empty states, limits",
+            "Components: WexButton tests expanded from 4 to 47 tests",
+            "Components: WexInput tests expanded from 3 to 54 tests",
+            "Components: WexCheckbox tests expanded from 3 to 29 tests",
+            "Components: WexSwitch tests expanded from 3 to 29 tests",
+            "Components: WexDialog tests expanded from 3 to 23 tests",
+            "Components: WexSheet tests expanded from 3 to 24 tests",
+            "Components: WexTabs tests expanded from 4 to 33 tests",
+            "Components: WexAccordion tests expanded from 3 to 31 tests",
+            "Components: WexSelect tests expanded from 4 to 33 tests",
+            "Components: WexCombobox tests expanded from 4 to 35 tests",
+            "Components: WexDropdownMenu tests expanded from 2 to 32 tests",
+            "Components: WexRadioGroup tests expanded from 4 to 35 tests",
+            "Components: WexSlider tests expanded from 5 to 42 tests",
+            "Dashboard: Updated Unit Tests page with comprehensive coverage notes",
+            "Dashboard: Added test category cards showing coverage areas",
+          ]}
+        />
+
+        <ChangelogEntry
           version="0.21.0"
           date="December 23, 2025"
           title="100% Accessibility Pass Rate"
