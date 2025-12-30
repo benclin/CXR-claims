@@ -251,8 +251,8 @@ export default function TabsPage() {
                 </WexTabs.Content>
               </WexTabs>
               <div className="flex gap-2">
-                <WexButton intent="outline" size="sm" onClick={() => setActiveTab("home")}>Go to Home</WexButton>
-                <WexButton intent="outline" size="sm" onClick={() => setActiveTab("dashboard")}>Go to Dashboard</WexButton>
+                <WexButton variant="outline" size="sm" onClick={() => setActiveTab("home")}>Go to Home</WexButton>
+                <WexButton variant="outline" size="sm" onClick={() => setActiveTab("dashboard")}>Go to Dashboard</WexButton>
               </div>
             </div>
           </ExampleCard>

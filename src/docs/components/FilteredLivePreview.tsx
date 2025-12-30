@@ -909,8 +909,8 @@ function InputBorderPreview() {
       {/* Outline buttons */}
       <PreviewSection label="Outline Buttons (border-input)">
         <div className="flex flex-wrap gap-2">
-          <WexButton intent="outline" size="sm">Outline Button</WexButton>
-          <WexButton intent="outline" size="sm" disabled>Disabled</WexButton>
+          <WexButton variant="outline" size="sm">Outline Button</WexButton>
+          <WexButton variant="outline" size="sm" disabled>Disabled</WexButton>
         </div>
       </PreviewSection>
 
@@ -1538,7 +1538,7 @@ function PrimaryPreviewFullWidth() {
           <div className="flex flex-wrap gap-2">
             <WexButton>Primary</WexButton>
             <WexButton disabled>Disabled</WexButton>
-            <WexButton intent="ghost">Ghost Style</WexButton>
+            <WexButton variant="ghost">Ghost Style</WexButton>
           </div>
         </PreviewCard>
 

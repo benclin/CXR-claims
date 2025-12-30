@@ -51,7 +51,7 @@ export default function DialogPage() {
         <ExampleCard>
           <WexDialog>
             <WexDialog.Trigger asChild>
-              <WexButton intent="outline">Open Dialog</WexButton>
+              <WexButton variant="outline">Open Dialog</WexButton>
             </WexDialog.Trigger>
             <WexDialog.Content>
               <WexDialog.Header>
@@ -80,7 +80,7 @@ export default function DialogPage() {
           {(["sm", "md", "lg", "xl", "full"] as const).map((size) => (
             <WexDialog key={size}>
               <WexDialog.Trigger asChild>
-                <WexButton intent="outline" className="capitalize">{size}</WexButton>
+                <WexButton variant="outline" className="capitalize">{size}</WexButton>
               </WexDialog.Trigger>
               <WexDialog.Content size={size}>
                 <WexDialog.Header>
@@ -116,7 +116,7 @@ export default function DialogPage() {
           {(["center", "top", "bottom", "left", "right"] as const).map((position) => (
             <WexDialog key={position}>
               <WexDialog.Trigger asChild>
-                <WexButton intent="outline" className="capitalize">{position}</WexButton>
+                <WexButton variant="outline" className="capitalize">{position}</WexButton>
               </WexDialog.Trigger>
               <WexDialog.Content position={position} size="sm">
                 <WexDialog.Header>
@@ -143,7 +143,7 @@ export default function DialogPage() {
         <ExampleCard>
           <WexDialog>
             <WexDialog.Trigger asChild>
-              <WexButton intent="outline">Maximizable Dialog</WexButton>
+              <WexButton variant="outline">Maximizable Dialog</WexButton>
             </WexDialog.Trigger>
             <WexDialog.Content maximizable size="md">
               <WexDialog.Header>
@@ -175,7 +175,7 @@ export default function DialogPage() {
         <ExampleCard>
           <WexDialog>
             <WexDialog.Trigger asChild>
-              <WexButton intent="outline">Edit Profile</WexButton>
+              <WexButton variant="outline">Edit Profile</WexButton>
             </WexDialog.Trigger>
             <WexDialog.Content size="md">
               <WexDialog.Header>
@@ -196,7 +196,7 @@ export default function DialogPage() {
               </div>
               <WexDialog.Footer>
                 <WexDialog.Close asChild>
-                  <WexButton intent="outline">Cancel</WexButton>
+                  <WexButton variant="outline">Cancel</WexButton>
                 </WexDialog.Close>
                 <WexButton>Save changes</WexButton>
               </WexDialog.Footer>
@@ -211,7 +211,7 @@ export default function DialogPage() {
       <Section title="Controlled" description="Programmatically control open state.">
         <ExampleCard>
           <div className="flex gap-2">
-            <WexButton intent="outline" onClick={() => setOpen(true)}>
+            <WexButton variant="outline" onClick={() => setOpen(true)}>
               Open via State
             </WexButton>
             <WexDialog open={open} onOpenChange={setOpen}>

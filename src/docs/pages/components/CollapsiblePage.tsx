@@ -44,7 +44,7 @@ export default function CollapsiblePage() {
                 @radix-ui/primitives
               </h4>
               <WexCollapsible.Trigger asChild>
-                <WexButton intent="ghost" size="sm" className="w-9 p-0">
+                <WexButton variant="ghost" size="sm" className="w-9 p-0">
                   <ChevronsUpDown className="h-4 w-4" />
                   <span className="sr-only">Toggle</span>
                 </WexButton>
@@ -101,7 +101,7 @@ const [isOpen, setIsOpen] = useState(false);
   <div className="flex items-center justify-between">
     <h4>Title</h4>
     <WexCollapsible.Trigger asChild>
-      <WexButton intent="ghost" size="sm">
+      <WexButton variant="ghost" size="sm">
         <ChevronsUpDown className="h-4 w-4" />
       </WexButton>
     </WexCollapsible.Trigger>

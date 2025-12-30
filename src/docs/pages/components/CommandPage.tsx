@@ -106,7 +106,7 @@ export default function CommandPage() {
               <span className="text-xs">⌘</span>K
             </kbd>
           </p>
-          <WexButton intent="outline" onClick={() => setOpen(true)}>
+          <WexButton variant="outline" onClick={() => setOpen(true)}>
             Open Command Palette
           </WexButton>
           <WexCommand.Dialog open={open} onOpenChange={setOpen}>

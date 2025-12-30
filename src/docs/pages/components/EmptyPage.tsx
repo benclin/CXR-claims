@@ -80,7 +80,7 @@ export default function EmptyPage() {
                 </WexEmpty.Description>
               </WexEmpty.Header>
               <WexEmpty.Content>
-                <WexButton intent="outline">Go Back</WexButton>
+                <WexButton variant="outline">Go Back</WexButton>
               </WexEmpty.Content>
             </WexEmpty>
           </ExampleCard>

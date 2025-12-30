@@ -50,7 +50,7 @@ export default function DropdownMenuPage() {
         <ExampleCard>
           <WexDropdownMenu>
             <WexDropdownMenu.Trigger asChild>
-              <WexButton intent="outline">Open Menu</WexButton>
+              <WexButton variant="outline">Open Menu</WexButton>
             </WexDropdownMenu.Trigger>
             <WexDropdownMenu.Content>
               <WexDropdownMenu.Label>My Account</WexDropdownMenu.Label>
@@ -74,7 +74,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Keyboard Shortcuts" description="Show keyboard shortcuts for actions.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">Edit Menu</WexButton>
+                <WexButton variant="outline">Edit Menu</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Label>Edit</WexDropdownMenu.Label>
@@ -107,7 +107,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Submenus" description="Nested menu items.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">File</WexButton>
+                <WexButton variant="outline">File</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Group>
@@ -142,7 +142,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Checkboxes" description="Toggle options on/off.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">View Options</WexButton>
+                <WexButton variant="outline">View Options</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Label>Appearance</WexDropdownMenu.Label>
@@ -170,7 +170,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Radio Items" description="Select one option from a group.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">Position: {position}</WexButton>
+                <WexButton variant="outline">Position: {position}</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Label>Panel Position</WexDropdownMenu.Label>
@@ -188,7 +188,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Disabled Items" description="Some options unavailable.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">Actions</WexButton>
+                <WexButton variant="outline">Actions</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Item>View Details</WexDropdownMenu.Item>
@@ -208,7 +208,7 @@ export default function DropdownMenuPage() {
           <ExampleCard title="With Groups" description="Organized sections.">
             <WexDropdownMenu>
               <WexDropdownMenu.Trigger asChild>
-                <WexButton intent="outline">Account</WexButton>
+                <WexButton variant="outline">Account</WexButton>
               </WexDropdownMenu.Trigger>
               <WexDropdownMenu.Content className="w-56">
                 <WexDropdownMenu.Label>john@example.com</WexDropdownMenu.Label>

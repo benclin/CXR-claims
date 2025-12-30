@@ -44,7 +44,7 @@ export default function SheetPage() {
         <ExampleCard>
           <WexSheet>
             <WexSheet.Trigger asChild>
-              <WexButton intent="outline">Open Sheet</WexButton>
+              <WexButton variant="outline">Open Sheet</WexButton>
             </WexSheet.Trigger>
             <WexSheet.Content>
               <WexSheet.Header>
@@ -71,7 +71,7 @@ export default function SheetPage() {
           {(["sm", "md", "lg", "xl", "full"] as const).map((size) => (
             <WexSheet key={size}>
               <WexSheet.Trigger asChild>
-                <WexButton intent="outline" className="capitalize">{size}</WexButton>
+                <WexButton variant="outline" className="capitalize">{size}</WexButton>
               </WexSheet.Trigger>
               <WexSheet.Content size={size}>
                 <WexSheet.Header>
@@ -107,7 +107,7 @@ export default function SheetPage() {
           {(["top", "right", "bottom", "left"] as const).map((side) => (
             <WexSheet key={side}>
               <WexSheet.Trigger asChild>
-                <WexButton intent="outline" className="capitalize">{side}</WexButton>
+                <WexButton variant="outline" className="capitalize">{side}</WexButton>
               </WexSheet.Trigger>
               <WexSheet.Content side={side}>
                 <WexSheet.Header>
@@ -134,7 +134,7 @@ export default function SheetPage() {
         <ExampleCard>
           <WexSheet>
             <WexSheet.Trigger asChild>
-              <WexButton intent="outline">Open Menu</WexButton>
+              <WexButton variant="outline">Open Menu</WexButton>
             </WexSheet.Trigger>
             <WexSheet.Content side="left" size="sm">
               <WexSheet.Header>
@@ -166,7 +166,7 @@ export default function SheetPage() {
         <ExampleCard>
           <WexSheet>
             <WexSheet.Trigger asChild>
-              <WexButton intent="outline">Edit Profile</WexButton>
+              <WexButton variant="outline">Edit Profile</WexButton>
             </WexSheet.Trigger>
             <WexSheet.Content size="md">
               <WexSheet.Header>
@@ -187,7 +187,7 @@ export default function SheetPage() {
               </div>
               <WexSheet.Footer>
                 <WexSheet.Close asChild>
-                  <WexButton intent="outline">Cancel</WexButton>
+                  <WexButton variant="outline">Cancel</WexButton>
                 </WexSheet.Close>
                 <WexButton>Save changes</WexButton>
               </WexSheet.Footer>
@@ -202,7 +202,7 @@ export default function SheetPage() {
       <Section title="Controlled" description="Programmatically control open state.">
         <ExampleCard>
           <div className="flex gap-2">
-            <WexButton intent="outline" onClick={() => setOpen(true)}>
+            <WexButton variant="outline" onClick={() => setOpen(true)}>
               Open via State
             </WexButton>
             <WexSheet open={open} onOpenChange={setOpen}>

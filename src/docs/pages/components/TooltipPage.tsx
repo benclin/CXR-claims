@@ -41,7 +41,7 @@ export default function TooltipPage() {
           <WexTooltip.Provider>
             <WexTooltip>
               <WexTooltip.Trigger asChild>
-                <WexButton intent="outline">Hover me</WexButton>
+                <WexButton variant="outline">Hover me</WexButton>
               </WexTooltip.Trigger>
               <WexTooltip.Content>
                 <p>This is a tooltip</p>
@@ -64,7 +64,7 @@ export default function TooltipPage() {
             <div className="flex gap-4">
               <WexTooltip>
                 <WexTooltip.Trigger asChild>
-                  <WexButton intent="outline" size="sm">Default (700ms)</WexButton>
+                  <WexButton variant="outline" size="sm">Default (700ms)</WexButton>
                 </WexTooltip.Trigger>
                 <WexTooltip.Content>
                   <p>Standard delay</p>
@@ -73,7 +73,7 @@ export default function TooltipPage() {
 
               <WexTooltip delayDuration={0}>
                 <WexTooltip.Trigger asChild>
-                  <WexButton intent="outline" size="sm">Instant (0ms)</WexButton>
+                  <WexButton variant="outline" size="sm">Instant (0ms)</WexButton>
                 </WexTooltip.Trigger>
                 <WexTooltip.Content>
                   <p>No delay!</p>
@@ -82,7 +82,7 @@ export default function TooltipPage() {
 
               <WexTooltip delayDuration={300}>
                 <WexTooltip.Trigger asChild>
-                  <WexButton intent="outline" size="sm">Quick (300ms)</WexButton>
+                  <WexButton variant="outline" size="sm">Quick (300ms)</WexButton>
                 </WexTooltip.Trigger>
                 <WexTooltip.Content>
                   <p>Quick delay</p>
@@ -91,7 +91,7 @@ export default function TooltipPage() {
 
               <WexTooltip delayDuration={1500}>
                 <WexTooltip.Trigger asChild>
-                  <WexButton intent="outline" size="sm">Slow (1500ms)</WexButton>
+                  <WexButton variant="outline" size="sm">Slow (1500ms)</WexButton>
                 </WexTooltip.Trigger>
                 <WexTooltip.Content>
                   <p>Longer delay</p>
@@ -116,7 +116,7 @@ export default function TooltipPage() {
               {(["top", "right", "bottom", "left"] as const).map((side) => (
                 <WexTooltip key={side}>
                   <WexTooltip.Trigger asChild>
-                    <WexButton intent="outline" size="sm" className="capitalize">
+                    <WexButton variant="outline" size="sm" className="capitalize">
                       {side}
                     </WexButton>
                   </WexTooltip.Trigger>
@@ -140,7 +140,7 @@ export default function TooltipPage() {
               <div className="flex gap-2">
                 <WexTooltip delayDuration={0}>
                   <WexTooltip.Trigger asChild>
-                    <WexButton intent="ghost" size="icon">
+                    <WexButton variant="ghost" size="icon">
                       <span className="sr-only">Settings</span>
                       <Settings className="h-4 w-4" />
                     </WexButton>
@@ -150,7 +150,7 @@ export default function TooltipPage() {
 
                 <WexTooltip delayDuration={0}>
                   <WexTooltip.Trigger asChild>
-                    <WexButton intent="ghost" size="icon">
+                    <WexButton variant="ghost" size="icon">
                       <span className="sr-only">Information</span>
                       <Info className="h-4 w-4" />
                     </WexButton>
@@ -160,7 +160,7 @@ export default function TooltipPage() {
 
                 <WexTooltip delayDuration={0}>
                   <WexTooltip.Trigger asChild>
-                    <WexButton intent="ghost" size="icon">
+                    <WexButton variant="ghost" size="icon">
                       <span className="sr-only">Help</span>
                       <HelpCircle className="h-4 w-4" />
                     </WexButton>

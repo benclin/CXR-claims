@@ -31,9 +31,9 @@ export default function ButtonGroupPage() {
       <Section title="Overview">
         <ExampleCard>
           <WexButtonGroup>
-            <WexButton intent="outline">Left</WexButton>
-            <WexButton intent="outline">Center</WexButton>
-            <WexButton intent="outline">Right</WexButton>
+            <WexButton variant="outline">Left</WexButton>
+            <WexButton variant="outline">Center</WexButton>
+            <WexButton variant="outline">Right</WexButton>
           </WexButtonGroup>
         </ExampleCard>
       </Section>
@@ -42,25 +42,25 @@ export default function ButtonGroupPage() {
         <div className="space-y-6">
           <ExampleCard title="Horizontal" description="Default horizontal layout.">
             <WexButtonGroup orientation="horizontal">
-              <WexButton intent="outline">One</WexButton>
-              <WexButton intent="outline">Two</WexButton>
-              <WexButton intent="outline">Three</WexButton>
+              <WexButton variant="outline">One</WexButton>
+              <WexButton variant="outline">Two</WexButton>
+              <WexButton variant="outline">Three</WexButton>
             </WexButtonGroup>
           </ExampleCard>
 
           <ExampleCard title="Vertical" description="Stacked vertical layout.">
             <WexButtonGroup orientation="vertical">
-              <WexButton intent="outline">First</WexButton>
-              <WexButton intent="outline">Second</WexButton>
-              <WexButton intent="outline">Third</WexButton>
+              <WexButton variant="outline">First</WexButton>
+              <WexButton variant="outline">Second</WexButton>
+              <WexButton variant="outline">Third</WexButton>
             </WexButtonGroup>
           </ExampleCard>
 
           <ExampleCard title="With Separator" description="Visual separator between buttons.">
             <WexButtonGroup>
-              <WexButton intent="outline">Edit</WexButton>
+              <WexButton variant="outline">Edit</WexButton>
               <WexButtonGroup.Separator />
-              <WexButton intent="outline">Delete</WexButton>
+              <WexButton variant="outline">Delete</WexButton>
             </WexButtonGroup>
           </ExampleCard>
         </div>
@@ -82,22 +82,22 @@ export default function ButtonGroupPage() {
 
 // Horizontal group
 <WexButtonGroup>
-  <WexButton intent="outline">Left</WexButton>
-  <WexButton intent="outline">Center</WexButton>
-  <WexButton intent="outline">Right</WexButton>
+  <WexButton variant="outline">Left</WexButton>
+  <WexButton variant="outline">Center</WexButton>
+  <WexButton variant="outline">Right</WexButton>
 </WexButtonGroup>
 
 // Vertical group
 <WexButtonGroup orientation="vertical">
-  <WexButton intent="outline">First</WexButton>
-  <WexButton intent="outline">Second</WexButton>
+  <WexButton variant="outline">First</WexButton>
+  <WexButton variant="outline">Second</WexButton>
 </WexButtonGroup>
 
 // With separator
 <WexButtonGroup>
-  <WexButton intent="outline">Edit</WexButton>
+  <WexButton variant="outline">Edit</WexButton>
   <WexButtonGroup.Separator />
-  <WexButton intent="outline">Delete</WexButton>
+  <WexButton variant="outline">Delete</WexButton>
 </WexButtonGroup>`}
         />
       </Section>

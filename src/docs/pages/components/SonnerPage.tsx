@@ -55,7 +55,7 @@ export default function SonnerPage() {
       <Section title="Overview">
         <ExampleCard>
           <WexButton
-            intent="outline"
+            variant="outline"
             onClick={() =>
               wexToast("Event has been created", {
                 position: sonnerPosition,
@@ -99,7 +99,7 @@ wexToast("Event has been created");`}
         <ExampleCard>
           <div className="flex flex-wrap gap-2">
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast("Event has been created", {
                   position: sonnerPosition,
@@ -110,7 +110,7 @@ wexToast("Event has been created");`}
             </WexButton>
 
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast.success("Event has been created", {
                   position: sonnerPosition,
@@ -121,7 +121,7 @@ wexToast("Event has been created");`}
             </WexButton>
 
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast.info("Be at the area 10 minutes before the event time", {
                   position: sonnerPosition,
@@ -132,7 +132,7 @@ wexToast("Event has been created");`}
             </WexButton>
 
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast.warning("Event start time cannot be earlier than 8am", {
                   position: sonnerPosition,
@@ -143,7 +143,7 @@ wexToast("Event has been created");`}
             </WexButton>
 
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast.error("Event has not been created", {
                   position: sonnerPosition,
@@ -154,7 +154,7 @@ wexToast("Event has been created");`}
             </WexButton>
 
             <WexButton
-              intent="outline"
+              variant="outline"
               onClick={() =>
                 wexToast.promise(
                   new Promise<{ name: string }>((resolve) =>
@@ -208,7 +208,7 @@ wexToast.promise(saveData(), {
       <Section title="With Description" description="Add additional context to your toast.">
         <ExampleCard>
           <WexButton
-            intent="outline"
+            variant="outline"
             onClick={() =>
               wexToast("Event has been created", {
                 description: "Sunday, December 03, 2023 at 9:00 AM",
@@ -232,7 +232,7 @@ wexToast.promise(saveData(), {
       <Section title="With Action" description="Add an action button to your toast.">
         <ExampleCard>
           <WexButton
-            intent="outline"
+            variant="outline"
             onClick={() =>
               wexToast("Event has been created", {
                 description: "Sunday, December 03, 2023 at 9:00 AM",
@@ -264,7 +264,7 @@ wexToast.promise(saveData(), {
       <Section title="Loading State" description="Show a loading toast that updates when complete.">
         <ExampleCard>
           <WexButton
-            intent="outline"
+            variant="outline"
             onClick={() => {
               const toastId = wexToast.loading("Saving changes...", { position: sonnerPosition });
               setTimeout(() => {

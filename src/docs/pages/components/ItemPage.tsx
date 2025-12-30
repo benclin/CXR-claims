@@ -54,7 +54,7 @@ export default function ItemPage() {
                 <WexItem.Description>Software Engineer</WexItem.Description>
               </WexItem.Content>
               <WexItem.Actions>
-                <WexButton intent="ghost" size="icon" aria-label="More options for John Doe">
+                <WexButton variant="ghost" size="icon" aria-label="More options for John Doe">
                   <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
                 </WexButton>
               </WexItem.Actions>
@@ -111,7 +111,7 @@ export default function ItemPage() {
               <WexItem>
                 <WexItem.Header>
                   <WexItem.Title>Notification Settings</WexItem.Title>
-                  <WexButton intent="ghost" size="sm">Edit</WexButton>
+                  <WexButton variant="ghost" size="sm">Edit</WexButton>
                 </WexItem.Header>
                 <WexItem.Content>
                   <WexItem.Description>
@@ -152,7 +152,7 @@ export default function ItemPage() {
       <WexItem.Description>Software Engineer</WexItem.Description>
     </WexItem.Content>
     <WexItem.Actions>
-      <WexButton intent="ghost" size="icon">
+      <WexButton variant="ghost" size="icon">
         <MoreHorizontal />
       </WexButton>
     </WexItem.Actions>

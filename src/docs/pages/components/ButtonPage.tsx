@@ -10,7 +10,8 @@ import { Plus, Settings, Download } from "lucide-react";
 
 // Props documentation for WexButton
 const buttonProps: PropDefinition[] = [
-  { name: "intent", type: '"primary" | "secondary" | "success" | "info" | "warning" | "destructive" | "help" | "contrast" | "ghost" | "outline" | "link"', default: '"primary"', description: "Visual style variant for the button" },
+  { name: "intent", type: '"primary" | "secondary" | "success" | "info" | "warning" | "destructive" | "help" | "contrast"', default: '"primary"', description: "Semantic intent/severity for the button" },
+  { name: "variant", type: '"solid" | "outline" | "ghost" | "link"', default: '"solid"', description: "Visual style variant (solid filled, outline bordered, ghost transparent, link text)" },
   { name: "size", type: '"sm" | "md" | "lg" | "icon"', default: '"md"', description: "Button size. Icon size is square for icon-only buttons" },
   { name: "rounded", type: "boolean", default: "false", description: "Applies pill-shaped rounded corners" },
   { name: "loading", type: "boolean", default: "false", description: "Shows loading spinner and disables the button" },
@@ -114,13 +115,13 @@ export default function ButtonPage() {
       <Section title="Text Variants" description="Outline, ghost, and link styles for subtle actions.">
         <div className="grid grid-cols-3 gap-4">
           <ExampleCard title="Ghost">
-            <WexButton intent="ghost">Ghost</WexButton>
+            <WexButton variant="ghost">Ghost</WexButton>
           </ExampleCard>
           <ExampleCard title="Outline">
-            <WexButton intent="outline">Outline</WexButton>
+            <WexButton variant="outline">Outline</WexButton>
           </ExampleCard>
           <ExampleCard title="Link">
-            <WexButton intent="link">Learn More</WexButton>
+            <WexButton variant="link">Learn More</WexButton>
           </ExampleCard>
         </div>
         <Guidance>
@@ -186,7 +187,7 @@ export default function ButtonPage() {
             <WexButton intent="secondary" size="icon" aria-label="Settings">
               <Settings className="h-4 w-4" />
             </WexButton>
-            <WexButton intent="ghost" size="icon" aria-label="Download">
+            <WexButton variant="ghost" size="icon" aria-label="Download">
               <Download className="h-4 w-4" />
             </WexButton>
           </div>
@@ -194,21 +195,21 @@ export default function ButtonPage() {
       </Section>
 
       {/* ============================================================
-          ALL VARIANTS TABLE
+          ALL INTENTS TABLE (Solid variant)
           ============================================================ */}
-      <Section title="All Variants at a Glance" description="Complete overview of all button intents.">
+      <Section title="All Intents at a Glance" description="Complete overview of all semantic button intents (solid variant).">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b border-border">
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Intent</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Default</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Solid</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Rounded</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Disabled</th>
               </tr>
             </thead>
             <tbody>
-              {(["primary", "secondary", "success", "info", "warning", "destructive", "help", "contrast", "ghost", "outline", "link"] as const).map((intent) => (
+              {(["primary", "secondary", "success", "info", "warning", "destructive", "help", "contrast"] as const).map((intent) => (
                 <tr key={intent} className="border-b border-border/50">
                   <td className="py-3 px-4 font-medium capitalize">{intent}</td>
                   <td className="py-3 px-4"><WexButton intent={intent} size="sm">{intent}</WexButton></td>
@@ -219,6 +220,38 @@ export default function ButtonPage() {
             </tbody>
           </table>
         </div>
+      </Section>
+
+      {/* ============================================================
+          OUTLINE SEVERITIES - New feature!
+          ============================================================ */}
+      <Section title="Outline Severities" description="Outline variant available for all semantic intents with tinted hover states.">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Intent</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Outline</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Rounded</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Disabled</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(["primary", "secondary", "success", "info", "warning", "destructive", "help", "contrast"] as const).map((intent) => (
+                <tr key={intent} className="border-b border-border/50">
+                  <td className="py-3 px-4 font-medium capitalize">{intent}</td>
+                  <td className="py-3 px-4"><WexButton intent={intent} variant="outline" size="sm">{intent}</WexButton></td>
+                  <td className="py-3 px-4"><WexButton intent={intent} variant="outline" size="sm" rounded>Pill</WexButton></td>
+                  <td className="py-3 px-4"><WexButton intent={intent} variant="outline" size="sm" disabled>Disabled</WexButton></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Guidance>
+          Outline buttons use transparent backgrounds with colored borders and text matching the intent.
+          On hover, they show a subtle tinted background for visual feedback.
+        </Guidance>
       </Section>
 
       <Section title="Accessibility">
@@ -262,9 +295,9 @@ export default function ButtonPage() {
 <WexButton intent="contrast">Contrast</WexButton>
 
 // Text variants
-<WexButton intent="ghost">Ghost</WexButton>
-<WexButton intent="outline">Outline</WexButton>
-<WexButton intent="link">Link</WexButton>
+<WexButton variant="ghost">Ghost</WexButton>
+<WexButton variant="outline">Outline</WexButton>
+<WexButton variant="link">Link</WexButton>
 
 // Modifiers
 <WexButton rounded>Pill Button</WexButton>

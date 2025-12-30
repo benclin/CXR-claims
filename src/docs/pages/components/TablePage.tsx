@@ -275,7 +275,7 @@ export default function TablePage() {
                   <WexTable.Cell className="font-medium">{inv.invoice}</WexTable.Cell>
                   <WexTable.Cell>{inv.status}</WexTable.Cell>
                   <WexTable.Cell className="text-right">
-                    <WexButton intent="ghost" size="sm">View</WexButton>
+                    <WexButton variant="ghost" size="sm">View</WexButton>
                   </WexTable.Cell>
                 </WexTable.Row>
               ))}

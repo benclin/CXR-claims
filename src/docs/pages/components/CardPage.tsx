@@ -188,7 +188,7 @@ export default function CardPage() {
                 </p>
               </WexCard.Content>
               <WexCard.Footer className="flex gap-2">
-                <WexButton intent="outline" size="sm">Message</WexButton>
+                <WexButton variant="outline" size="sm">Message</WexButton>
                 <WexButton size="sm">Follow</WexButton>
               </WexCard.Footer>
             </WexCard>

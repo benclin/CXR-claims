@@ -47,7 +47,7 @@ export default function OverviewPage() {
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </WexButton>
-            <WexButton intent="outline" size="lg" asChild className="backdrop-blur-sm border-white/20">
+            <WexButton variant="outline" size="lg" asChild className="backdrop-blur-sm border-white/20">
               <Link to="/story">
                 Our philosophy
               </Link>

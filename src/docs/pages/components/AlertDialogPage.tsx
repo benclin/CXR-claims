@@ -62,7 +62,7 @@ export default function AlertDialogPage() {
           <ExampleCard title="Confirmation" description="Standard confirmation dialog.">
             <WexAlertDialog>
               <WexAlertDialog.Trigger asChild>
-                <WexButton intent="outline">Show Confirmation</WexButton>
+                <WexButton variant="outline">Show Confirmation</WexButton>
               </WexAlertDialog.Trigger>
               <WexAlertDialog.Content>
                 <WexAlertDialog.Header>

@@ -440,7 +440,7 @@ export function ThemeExportView(_props: ThemeExportViewProps) {
               </div>
               <div className="flex items-center gap-1">
                 <WexButton
-                  intent="ghost"
+                  variant="ghost"
                   size="sm"
                   onClick={handleCopyCSS}
                   className="h-7 px-2"
@@ -452,7 +452,7 @@ export function ThemeExportView(_props: ThemeExportViewProps) {
                   )}
                 </WexButton>
                 <WexButton
-                  intent="ghost"
+                  variant="ghost"
                   size="sm"
                   onClick={handleExportCSS}
                   className="h-7 px-2"
@@ -482,7 +482,7 @@ export function ThemeExportView(_props: ThemeExportViewProps) {
               </div>
               <div className="flex items-center gap-1">
                 <WexButton
-                  intent="ghost"
+                  variant="ghost"
                   size="sm"
                   onClick={handleCopyJSON}
                   className="h-7 px-2"
@@ -494,7 +494,7 @@ export function ThemeExportView(_props: ThemeExportViewProps) {
                   )}
                 </WexButton>
                 <WexButton
-                  intent="ghost"
+                  variant="ghost"
                   size="sm"
                   onClick={handleExportJSON}
                   className="h-7 px-2"

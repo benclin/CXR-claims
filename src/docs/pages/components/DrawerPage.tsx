@@ -44,7 +44,7 @@ export default function DrawerPage() {
         <ExampleCard>
           <WexDrawer>
             <WexDrawer.Trigger asChild>
-              <WexButton intent="outline">Open Drawer</WexButton>
+              <WexButton variant="outline">Open Drawer</WexButton>
             </WexDrawer.Trigger>
             <WexDrawer.Content>
               <WexDrawer.Header>
@@ -56,7 +56,7 @@ export default function DrawerPage() {
               </div>
               <WexDrawer.Footer>
                 <WexDrawer.Close asChild>
-                  <WexButton intent="outline">Close</WexButton>
+                  <WexButton variant="outline">Close</WexButton>
                 </WexDrawer.Close>
               </WexDrawer.Footer>
             </WexDrawer.Content>
@@ -73,7 +73,7 @@ export default function DrawerPage() {
           <ExampleCard title="Simple" description="Basic informational drawer.">
             <WexDrawer>
               <WexDrawer.Trigger asChild>
-                <WexButton intent="outline">Simple Drawer</WexButton>
+                <WexButton variant="outline">Simple Drawer</WexButton>
               </WexDrawer.Trigger>
               <WexDrawer.Content>
                 <WexDrawer.Header>
@@ -94,7 +94,7 @@ export default function DrawerPage() {
           <ExampleCard title="With Form" description="Drawer containing a form.">
             <WexDrawer>
               <WexDrawer.Trigger asChild>
-                <WexButton intent="outline">Edit Settings</WexButton>
+                <WexButton variant="outline">Edit Settings</WexButton>
               </WexDrawer.Trigger>
               <WexDrawer.Content>
                 <WexDrawer.Header>
@@ -115,7 +115,7 @@ export default function DrawerPage() {
                 </div>
                 <WexDrawer.Footer>
                   <WexDrawer.Close asChild>
-                    <WexButton intent="outline">Cancel</WexButton>
+                    <WexButton variant="outline">Cancel</WexButton>
                   </WexDrawer.Close>
                   <WexButton>Save Changes</WexButton>
                 </WexDrawer.Footer>
@@ -126,7 +126,7 @@ export default function DrawerPage() {
           <ExampleCard title="With Footer Actions" description="Drawer with action buttons.">
             <WexDrawer>
               <WexDrawer.Trigger asChild>
-                <WexButton intent="outline">Confirm Action</WexButton>
+                <WexButton variant="outline">Confirm Action</WexButton>
               </WexDrawer.Trigger>
               <WexDrawer.Content>
                 <WexDrawer.Header>
@@ -145,7 +145,7 @@ export default function DrawerPage() {
                 </div>
                 <WexDrawer.Footer>
                   <WexDrawer.Close asChild>
-                    <WexButton intent="outline">Cancel</WexButton>
+                    <WexButton variant="outline">Cancel</WexButton>
                   </WexDrawer.Close>
                   <WexButton>Subscribe</WexButton>
                 </WexDrawer.Footer>
@@ -155,7 +155,7 @@ export default function DrawerPage() {
 
           <ExampleCard title="Controlled" description="Programmatically control open state.">
             <div className="flex gap-2">
-              <WexButton intent="outline" onClick={() => setOpen(true)}>
+              <WexButton variant="outline" onClick={() => setOpen(true)}>
                 Open via State
               </WexButton>
               <WexDrawer open={open} onOpenChange={setOpen}>
@@ -247,7 +247,7 @@ export default function DrawerPage() {
     <div className="p-4">Content here</div>
     <WexDrawer.Footer>
       <WexDrawer.Close asChild>
-        <WexButton intent="outline">Cancel</WexButton>
+        <WexButton variant="outline">Cancel</WexButton>
       </WexDrawer.Close>
       <WexButton>Confirm</WexButton>
     </WexDrawer.Footer>
