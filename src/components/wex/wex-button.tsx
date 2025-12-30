@@ -295,19 +295,6 @@ const wexButtonVariants = cva(
           "disabled:opacity-[var(--wex-component-button-disabled-opacity)]",
         ].join(" "),
       },
-      {
-        intent: "contrast",
-        variant: "outline",
-        class: [
-          "text-wex-button-contrast-outline-fg",
-          "border border-wex-button-contrast-outline-border",
-          "hover:bg-wex-button-contrast-outline-hover-bg",
-          "active:bg-wex-button-contrast-outline-active-bg",
-          "disabled:text-wex-button-contrast-outline-disabled-fg",
-          "disabled:border-wex-button-contrast-outline-disabled-border",
-          "disabled:opacity-[var(--wex-component-button-disabled-opacity)]",
-        ].join(" "),
-      },
     ],
     defaultVariants: {
       intent: "primary",

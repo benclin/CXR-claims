@@ -98,7 +98,7 @@ export default function ChartPage() {
             Good for showing cumulative totals or comparing parts of a whole.
           </Guidance>
 
-          <ExampleCard title="Pie Chart" description="Show proportional distribution of data.">
+          <ExampleCard title="Pie Chart (custom)" description="Show proportional distribution of data.">
             <PieChartExample />
           </ExampleCard>
           <Guidance>
@@ -248,7 +248,7 @@ const barChartConfig = {
 function BasicBarChartExample() {
   return (
     <WexChart.Container config={barChartConfig} className="h-[250px] w-full">
-      <BarChart data={sampleData.monthly} accessibilityLayer>
+      <BarChart data={sampleData.monthly} >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"
@@ -274,7 +274,7 @@ const lineChartConfig = {
 function LineChartExample() {
   return (
     <WexChart.Container config={lineChartConfig} className="h-[250px] w-full">
-      <LineChart data={sampleData.monthly} accessibilityLayer>
+      <LineChart data={sampleData.monthly} >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"
@@ -310,7 +310,7 @@ const multiSeriesConfig = {
 function MultiSeriesBarChartExample() {
   return (
     <WexChart.Container config={multiSeriesConfig} className="h-[250px] w-full">
-      <BarChart data={sampleData.multiSeries} accessibilityLayer>
+      <BarChart data={sampleData.multiSeries} >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"
@@ -338,7 +338,7 @@ const areaChartConfig = {
 function AreaChartExample() {
   return (
     <WexChart.Container config={areaChartConfig} className="h-[250px] w-full">
-      <AreaChart data={sampleData.monthly} accessibilityLayer>
+      <AreaChart data={sampleData.monthly} >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="month"
@@ -381,8 +381,8 @@ const pieChartConfig = {
 
 function PieChartExample() {
   return (
-    <WexChart.Container config={pieChartConfig} className="h-[250px] w-full">
-      <PieChart accessibilityLayer>
+    <WexChart.Container config={pieChartConfig} className="h-[250px] w-full" aria-label="Pie chart showing distribution of Desktop, Mobile, Tablet, and Other usage">
+      <PieChart>
         <WexChart.Tooltip content={<WexChart.TooltipContent />} />
         <WexChart.Legend content={<WexChart.LegendContent />} />
         <Pie
@@ -394,6 +394,7 @@ function PieChartExample() {
           innerRadius={40}
           outerRadius={80}
           paddingAngle={2}
+          tabIndex={-1}
         >
           {sampleData.distribution.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.fill} />

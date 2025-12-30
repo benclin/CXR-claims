@@ -262,7 +262,7 @@ function PasswordWithToggle() {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="cursor-pointer hover:text-foreground transition-colors pointer-events-auto"
+            className="cursor-pointer hover:text-foreground transition-colors pointer-events-auto min-w-6 min-h-6 flex items-center justify-center -mr-1"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

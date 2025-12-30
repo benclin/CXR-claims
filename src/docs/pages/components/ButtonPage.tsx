@@ -249,9 +249,6 @@ export default function ButtonPage() {
           <ExampleCard title="Outline Help" exampleId="outline-help">
             <WexButton intent="help" variant="outline">Help</WexButton>
           </ExampleCard>
-          <ExampleCard title="Outline Contrast" exampleId="outline-contrast">
-            <WexButton intent="contrast" variant="outline">Contrast</WexButton>
-          </ExampleCard>
         </div>
         
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -275,9 +272,6 @@ export default function ButtonPage() {
           </ExampleCard>
           <ExampleCard title="Outline Help Disabled" exampleId="outline-help-disabled">
             <WexButton intent="help" variant="outline" disabled>Disabled</WexButton>
-          </ExampleCard>
-          <ExampleCard title="Outline Contrast Disabled" exampleId="outline-contrast-disabled">
-            <WexButton intent="contrast" variant="outline" disabled>Disabled</WexButton>
           </ExampleCard>
         </div>
         

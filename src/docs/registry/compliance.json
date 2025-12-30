@@ -8,7 +8,7 @@
       "light",
       "dark"
     ],
-    "lastUpdated": "2025-12-30T19:25:13.601Z",
+    "lastUpdated": "2025-12-30T19:49:02.893Z",
     "totalComponents": 57
   },
   "accordion": {
@@ -16,7 +16,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:00.466Z",
+    "testedAt": "2025-12-30T19:47:54.165Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -86,7 +86,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:03.520Z",
+    "testedAt": "2025-12-30T19:47:57.236Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -156,7 +156,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:08.057Z",
+    "testedAt": "2025-12-30T19:48:01.898Z",
     "scope": "manifest-driven",
     "examplesFound": 5,
     "scenariosTested": [
@@ -271,7 +271,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:12.573Z",
+    "testedAt": "2025-12-30T19:48:06.297Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -362,7 +362,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:21.169Z",
+    "testedAt": "2025-12-30T19:48:14.584Z",
     "scope": "manifest-driven",
     "examplesFound": 12,
     "scenariosTested": [
@@ -568,7 +568,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:23.626Z",
+    "testedAt": "2025-12-30T19:48:17.159Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -625,7 +625,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:27.144Z",
+    "testedAt": "2025-12-30T19:48:20.835Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -708,9 +708,9 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:43.438Z",
+    "testedAt": "2025-12-30T19:48:36.183Z",
     "scope": "manifest-driven",
-    "examplesFound": 28,
+    "examplesFound": 26,
     "scenariosTested": [
       "primary",
       "secondary",
@@ -731,15 +731,13 @@
       "outline-warning",
       "outline-destructive",
       "outline-help",
-      "outline-contrast",
       "outline-primary-disabled",
       "outline-secondary-disabled",
       "outline-success-disabled",
       "outline-info-disabled",
       "outline-warning-disabled",
       "outline-destructive-disabled",
-      "outline-help-disabled",
-      "outline-contrast-disabled"
+      "outline-help-disabled"
     ],
     "subject": "Component examples for WexButton",
     "modes": {
@@ -748,7 +746,7 @@
         "levelAchieved": "AA",
         "violations": 0,
         "issues": [],
-        "examplesFound": 28,
+        "examplesFound": 26,
         "failingElements": [],
         "examples": {
           "primary": {
@@ -846,11 +844,6 @@
             "violations": 0,
             "issues": []
           },
-          "outline-contrast": {
-            "status": "pass",
-            "violations": 0,
-            "issues": []
-          },
           "outline-primary-disabled": {
             "status": "pass",
             "violations": 0,
@@ -885,11 +878,6 @@
             "status": "pass",
             "violations": 0,
             "issues": []
-          },
-          "outline-contrast-disabled": {
-            "status": "pass",
-            "violations": 0,
-            "issues": []
           }
         },
         "examplesTested": [
@@ -912,21 +900,19 @@
           "outline-warning",
           "outline-destructive",
           "outline-help",
-          "outline-contrast",
           "outline-primary-disabled",
           "outline-secondary-disabled",
           "outline-success-disabled",
           "outline-info-disabled",
           "outline-warning-disabled",
           "outline-destructive-disabled",
-          "outline-help-disabled",
-          "outline-contrast-disabled"
+          "outline-help-disabled"
         ],
         "examplesSkipped": [
           "loading-buttons",
           "icon-size"
         ],
-        "examplesPassed": 28,
+        "examplesPassed": 26,
         "examplesFailed": 0
       },
       "dark": {
@@ -934,7 +920,7 @@
         "levelAchieved": "AA",
         "violations": 0,
         "issues": [],
-        "examplesFound": 28,
+        "examplesFound": 26,
         "failingElements": [],
         "examples": {
           "primary": {
@@ -1032,11 +1018,6 @@
             "violations": 0,
             "issues": []
           },
-          "outline-contrast": {
-            "status": "pass",
-            "violations": 0,
-            "issues": []
-          },
           "outline-primary-disabled": {
             "status": "pass",
             "violations": 0,
@@ -1071,11 +1052,6 @@
             "status": "pass",
             "violations": 0,
             "issues": []
-          },
-          "outline-contrast-disabled": {
-            "status": "pass",
-            "violations": 0,
-            "issues": []
           }
         },
         "examplesTested": [
@@ -1098,21 +1074,19 @@
           "outline-warning",
           "outline-destructive",
           "outline-help",
-          "outline-contrast",
           "outline-primary-disabled",
           "outline-secondary-disabled",
           "outline-success-disabled",
           "outline-info-disabled",
           "outline-warning-disabled",
           "outline-destructive-disabled",
-          "outline-help-disabled",
-          "outline-contrast-disabled"
+          "outline-help-disabled"
         ],
         "examplesSkipped": [
           "loading-buttons",
           "icon-size"
         ],
-        "examplesPassed": 28,
+        "examplesPassed": 26,
         "examplesFailed": 0
       }
     }
@@ -1122,7 +1096,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:51.548Z",
+    "testedAt": "2025-12-30T19:48:44.298Z",
     "scope": "manifest-driven",
     "examplesFound": 6,
     "scenariosTested": [
@@ -1248,7 +1222,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:56.978Z",
+    "testedAt": "2025-12-30T19:48:49.758Z",
     "scope": "manifest-driven",
     "examplesFound": 8,
     "scenariosTested": [
@@ -1396,7 +1370,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:59.270Z",
+    "testedAt": "2025-12-30T19:48:52.019Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -1449,56 +1423,28 @@
     }
   },
   "chart": {
-    "status": "fail",
-    "violations": 2,
-    "issues": [
-      "svg-img-alt"
-    ],
-    "testedAt": "2025-12-30T19:25:03.922Z",
+    "status": "pass",
+    "levelAchieved": "AA",
+    "violations": 0,
+    "issues": [],
+    "testedAt": "2025-12-30T19:48:56.036Z",
     "scope": "manifest-driven",
-    "examplesFound": 5,
+    "examplesFound": 4,
     "scenariosTested": [
       "basic-bar-chart",
       "line-chart",
       "multi-series-bar-chart",
-      "area-chart",
-      "pie-chart"
+      "area-chart"
     ],
     "subject": "Component examples for WexChart",
     "modes": {
       "light": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "svg-img-alt"
-        ],
-        "examplesFound": 5,
-        "failingElements": [
-          {
-            "selector": "path[name=\"Desktop\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Mobile\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Tablet\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Other\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          }
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
+        "examplesFound": 4,
+        "failingElements": [],
         "examples": {
           "basic-bar-chart": {
             "status": "pass",
@@ -1519,59 +1465,27 @@
             "status": "pass",
             "violations": 0,
             "issues": []
-          },
-          "pie-chart": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "svg-img-alt"
-            ]
           }
         },
         "examplesTested": [
           "basic-bar-chart",
           "line-chart",
           "multi-series-bar-chart",
-          "area-chart",
-          "pie-chart"
+          "area-chart"
         ],
-        "examplesSkipped": [],
+        "examplesSkipped": [
+          "pie-chart-custom"
+        ],
         "examplesPassed": 4,
-        "examplesFailed": 1
+        "examplesFailed": 0
       },
       "dark": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "svg-img-alt"
-        ],
-        "examplesFound": 5,
-        "failingElements": [
-          {
-            "selector": "path[name=\"Desktop\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Mobile\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Tablet\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          },
-          {
-            "selector": "path[name=\"Other\"]",
-            "violationId": "svg-img-alt",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
-          }
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
+        "examplesFound": 4,
+        "failingElements": [],
         "examples": {
           "basic-bar-chart": {
             "status": "pass",
@@ -1592,25 +1506,19 @@
             "status": "pass",
             "violations": 0,
             "issues": []
-          },
-          "pie-chart": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "svg-img-alt"
-            ]
           }
         },
         "examplesTested": [
           "basic-bar-chart",
           "line-chart",
           "multi-series-bar-chart",
-          "area-chart",
-          "pie-chart"
+          "area-chart"
         ],
-        "examplesSkipped": [],
+        "examplesSkipped": [
+          "pie-chart-custom"
+        ],
         "examplesPassed": 4,
-        "examplesFailed": 1
+        "examplesFailed": 0
       }
     }
   },
@@ -1619,7 +1527,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:01.500Z",
+    "testedAt": "2025-12-30T19:47:55.176Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -1721,7 +1629,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:04.156Z",
+    "testedAt": "2025-12-30T19:47:57.734Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -1778,7 +1686,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:06.607Z",
+    "testedAt": "2025-12-30T19:48:00.190Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -1841,7 +1749,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:09.082Z",
+    "testedAt": "2025-12-30T19:48:02.637Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -1898,7 +1806,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:11.503Z",
+    "testedAt": "2025-12-30T19:48:05.099Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -1955,7 +1863,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:14.088Z",
+    "testedAt": "2025-12-30T19:48:07.857Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -2012,7 +1920,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:17.627Z",
+    "testedAt": "2025-12-30T19:48:11.425Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -2099,7 +2007,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:20.323Z",
+    "testedAt": "2025-12-30T19:48:13.948Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -2156,7 +2064,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:24.033Z",
+    "testedAt": "2025-12-30T19:48:17.712Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -2243,7 +2151,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:28.517Z",
+    "testedAt": "2025-12-30T19:48:22.318Z",
     "scope": "manifest-driven",
     "examplesFound": 5,
     "scenariosTested": [
@@ -2356,7 +2264,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:31.609Z",
+    "testedAt": "2025-12-30T19:48:25.256Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -2426,7 +2334,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:35.834Z",
+    "testedAt": "2025-12-30T19:48:29.297Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -2518,12 +2426,11 @@
     }
   },
   "float-label": {
-    "status": "fail",
-    "violations": 2,
-    "issues": [
-      "target-size"
-    ],
-    "testedAt": "2025-12-30T19:24:04.030Z",
+    "status": "pass",
+    "levelAchieved": "AA",
+    "violations": 0,
+    "issues": [],
+    "testedAt": "2025-12-30T19:47:57.790Z",
     "scope": "manifest-driven",
     "examplesFound": 8,
     "scenariosTested": [
@@ -2539,20 +2446,12 @@
     "subject": "Component examples for WexFloatLabel",
     "modes": {
       "light": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "target-size"
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
         "examplesFound": 8,
-        "failingElements": [
-          {
-            "selector": ".pointer-events-auto",
-            "violationId": "target-size",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Target has insufficient size (16px by 16px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
-          }
-        ],
+        "failingElements": [],
         "examples": {
           "email": {
             "status": "pass",
@@ -2590,11 +2489,9 @@
             "issues": []
           },
           "password-with-toggle": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "target-size"
-            ]
+            "status": "pass",
+            "violations": 0,
+            "issues": []
           }
         },
         "examplesTested": [
@@ -2612,24 +2509,16 @@
           "disabled",
           "controlled"
         ],
-        "examplesPassed": 7,
-        "examplesFailed": 1
+        "examplesPassed": 8,
+        "examplesFailed": 0
       },
       "dark": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "target-size"
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
         "examplesFound": 8,
-        "failingElements": [
-          {
-            "selector": ".pointer-events-auto",
-            "violationId": "target-size",
-            "impact": "serious",
-            "message": "Fix any of the following:\n  Target has insufficient size (16px by 16px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
-          }
-        ],
+        "failingElements": [],
         "examples": {
           "email": {
             "status": "pass",
@@ -2667,11 +2556,9 @@
             "issues": []
           },
           "password-with-toggle": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "target-size"
-            ]
+            "status": "pass",
+            "violations": 0,
+            "issues": []
           }
         },
         "examplesTested": [
@@ -2689,8 +2576,8 @@
           "disabled",
           "controlled"
         ],
-        "examplesPassed": 7,
-        "examplesFailed": 1
+        "examplesPassed": 8,
+        "examplesFailed": 0
       }
     }
   },
@@ -2699,7 +2586,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:11.938Z",
+    "testedAt": "2025-12-30T19:48:05.889Z",
     "scope": "manifest-driven",
     "examplesFound": 11,
     "scenariosTested": [
@@ -2898,7 +2785,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:15.412Z",
+    "testedAt": "2025-12-30T19:48:09.363Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -2985,7 +2872,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:18.405Z",
+    "testedAt": "2025-12-30T19:48:12.390Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -3061,7 +2948,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:20.211Z",
+    "testedAt": "2025-12-30T19:48:14.176Z",
     "scope": "manifest-driven",
     "examplesFound": 0,
     "scenariosTested": [],
@@ -3100,7 +2987,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:28.555Z",
+    "testedAt": "2025-12-30T19:48:22.909Z",
     "scope": "manifest-driven",
     "examplesFound": 12,
     "scenariosTested": [
@@ -3312,7 +3199,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:31.706Z",
+    "testedAt": "2025-12-30T19:48:25.945Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -3386,7 +3273,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:35.112Z",
+    "testedAt": "2025-12-30T19:48:29.316Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
@@ -3469,7 +3356,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:38.026Z",
+    "testedAt": "2025-12-30T19:48:32.326Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -3539,7 +3426,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:40.516Z",
+    "testedAt": "2025-12-30T19:48:34.719Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -3596,7 +3483,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:42.852Z",
+    "testedAt": "2025-12-30T19:48:37.008Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -3653,7 +3540,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:45.371Z",
+    "testedAt": "2025-12-30T19:48:39.527Z",
     "scope": "manifest-driven",
     "examplesFound": 6,
     "scenariosTested": [
@@ -3710,7 +3597,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:01.362Z",
+    "testedAt": "2025-12-30T19:47:55.263Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -3806,7 +3693,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:06.034Z",
+    "testedAt": "2025-12-30T19:48:00.244Z",
     "scope": "manifest-driven",
     "examplesFound": 5,
     "scenariosTested": [
@@ -3921,7 +3808,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:08.511Z",
+    "testedAt": "2025-12-30T19:48:02.823Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -3982,7 +3869,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:10.909Z",
+    "testedAt": "2025-12-30T19:48:05.397Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -4039,7 +3926,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:13.351Z",
+    "testedAt": "2025-12-30T19:48:07.923Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -4096,7 +3983,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:17.373Z",
+    "testedAt": "2025-12-30T19:48:12.046Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -4200,7 +4087,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:20.601Z",
+    "testedAt": "2025-12-30T19:48:14.906Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -4270,7 +4157,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:23.064Z",
+    "testedAt": "2025-12-30T19:48:17.378Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -4327,7 +4214,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:25.727Z",
+    "testedAt": "2025-12-30T19:48:20.064Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -4384,7 +4271,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:33.494Z",
+    "testedAt": "2025-12-30T19:48:27.945Z",
     "scope": "manifest-driven",
     "examplesFound": 12,
     "scenariosTested": [
@@ -4584,7 +4471,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:37.619Z",
+    "testedAt": "2025-12-30T19:48:32.114Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -4686,7 +4573,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:40.086Z",
+    "testedAt": "2025-12-30T19:48:34.531Z",
     "scope": "manifest-driven",
     "examplesFound": 5,
     "scenariosTested": [
@@ -4743,7 +4630,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:23:59.803Z",
+    "testedAt": "2025-12-30T19:47:53.731Z",
     "scope": "manifest-driven",
     "examplesFound": 1,
     "scenariosTested": [
@@ -4806,7 +4693,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:02.779Z",
+    "testedAt": "2025-12-30T19:47:56.884Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -4882,7 +4769,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:08.868Z",
+    "testedAt": "2025-12-30T19:48:02.777Z",
     "scope": "manifest-driven",
     "examplesFound": 7,
     "scenariosTested": [
@@ -5013,12 +4900,11 @@
     }
   },
   "tabs": {
-    "status": "fail",
-    "violations": 2,
-    "issues": [
-      "aria-required-children"
-    ],
-    "testedAt": "2025-12-30T19:24:13.272Z",
+    "status": "pass",
+    "levelAchieved": "AA",
+    "violations": 0,
+    "issues": [],
+    "testedAt": "2025-12-30T19:48:07.388Z",
     "scope": "manifest-driven",
     "examplesFound": 4,
     "scenariosTested": [
@@ -5030,20 +4916,12 @@
     "subject": "Component examples for WexTabs",
     "modes": {
       "light": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "aria-required-children"
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
         "examplesFound": 4,
-        "failingElements": [
-          {
-            "selector": "div[data-example-id=\"closable-tabs\"] > .max-w-md.w-full > div[dir=\"ltr\"][data-orientation=\"horizontal\"] > .border-wex-tabs-divider[role=\"tablist\"][aria-orientation=\"horizontal\"]",
-            "violationId": "aria-required-children",
-            "impact": "critical",
-            "message": "Fix any of the following:\n  Element has children which are not allowed: button[aria-label]"
-          }
-        ],
+        "failingElements": [],
         "examples": {
           "scrollable-tab-list": {
             "status": "pass",
@@ -5051,11 +4929,9 @@
             "issues": []
           },
           "closable-tabs": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "aria-required-children"
-            ]
+            "status": "pass",
+            "violations": 0,
+            "issues": []
           },
           "full-width-tabs": {
             "status": "pass",
@@ -5078,24 +4954,16 @@
           "disabled-tab",
           "controlled-tabs"
         ],
-        "examplesPassed": 3,
-        "examplesFailed": 1
+        "examplesPassed": 4,
+        "examplesFailed": 0
       },
       "dark": {
-        "status": "fail",
-        "violations": 1,
-        "issues": [
-          "aria-required-children"
-        ],
+        "status": "pass",
+        "levelAchieved": "AA",
+        "violations": 0,
+        "issues": [],
         "examplesFound": 4,
-        "failingElements": [
-          {
-            "selector": "div[data-example-id=\"closable-tabs\"] > .max-w-md.w-full > div[dir=\"ltr\"][data-orientation=\"horizontal\"] > .border-wex-tabs-divider[role=\"tablist\"][aria-orientation=\"horizontal\"]",
-            "violationId": "aria-required-children",
-            "impact": "critical",
-            "message": "Fix any of the following:\n  Element has children which are not allowed: button[aria-label]"
-          }
-        ],
+        "failingElements": [],
         "examples": {
           "scrollable-tab-list": {
             "status": "pass",
@@ -5103,11 +4971,9 @@
             "issues": []
           },
           "closable-tabs": {
-            "status": "fail",
-            "violations": 1,
-            "issues": [
-              "aria-required-children"
-            ]
+            "status": "pass",
+            "violations": 0,
+            "issues": []
           },
           "full-width-tabs": {
             "status": "pass",
@@ -5130,8 +4996,8 @@
           "disabled-tab",
           "controlled-tabs"
         ],
-        "examplesPassed": 3,
-        "examplesFailed": 1
+        "examplesPassed": 4,
+        "examplesFailed": 0
       }
     }
   },
@@ -5140,7 +5006,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:18.268Z",
+    "testedAt": "2025-12-30T19:48:12.455Z",
     "scope": "manifest-driven",
     "examplesFound": 6,
     "scenariosTested": [
@@ -5268,7 +5134,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:23.752Z",
+    "testedAt": "2025-12-30T19:48:17.970Z",
     "scope": "manifest-driven",
     "examplesFound": 6,
     "scenariosTested": [
@@ -5396,7 +5262,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:26.763Z",
+    "testedAt": "2025-12-30T19:48:20.946Z",
     "scope": "manifest-driven",
     "examplesFound": 2,
     "scenariosTested": [
@@ -5466,7 +5332,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:33.600Z",
+    "testedAt": "2025-12-30T19:48:27.747Z",
     "scope": "manifest-driven",
     "examplesFound": 9,
     "scenariosTested": [
@@ -5624,7 +5490,7 @@
     "levelAchieved": "AA",
     "violations": 0,
     "issues": [],
-    "testedAt": "2025-12-30T19:24:37.180Z",
+    "testedAt": "2025-12-30T19:48:31.334Z",
     "scope": "manifest-driven",
     "examplesFound": 3,
     "scenariosTested": [
