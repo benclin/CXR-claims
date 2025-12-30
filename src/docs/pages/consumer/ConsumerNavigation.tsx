@@ -39,12 +39,12 @@ export function ConsumerNavigation() {
         {/* Left: Logo */}
         <Link to="/consumer-experience" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <img
-            src="/WEX_Logo_Red_Vector.svg"
+            src={`${import.meta.env.BASE_URL}WEX_Logo_Red_Vector.svg`}
             alt="WEX"
             className="h-8 dark:hidden"
           />
           <img
-            src="/WEX_Logo_White_Vector.svg"
+            src={`${import.meta.env.BASE_URL}WEX_Logo_White_Vector.svg`}
             alt="WEX"
             className="h-8 hidden dark:block"
           />

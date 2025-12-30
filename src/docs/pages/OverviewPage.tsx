@@ -240,7 +240,7 @@ export default function OverviewPage() {
         
         <div className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-border/30 py-10 sm:flex-row">
           <div className="flex items-center gap-4">
-            <img src="/WEX_Logo_Red_Vector.svg" alt="WEX" className="h-5" />
+            <img src={`${import.meta.env.BASE_URL}WEX_Logo_Red_Vector.svg`} alt="WEX" className="h-5" />
             <span className="text-sm font-medium text-muted-foreground">Design System</span>
           </div>
           
