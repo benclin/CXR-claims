@@ -26,7 +26,13 @@ export function Header() {
             Design System
           </span>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <Link 
+            to="/consumer-experience"
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Consumer Experience
+          </Link>
           <ThemeToggle />
         </div>
       </div>

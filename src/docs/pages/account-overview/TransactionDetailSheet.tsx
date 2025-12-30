@@ -1,0 +1,136 @@
+import { WexSheet } from "@/components/wex/wex-sheet";
+import { WexButton } from "@/components/wex/wex-button";
+import { WexSeparator } from "@/components/wex/wex-separator";
+import { WexScrollArea } from "@/components/wex/wex-scroll-area";
+import { type Transaction, type TransactionDetail, transactionDetailData } from "./mockData";
+
+interface TransactionDetailSheetProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  transaction: Transaction | null;
+}
+
+/**
+ * Transaction Detail Sheet Component
+ * 
+ * Slide-out panel from the left displaying detailed transaction/plan information.
+ * Follows the Figma design with:
+ * - Title bar with "Plan details" heading
+ * - Year range and account name sub-header
+ * - Data rows with label-value pairs
+ * - Claims section
+ * - Action buttons at the bottom
+ */
+export function TransactionDetailSheet({ 
+  open, 
+  onOpenChange, 
+  transaction 
+}: TransactionDetailSheetProps) {
+  // Get the detail data for this transaction
+  const detail: TransactionDetail | undefined = transaction 
+    ? transactionDetailData[transaction.id] 
+    : undefined;
+
+  if (!transaction || !detail) {
+    return null;
+  }
+
+  return (
+    <WexSheet open={open} onOpenChange={onOpenChange}>
+      <WexSheet.Content side="right" className="w-[480px] max-w-[90vw] p-0">
+        <WexScrollArea className="h-full">
+          <div className="p-6 space-y-4">
+            {/* Header */}
+            <WexSheet.Header className="space-y-1">
+              <WexSheet.Title className="text-[30px] font-bold tracking-tight leading-10">
+                Plan details
+              </WexSheet.Title>
+            </WexSheet.Header>
+
+            {/* Sub-header: Year and Account Name */}
+            <div className="space-y-0.5">
+              <p className="text-sm text-muted-foreground">
+                Year {detail.yearRange}
+              </p>
+              <p className="text-xl font-medium text-foreground/90">
+                {detail.accountName}
+              </p>
+            </div>
+
+            {/* Data Rows */}
+            <div className="space-y-0">
+              <DataRow label="Election Amount" value={detail.electionAmount} />
+              <DataRow label="Amount Forfeited" value={detail.amountForfeited} />
+              <DataRow label="Amount Rollover" value={detail.amountRollover} />
+              <DataRow label="Available Balance" value={detail.availableBalance} />
+              <DataRow label="Effective" value={detail.effective} />
+              <DataRow label="My Annual Election" value={detail.myAnnualElection} />
+              <DataRow label="Company Contributions" value={detail.companyContributions} />
+              <DataRow label="My contributions to Date" value={detail.myContributionsToDate} />
+              <DataRow label="Estimated Payroll Deductions" value={detail.estimatedPayrollDeductions} />
+              <DataRow label="Plan Year Balance" value={detail.planYearBalance} />
+            </div>
+
+            {/* Claims Section */}
+            <div className="pt-8 space-y-2">
+              <h3 className="text-[17px] font-semibold text-foreground pb-2">
+                Claims
+              </h3>
+              <ClaimRow label="Submitted" value={detail.claims.submitted} />
+              <WexSeparator />
+              <ClaimRow label="Paid" value={detail.claims.paid} />
+              <WexSeparator />
+              <ClaimRow label="Pending" value={detail.claims.pending} />
+              <WexSeparator />
+              <ClaimRow label="Denied" value={detail.claims.denied} />
+              <WexSeparator />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center justify-center gap-4 pt-8 pb-4">
+              <WexButton intent="outline" size="md">
+                View Transactions
+              </WexButton>
+              <WexButton intent="outline" size="md">
+                View Claims
+              </WexButton>
+            </div>
+          </div>
+        </WexScrollArea>
+      </WexSheet.Content>
+    </WexSheet>
+  );
+}
+
+/**
+ * Data Row Component - Label/Value pair with bottom border
+ */
+function DataRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between py-3 border-b border-border">
+      <span className="text-sm text-muted-foreground">
+        {label}
+      </span>
+      <span className="text-sm text-foreground text-right">
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * Claim Row Component - Simpler layout for claims section
+ */
+function ClaimRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="text-sm text-muted-foreground">
+        {label}
+      </span>
+      <span className="text-sm text-foreground text-right">
+        {value}
+      </span>
+    </div>
+  );
+}
+

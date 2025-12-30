@@ -1,0 +1,28 @@
+import { WexButton } from "@/components/wex/wex-button";
+
+/**
+ * Title Bar Component
+ * 
+ * Page header with:
+ * - "Account Overview" heading (H1/Bold)
+ * - "Send a Payment" button (outline)
+ * - "Reimburse Myself" button (primary)
+ */
+export function TitleBar() {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <h1 className="text-3xl font-bold text-foreground tracking-tight">
+        Account Overview
+      </h1>
+      <div className="flex items-center gap-4">
+        <WexButton intent="outline" size="md">
+          Send a Payment
+        </WexButton>
+        <WexButton intent="primary" size="md">
+          Reimburse Myself
+        </WexButton>
+      </div>
+    </div>
+  );
+}
+

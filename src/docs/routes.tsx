@@ -14,6 +14,12 @@ const ArchitecturePage = React.lazy(() => import("@/docs/pages/ArchitecturePage"
 const ThemeBuilderPage = React.lazy(() => import("@/docs/pages/ThemeBuilderPage"));
 const ThemeExportPage = React.lazy(() => import("@/docs/pages/ThemeExportPage"));
 
+// Consumer Experience page - standalone route
+const ConsumerExperiencePage = React.lazy(() => import("@/docs/pages/ConsumerExperiencePage"));
+
+// Account Overview page - standalone route
+const AccountOverviewPage = React.lazy(() => import("@/docs/pages/AccountOverviewPage"));
+
 // Foundation pages
 const TokenArchitecturePage = React.lazy(() => import("@/docs/pages/foundations/TokenArchitecturePage"));
 const ColorsPage = React.lazy(() => import("@/docs/pages/foundations/ColorsPage"));
@@ -101,6 +107,12 @@ export function DocsRoutes() {
   return (
     <React.Suspense fallback={<PageLoader />}>
       <Routes>
+        {/* Standalone Consumer Experience route - bypasses DocsLayout */}
+        <Route path="/consumer-experience" element={<ConsumerExperiencePage />} />
+        
+        {/* Standalone Account Overview route - bypasses DocsLayout */}
+        <Route path="/account-overview" element={<AccountOverviewPage />} />
+        
         <Route element={<DocsLayout />}>
           {/* Static pages */}
           <Route index element={<OverviewPage />} />
