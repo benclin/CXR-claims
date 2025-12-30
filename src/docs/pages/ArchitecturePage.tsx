@@ -417,7 +417,7 @@ import './button-variants.css';
       <Section 
         title="Component Implementation Patterns" 
         description="How WEX components are built under the hood."
-        className="mb-16"
+        className="mb-16 mt-16"
       >
         <p className="text-muted-foreground mb-6 mt-2">
           WEX components follow two implementation patterns depending on whether shadcn's 
@@ -436,14 +436,14 @@ import './button-variants.css';
             </thead>
             <tbody className="divide-y divide-border">
               <tr>
-                <td className="py-4 px-4">
+                <td className="py-4 px-4 whitespace-nowrap">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-info" />
                     Extended CVA
                   </span>
                 </td>
                 <td className="py-4 px-4 font-medium">3</td>
-                <td className="py-4 px-4">
+                <td className="py-4 px-4 whitespace-nowrap">
                   <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Button</code>,{" "}
                   <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Badge</code>,{" "}
                   <code className="bg-muted px-1.5 py-0.5 rounded text-xs">Alert</code>
@@ -453,14 +453,14 @@ import './button-variants.css';
                 </td>
               </tr>
               <tr>
-                <td className="py-4 px-4">
+                <td className="py-4 px-4 whitespace-nowrap">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-success" />
                     shadcn Wrapper
                   </span>
                 </td>
                 <td className="py-4 px-4 font-medium">55</td>
-                <td className="py-4 px-4 text-muted-foreground">
+                <td className="py-4 px-4 whitespace-nowrap text-muted-foreground">
                   All other components
                 </td>
                 <td className="py-4 px-4 text-muted-foreground">
@@ -494,14 +494,29 @@ import './button-variants.css';
         <div className="grid md:grid-cols-3 gap-4 mb-6">
           <ValidationCard
             company="Vercel"
+            logo={
+              <svg viewBox="0 0 76 65" fill="currentColor" className="h-5 w-5">
+                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+              </svg>
+            }
             description="Builds on Radix + Tailwind for their internal design system and Geist UI."
           />
           <ValidationCard
-            company="Shopify Polaris"
+            company="Shopify"
+            logo={
+              <svg viewBox="0 0 109 124" fill="currentColor" className="h-5 w-5">
+                <path d="M95.8 28.3c-.1-.6-.6-1-1.1-1-.5 0-9.3-.2-9.3-.2s-7.4-7.2-8.1-7.9c-.8-.8-2.3-.5-2.9-.4-.1 0-1.6.5-4.1 1.3-2.4-7-6.7-13.4-14.2-13.4h-.7c-2.1-2.8-4.8-4-7-4C35.2 2.7 28.6 19.2 26.4 28c-5.8 1.8-9.9 3.1-10.4 3.2-3.2 1-3.3 1.1-3.7 4.1-.3 2.3-8.7 67.1-8.7 67.1l69.5 12.9 37.6-8.2S96 28.9 95.8 28.3zm-32.6-6c-2 .6-4.2 1.3-6.6 2V23c0-2.8-.4-5.1-1-6.9 2.5.4 4.2 3.2 7.6 5.2zm-12.5-4c.7 2.1 1.1 4.9 1.1 8.8v.8c-4.3 1.3-8.9 2.7-13.5 4.2 2.6-10.1 7.5-15 12.4-13.8zm-5.7-7.9c.8 0 1.6.3 2.4.8-5.9 2.8-12.3 9.8-15 23.8-3.7 1.1-7.2 2.2-10.5 3.2 2.9-10 10-27.8 23.1-27.8z"/>
+              </svg>
+            }
             description="Uses headless primitives with a brand layer on top for consistent merchant experiences."
           />
           <ValidationCard
             company="Stripe"
+            logo={
+              <svg viewBox="0 0 60 25" fill="currentColor" className="h-4 w-auto">
+                <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a10.3 10.3 0 0 1-4.56.98c-4.01 0-6.83-2.5-6.83-7.28 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.28 0 .55-.03 1.09-.06 1.62zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM41.49 20.3c-1.53 0-2.54-.64-3.2-1.13l-.03 5.12-4.35.93V5.75h3.82l.16 1.02c.68-.58 1.82-1.22 3.47-1.22 3.09 0 5.88 2.74 5.88 7.15 0 4.93-2.73 7.6-5.75 7.6zm-.8-11.35c-.94 0-1.6.34-2.03.72l.06 6.22c.4.35 1.03.7 1.97.7 1.52 0 2.52-1.56 2.52-3.87 0-2.22-1.01-3.77-2.52-3.77zM28.24 2.23l4.38-.92v4.26h3.38v3.52h-3.38v5.47c0 1.34.6 1.67 1.55 1.67.5 0 1.08-.09 1.6-.22v3.46a8.2 8.2 0 0 1-2.85.46c-3.06 0-4.65-1.6-4.65-4.73V9.09h-1.65V5.75h1.62V2.23zM20.1 5.57c1.13 0 2.04.19 2.66.41v3.64a6 6 0 0 0-2.34-.46c-1.78 0-2.68 1.22-2.68 3.15v7.69h-4.37V5.75h3.84l.2 1.5c.6-1.09 1.53-1.68 2.69-1.68zM10.23 5.75h4.37v14.25h-4.37V5.75zm.03-2.16l4.35-.93V5.2l-4.35.93V3.59zM4.37 12.23c0-2.79 1.9-5.29 5.14-6.06l-.73 3.58c-1.31.38-2.06 1.28-2.06 2.48 0 2.06 1.58 3.04 3.49 3.45L9.55 19.4c-3.42-.8-5.18-3.73-5.18-7.17z"/>
+              </svg>
+            }
             description="Wraps Radix components with custom styling for their dashboard and documentation."
           />
         </div>
@@ -658,14 +673,21 @@ function MetricCard({
 
 function ValidationCard({
   company,
+  logo,
   description,
 }: {
   company: string;
+  logo?: React.ReactNode;
   description: string;
 }) {
   return (
     <div className="p-4 rounded-lg border border-border bg-card">
-      <h4 className="font-medium text-foreground mb-2">{company}</h4>
+      <div className="flex items-center gap-2 mb-2">
+        {logo && (
+          <span className="text-foreground">{logo}</span>
+        )}
+        <h4 className="font-medium text-foreground">{company}</h4>
+      </div>
       <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
     </div>
   );
