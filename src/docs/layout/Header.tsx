@@ -12,13 +12,13 @@ export function Header() {
         <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           {/* Light mode logo */}
           <img
-            src="/WEX_Logo_Red_Vector.svg"
+            src={`${import.meta.env.BASE_URL}WEX_Logo_Red_Vector.svg`}
             alt="WEX"
             className="h-6 dark:hidden"
           />
           {/* Dark mode logo */}
           <img
-            src="/WEX_Logo_White_Vector.svg"
+            src={`${import.meta.env.BASE_URL}WEX_Logo_White_Vector.svg`}
             alt="WEX"
             className="h-6 hidden dark:block"
           />
