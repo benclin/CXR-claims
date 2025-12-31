@@ -40,7 +40,7 @@ export default function ReimburseConfirm() {
   const approvedAmount = amount;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#F1FAFE]">
       <ConsumerNavigation />
 
       <div className="mx-auto max-w-[1440px] px-8 py-8">
