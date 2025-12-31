@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { WexButton } from "@/components/wex/wex-button"
 import { WexFloatLabel } from "@/components/wex/wex-float-label"
-import { WexInput } from "@/components/wex/wex-input"
 import { WexCard } from "@/components/wex/wex-card"
 import { wexToast } from "@/components/wex/wex-toast"
 import { Eye, EyeOff } from "lucide-react"
