@@ -29,6 +29,9 @@ const MyProfilePage = React.lazy(() => import("@/docs/pages/consumer/MyProfile")
 // Resources page - standalone route
 const ResourcesPage = React.lazy(() => import("@/docs/pages/consumer/Resources"));
 
+// Claims page - standalone route
+const ClaimsPage = React.lazy(() => import("@/docs/pages/consumer/Claims"));
+
 // Login page - standalone route
 const LoginPage = React.lazy(() => import("@/docs/pages/Login"));
 
@@ -136,6 +139,9 @@ export function DocsRoutes() {
 
         {/* Standalone Resources route - bypasses DocsLayout */}
         <Route path="resources" element={<ResourcesPage />} />
+
+        {/* Standalone Claims route - bypasses DocsLayout */}
+        <Route path="claims" element={<ClaimsPage />} />
 
         {/* Standalone Login route - bypasses DocsLayout */}
         <Route path="login" element={<LoginPage onLoginSuccess={() => window.location.href = '/'} />} />
