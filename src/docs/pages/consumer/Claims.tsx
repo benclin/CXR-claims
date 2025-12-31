@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { WexButton } from "@/components/wex/wex-button";
 import { WexCard } from "@/components/wex/wex-card";
 import { WexTable } from "@/components/wex/wex-table";
@@ -365,6 +366,7 @@ const getStatusBadge = (status: Claim["status"]) => {
 };
 
 export default function Claims() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(null);
@@ -409,7 +411,7 @@ export default function Claims() {
                 <CreditCard className="h-4 w-4" />
                 Pay provider
               </WexButton>
-              <WexButton intent="primary">
+              <WexButton intent="primary" onClick={() => navigate("/reimburse")}>
                 <Wallet className="h-4 w-4" />
                 Reimburse myself
               </WexButton>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DocsLayout } from "./layout/DocsLayout";
+import { ReimbursementProvider } from "./pages/consumer/reimburse/ReimbursementContext";
 
 // Lazy load pages for code splitting
 const OverviewPage = React.lazy(() => import("@/docs/pages/OverviewPage"));
@@ -31,6 +32,13 @@ const ResourcesPage = React.lazy(() => import("@/docs/pages/consumer/Resources")
 
 // Claims page - standalone route
 const ClaimsPage = React.lazy(() => import("@/docs/pages/consumer/Claims"));
+
+// Reimbursement flow pages - standalone routes
+const ReimburseMyselfPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseMyself"));
+const ReimburseDocsPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseDocs"));
+const ReimburseAnalyzePage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseAnalyze"));
+const ReimburseReviewPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseReview"));
+const ReimburseConfirmPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseConfirm"));
 
 // Login page - standalone route
 const LoginPage = React.lazy(() => import("@/docs/pages/Login"));
@@ -142,6 +150,22 @@ export function DocsRoutes() {
 
         {/* Standalone Claims route - bypasses DocsLayout */}
         <Route path="claims" element={<ClaimsPage />} />
+
+        {/* Standalone Reimbursement flow routes - bypasses DocsLayout, wrapped with ReimbursementProvider */}
+        <Route
+          path="reimburse/*"
+          element={
+            <ReimbursementProvider>
+              <Routes>
+                <Route index element={<ReimburseMyselfPage />} />
+                <Route path="docs" element={<ReimburseDocsPage />} />
+                <Route path="analyze" element={<ReimburseAnalyzePage />} />
+                <Route path="review" element={<ReimburseReviewPage />} />
+                <Route path="confirm" element={<ReimburseConfirmPage />} />
+              </Routes>
+            </ReimbursementProvider>
+          }
+        />
 
         {/* Standalone Login route - bypasses DocsLayout */}
         <Route path="login" element={<LoginPage onLoginSuccess={() => window.location.href = '/'} />} />
