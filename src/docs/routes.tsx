@@ -23,6 +23,9 @@ const AccountOverviewPage = React.lazy(() => import("@/docs/pages/AccountOvervie
 // Message Center page - standalone route
 const MessageCenterPage = React.lazy(() => import("@/docs/pages/consumer/MessageCenter"));
 
+// Custom Components Demo page - standalone route
+const CustomComponentsDemo = React.lazy(() => import("@/docs/pages/consumer/CustomComponentsDemo"));
+
 // Foundation pages
 const TokenArchitecturePage = React.lazy(() => import("@/docs/pages/foundations/TokenArchitecturePage"));
 const ColorsPage = React.lazy(() => import("@/docs/pages/foundations/ColorsPage"));
@@ -118,6 +121,9 @@ export function DocsRoutes() {
         
         {/* Standalone Message Center route - bypasses DocsLayout */}
         <Route path="/message-center" element={<MessageCenterPage />} />
+        
+        {/* Custom Components Demo route - bypasses DocsLayout */}
+        <Route path="/custom-components-demo" element={<CustomComponentsDemo />} />
         
         <Route element={<DocsLayout />}>
           {/* Design System overview moved to /design-system */}
