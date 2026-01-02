@@ -248,10 +248,6 @@ const getToDoMessages = (messages: Message[]): MessageItem[] => {
       date: msg.deliveryDate,
       actionDescription: getActionDescription(msg.subject, msg.category),
       icon: "alert" as const,
-      badge: {
-        label: "Action Required",
-        intent: "destructive" as const,
-      },
       type: "message" as const,
     }));
 
@@ -265,21 +261,11 @@ const getToDoMessages = (messages: Message[]): MessageItem[] => {
       date: "Today",
       actionDescription: task.description,
       icon: task.category as "alert" | "bell" | "document",
-      badge: task.isUrgent ? {
-        label: "Urgent",
-        intent: "destructive" as const,
-      } : undefined,
       type: "task" as const,
     }));
 
-  // Combine and sort: urgent items first, then by type
+  // Combine messages and tasks
   const allItems = [...actionRequiredMessages, ...taskItems];
-  allItems.sort((a, b) => {
-    // Urgent items first
-    if (a.badge && !b.badge) return -1;
-    if (!a.badge && b.badge) return 1;
-    return 0;
-  });
 
   return allItems.slice(0, 10); // Show up to 10 items
 };
@@ -452,19 +438,10 @@ export function MessageCenterWidget() {
                         </div>
                         {/* Content */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-start gap-2 mb-1">
+                          <div className="mb-1">
                             <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                               {message.title}
                             </h4>
-                            {message.badge && (
-                              <WexBadge 
-                                intent={message.badge.intent} 
-                                size="sm" 
-                                className="shrink-0 text-xs px-2 py-0.5"
-                              >
-                                {message.badge.label}
-                              </WexBadge>
-                            )}
                           </div>
                           <p className="text-xs text-muted-foreground">
                             {message.actionDescription}
