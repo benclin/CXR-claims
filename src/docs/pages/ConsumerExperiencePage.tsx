@@ -3,7 +3,6 @@ import { AIChatSection } from "./consumer/AIChatSection";
 import { AccountsSection } from "./consumer/AccountsSection";
 import { MessageCenterWidget } from "./consumer/MessageCenterWidget";
 import { QuickLinksSection } from "./consumer/QuickLinksSection";
-import { TasksSection } from "./consumer/TasksSection";
 import { TransactionsAndLinks } from "./consumer/TransactionsAndLinks";
 import { InfoCardsSection } from "./consumer/InfoCardsSection";
 import { QuickViewSection } from "./consumer/QuickViewSection";
@@ -56,9 +55,6 @@ export default function ConsumerExperiencePage() {
           {/* Quick Links - Takes 1 column */}
           <QuickLinksSection />
         </div>
-
-        {/* Pending Tasks */}
-        <TasksSection />
 
         {/* Recent Transactions */}
         <TransactionsAndLinks />
