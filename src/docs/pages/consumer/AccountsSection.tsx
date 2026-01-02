@@ -37,7 +37,7 @@ export function AccountsSection() {
                 View All Accounts
                 <ChevronRight className="h-4 w-4" />
               </WexButton>
-              <WexButton intent="destructive" size="md">
+              <WexButton intent="primary" size="md">
                 Reimburse Myself
               </WexButton>
             </div>
@@ -46,19 +46,17 @@ export function AccountsSection() {
           {/* Account Cards Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* HSA Card */}
-            <WexCard className="group relative overflow-hidden border-2 border-border bg-gradient-to-br from-background to-background/80 shadow-md transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:border-primary/20 cursor-pointer">
-              {/* Subtle accent bar - easily customizable via bg color */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/60 transition-all duration-300 group-hover:h-1.5" />
-              <WexCard.Content className="p-0 relative z-10">
+            <WexCard className="transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] cursor-pointer">
+              <WexCard.Content className="p-0">
                 {/* Top Section */}
-                <div className="p-4 space-y-4 transition-colors duration-300 group-hover:bg-primary/[0.02]">
+                <div className="p-4 space-y-4">
                   {/* Card Header */}
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-display font-bold text-foreground transition-colors duration-200 group-hover:text-primary">
+                      <h3 className="text-lg font-display font-bold text-foreground">
                         {hsaAccountData.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground transition-colors duration-200">
+                      <p className="text-sm text-muted-foreground">
                         {hsaAccountData.subtitle}
                       </p>
                     </div>
@@ -80,7 +78,7 @@ export function AccountsSection() {
                     <div className="text-[11px] font-bold text-muted-foreground tracking-wide">
                       TOTAL ACCOUNT VALUE
                     </div>
-                    <div className="text-2xl font-display font-bold text-foreground leading-tight transition-colors duration-200 group-hover:text-primary/90">
+                    <div className="text-2xl font-display font-bold text-foreground leading-tight">
                       {hsaAccountData.totalAccountValue}
                     </div>
                   </div>
@@ -136,19 +134,17 @@ export function AccountsSection() {
             </WexCard>
 
             {/* FSA Card */}
-            <WexCard className="group relative overflow-hidden border-2 border-border bg-gradient-to-br from-background to-background/80 shadow-md transition-all duration-300 ease-out hover:shadow-xl hover:scale-[1.02] hover:border-info/20 cursor-pointer">
-              {/* Subtle accent bar - easily customizable via bg color */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-info to-info/60 transition-all duration-300 group-hover:h-1.5" />
-              <WexCard.Content className="p-0 relative z-10">
+            <WexCard className="transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] cursor-pointer">
+              <WexCard.Content className="p-0">
                 {/* Top Section */}
-                <div className="p-4 space-y-4 transition-colors duration-300 group-hover:bg-info/[0.02]">
+                <div className="p-4 space-y-4">
                   {/* Card Header */}
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-display font-bold text-foreground transition-colors duration-200 group-hover:text-info">
+                      <h3 className="text-lg font-display font-bold text-foreground">
                         {fsaAccountData.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground transition-colors duration-200">
+                      <p className="text-sm text-muted-foreground">
                         {fsaAccountData.subtitle}
                       </p>
                     </div>
@@ -170,7 +166,7 @@ export function AccountsSection() {
                     <div className="text-[11px] font-bold text-muted-foreground tracking-wide">
                       AVAILABLE BALANCE
                     </div>
-                    <div className="text-2xl font-display font-bold text-foreground leading-tight transition-colors duration-200 group-hover:text-info/90">
+                    <div className="text-2xl font-display font-bold text-foreground leading-tight">
                       {fsaAccountData.availableBalance}
                     </div>
                   </div>
