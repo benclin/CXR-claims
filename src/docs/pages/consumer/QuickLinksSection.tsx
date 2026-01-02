@@ -22,9 +22,9 @@ export function QuickLinksSection() {
             {quickLinksData.map((link, index) => (
               <WexButton
                 key={index}
-                intent="outline"
-                size="sm"
-                className="rounded-[32px] h-auto py-0.5 text-sm font-medium shrink-0"
+                intent="ghost"
+                size="md"
+                className="rounded-[32px] bg-info/10 text-primary hover:bg-info/20 shrink-0 h-auto py-1"
               >
                 {link.label}
               </WexButton>
