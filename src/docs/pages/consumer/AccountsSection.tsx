@@ -49,7 +49,7 @@ export function AccountsSection() {
             <WexCard className="transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] cursor-pointer">
               <WexCard.Content className="p-0">
                 {/* Top Section */}
-                <div className="p-4 space-y-4 bg-gradient-to-br from-primary/[0.05] via-primary/[0.03] to-primary/[0.01] transition-all duration-200 hover:from-primary/[0.08] hover:via-primary/[0.05] hover:to-primary/[0.02]">
+                <div className="p-4 space-y-4 bg-gradient-to-br from-primary/[0.08] via-primary/[0.05] to-primary/[0.03] transition-all duration-200 hover:from-primary/[0.12] hover:via-primary/[0.08] hover:to-primary/[0.05]">
                   {/* Card Header */}
                   <div className="flex items-start justify-between">
                     <div>
@@ -137,7 +137,7 @@ export function AccountsSection() {
             <WexCard className="transition-all duration-200 ease-in-out hover:shadow-lg hover:scale-[1.01] cursor-pointer">
               <WexCard.Content className="p-0">
                 {/* Top Section */}
-                <div className="p-4 space-y-4 bg-gradient-to-br from-info/[0.05] via-info/[0.03] to-info/[0.01] transition-all duration-200 hover:from-info/[0.08] hover:via-info/[0.05] hover:to-info/[0.02]">
+                <div className="p-4 space-y-4 bg-gradient-to-br from-info/[0.08] via-info/[0.05] to-info/[0.03] transition-all duration-200 hover:from-info/[0.12] hover:via-info/[0.08] hover:to-info/[0.05]">
                   {/* Card Header */}
                   <div className="flex items-start justify-between">
                     <div>
