@@ -27,6 +27,7 @@ interface MessageItem {
   title: string;
   category: string;
   date: string;
+  actionDescription: string;
   icon: "alert" | "bell" | "document";
   badge?: {
     label: string;
@@ -189,6 +190,48 @@ const getMessageData = (): Message[] => {
   return getInitialMessages(initialMessages);
 };
 
+// Generate action description based on message content
+const getActionDescription = (subject: string, category: string): string => {
+  // Check for specific keywords to generate relevant action descriptions
+  if (subject.toLowerCase().includes("contribution maximum") || subject.toLowerCase().includes("contribution warning")) {
+    return "Review and adjust your contribution settings to stay within limits";
+  }
+  if (subject.toLowerCase().includes("contribution notification")) {
+    return "Confirm contribution details and update records if needed";
+  }
+  if (subject.toLowerCase().includes("account summary")) {
+    return "Review your monthly account activity and transactions";
+  }
+  if (subject.toLowerCase().includes("payment issued")) {
+    return "Verify payment details and expected delivery date";
+  }
+  if (subject.toLowerCase().includes("password") && subject.toLowerCase().includes("changed")) {
+    return "Verify this change was authorized and secure your account";
+  }
+  if (subject.toLowerCase().includes("withdrawal")) {
+    return "Confirm withdrawal amount and destination account";
+  }
+  if (subject.toLowerCase().includes("purchase alert")) {
+    return "Review transaction details and verify the purchase";
+  }
+  if (subject.toLowerCase().includes("tax form")) {
+    return "Download and save your tax documents for filing";
+  }
+  
+  // Default action based on category
+  if (category.toLowerCase().includes("security")) {
+    return "Review security alert and take necessary action";
+  }
+  if (category.toLowerCase().includes("contributions")) {
+    return "Review contribution details and confirm accuracy";
+  }
+  if (category.toLowerCase().includes("statements")) {
+    return "Review document and download for your records";
+  }
+  
+  return "Review this message and take appropriate action";
+};
+
 // Mock message data for To Do list - using actual messages from Message Center
 const getToDoMessages = (messages: Message[]): MessageItem[] => {
   // Get only urgent messages that require action (bold + unread)
@@ -201,6 +244,7 @@ const getToDoMessages = (messages: Message[]): MessageItem[] => {
     title: msg.subject,
     category: msg.category,
     date: msg.deliveryDate,
+    actionDescription: getActionDescription(msg.subject, msg.category),
     icon: "alert" as const,
     badge: {
       label: "Action Required",
@@ -332,11 +376,9 @@ export function MessageCenterWidget() {
                               {message.title}
                             </h4>
                           </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span>{message.category}</span>
-                            <span>•</span>
-                            <span>{message.date}</span>
-                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            {message.actionDescription}
+                          </p>
                         </div>
                       </div>
                     </button>
