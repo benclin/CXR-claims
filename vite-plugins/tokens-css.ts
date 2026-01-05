@@ -66,6 +66,7 @@ function loadBridgeFiles() {
 
 export function tokensCSSPlugin(): Plugin {
   const tokensJSONPath = join(__dirname, '..', 'packages', 'design-tokens', 'design-tokens.json');
+  const virtualModuleId = '\0virtual:@wex/design-tokens.css';
   
   return {
     name: 'tokens-css',
@@ -73,13 +74,13 @@ export function tokensCSSPlugin(): Plugin {
     resolveId(id) {
       // Intercept @wex/design-tokens imports
       if (id === '@wex/design-tokens' || id === '@wex/design-tokens/css') {
-        return '\0' + id + '.css'; // Virtual CSS module
+        return virtualModuleId;
       }
       return null;
     },
     load(id) {
       // Handle virtual module
-      if (id === '\0@wex/design-tokens.css' || id === '\0@wex/design-tokens/css.css') {
+      if (id === virtualModuleId) {
         if (!existsSync(tokensJSONPath)) {
           throw new Error(`design-tokens.json not found at ${tokensJSONPath}`);
         }

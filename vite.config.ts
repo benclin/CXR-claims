@@ -16,7 +16,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@wex/design-tokens": '\0@wex/design-tokens.css', // Virtual CSS module - generates CSS from JSON
       "@wex/design-tokens/tailwind-preset": path.resolve(__dirname, "./packages/design-tokens/tailwind-preset.js"),
     },
   },
