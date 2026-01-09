@@ -6,6 +6,7 @@ import { WexCheckbox } from "@/components/wex/wex-checkbox"
 import { wexToast } from "@/components/wex/wex-toast"
 import { Eye, EyeOff, AlertCircle, Mail, MessageSquare, ChevronRight } from "lucide-react"
 import WexLogo from "/WEX_Logo_Red_Vector.svg"
+import LoginBg from "/login-bg.svg"
 import { useAuth } from "@/docs/context/AuthContext"
 
 interface LoginProps {
@@ -25,6 +26,107 @@ export default function Login({ onLoginSuccess }: LoginProps) {
   const [codeError, setCodeError] = useState(false)
   const [saveUsername, setSaveUsername] = useState(false)
   const [selectedMfaMethod, setSelectedMfaMethod] = useState<'email' | 'sms'>('email')
+
+  // Debug instrumentation (Debug Mode)
+  useEffect(() => {
+    const runId = 'pre-fix'
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/0f2d92c4-4c76-48a6-a34a-0a7a7699a103', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId,
+        hypothesisId: 'H1',
+        location: 'Login.tsx:initial',
+        message: 'Login background asset resolved',
+        data: {
+          loginBg: LoginBg,
+          baseUrl: import.meta.env.BASE_URL,
+          windowPath: typeof window !== 'undefined' ? window.location.pathname : 'no-window'
+        },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {})
+    // #endregion
+  }, [])
+
+  // Debug instrumentation (asset reachability)
+  useEffect(() => {
+    const runId = 'pre-fix'
+    const targetUrl = LoginBg
+
+    // #region agent log
+    fetch(targetUrl, { method: 'HEAD' })
+      .then((res) => {
+        fetch('http://127.0.0.1:7242/ingest/0f2d92c4-4c76-48a6-a34a-0a7a7699a103', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: 'debug-session',
+            runId,
+            hypothesisId: 'H1',
+            location: 'Login.tsx:head-check',
+            message: 'HEAD check for login background',
+            data: { targetUrl, status: res.status, resolvedUrl: res.url },
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {})
+      })
+      .catch((err) => {
+        fetch('http://127.0.0.1:7242/ingest/0f2d92c4-4c76-48a6-a34a-0a7a7699a103', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: 'debug-session',
+            runId,
+            hypothesisId: 'H1',
+            location: 'Login.tsx:head-check',
+            message: 'HEAD check failed',
+            data: { targetUrl, error: String(err) },
+            timestamp: Date.now(),
+          }),
+        }).catch(() => {})
+      })
+    // #endregion
+
+    const img = new Image()
+    img.onload = () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/0f2d92c4-4c76-48a6-a34a-0a7a7699a103', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId,
+          hypothesisId: 'H1',
+          location: 'Login.tsx:image-load',
+          message: 'Background image load success',
+          data: { targetUrl },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {})
+      // #endregion
+    }
+    img.onerror = () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/0f2d92c4-4c76-48a6-a34a-0a7a7699a103', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId,
+          hypothesisId: 'H1',
+          location: 'Login.tsx:image-load',
+          message: 'Background image load failed',
+          data: { targetUrl },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {})
+      // #endregion
+    }
+    img.src = targetUrl
+  }, [])
 
   // Generate code when entering Step 3
   useEffect(() => {
@@ -171,13 +273,16 @@ export default function Login({ onLoginSuccess }: LoginProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[hsl(var(--wex-palette-blue-50))] relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div 
-        className="absolute inset-0 overflow-hidden pointer-events-none bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/login-bg.svg)' }}
-      >
-      </div>
+    <div 
+      className="min-h-screen w-full relative overflow-hidden"
+      style={{ 
+        backgroundImage: `url(${LoginBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#f0f4f8'
+      }}
+    >
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
