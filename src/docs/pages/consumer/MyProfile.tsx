@@ -602,7 +602,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Personal Information</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -636,7 +636,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Contact Information</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -671,7 +671,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Address Information</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -717,7 +717,8 @@ export default function MyProfile() {
               <div className="px-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-2xl font-semibold text-gray-800">Dependents</h2>
                 <WexButton
-                  intent="outline"
+                  intent="primary"
+                  variant="outline"
                   size="sm"
                   className="w-full sm:w-auto justify-center border-[#0058a3] text-[#0058a3] hover:bg-blue-50"
                   onClick={() => {
@@ -771,7 +772,7 @@ export default function MyProfile() {
                       </div>
                       <div className="flex gap-2">
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#0058a3] hover:bg-blue-50"
                           onClick={() => handleEditDependent(dependent)}
@@ -780,7 +781,7 @@ export default function MyProfile() {
                           Edit
                         </WexButton>
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#d23f57] hover:bg-red-50"
                           onClick={() => handleRemoveClick(dependent)}
@@ -804,7 +805,8 @@ export default function MyProfile() {
               <div className="px-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-2xl font-semibold text-gray-800">Beneficiaries</h2>
                 <WexButton
-                  intent="outline"
+                  intent="primary"
+                  variant="outline"
                   size="sm"
                   className="w-full sm:w-auto justify-center border-[#0058a3] text-[#0058a3] hover:bg-blue-50"
                   onClick={() => {
@@ -862,7 +864,7 @@ export default function MyProfile() {
                       </div>
                       <div className="flex gap-2">
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#0058a3] hover:bg-blue-50"
                           onClick={() => handleEditBeneficiary(beneficiary)}
@@ -871,7 +873,7 @@ export default function MyProfile() {
                           Edit
                         </WexButton>
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#d23f57] hover:bg-red-50"
                           onClick={() => handleRemoveBeneficiaryClick(beneficiary)}
@@ -895,7 +897,8 @@ export default function MyProfile() {
               <div className="px-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-2xl font-semibold text-gray-800">Banking</h2>
                 <WexButton
-                  intent="outline"
+                  intent="primary"
+                  variant="outline"
                   size="sm"
                   className="w-full sm:w-auto justify-center border-[#0058a3] text-[#0058a3] hover:bg-blue-50"
                   onClick={() => {
@@ -963,7 +966,7 @@ export default function MyProfile() {
                       </div>
                       <div className="flex gap-2">
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#0058a3] hover:bg-blue-50"
                           onClick={() => handleEditBankAccount(bankAccount)}
@@ -972,7 +975,7 @@ export default function MyProfile() {
                           Edit
                         </WexButton>
                         <WexButton
-                          intent="ghost"
+                          variant="ghost"
                           size="sm"
                           className="text-[#d23f57] hover:bg-red-50"
                           onClick={() => handleRemoveBankAccountClick(bankAccount)}
@@ -1031,7 +1034,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Password</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1046,7 +1049,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Two-Factor Authentication</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1061,7 +1064,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Security Questions</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1089,7 +1092,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Email Preferences</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1113,7 +1116,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">SMS Preferences</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1137,7 +1140,7 @@ export default function MyProfile() {
                 <div className="mb-4 flex items-center gap-4">
                   <h3 className="text-xl font-medium text-gray-800">Push Notifications</h3>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary active:text-primary [&>svg]:text-primary"
                   >
@@ -1246,19 +1249,19 @@ export default function MyProfile() {
       <footer className="border-t bg-white py-4">
         <div className="mx-auto max-w-[1440px] px-8">
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500">
-            <WexButton intent="ghost" className="h-auto p-0 text-sm text-gray-500">
+            <WexButton variant="ghost" className="h-auto p-0 text-sm text-gray-500">
               Copyright
             </WexButton>
             <span>•</span>
-            <WexButton intent="ghost" className="h-auto p-0 text-sm text-gray-500">
+            <WexButton variant="ghost" className="h-auto p-0 text-sm text-gray-500">
               Disclaimer
             </WexButton>
             <span>•</span>
-            <WexButton intent="ghost" className="h-auto p-0 text-sm text-gray-500">
+            <WexButton variant="ghost" className="h-auto p-0 text-sm text-gray-500">
               Privacy Policy
             </WexButton>
             <span>•</span>
-            <WexButton intent="ghost" className="h-auto p-0 text-sm text-gray-500">
+            <WexButton variant="ghost" className="h-auto p-0 text-sm text-gray-500">
               Terms of Use
             </WexButton>
           </div>
@@ -1278,7 +1281,7 @@ export default function MyProfile() {
             </WexDialog.Title>
             <WexDialog.Close asChild>
               <WexButton
-                intent="ghost"
+                variant="ghost"
                 size="icon"
                 className="h-6 w-6"
                 aria-label="Close"
@@ -1440,7 +1443,8 @@ export default function MyProfile() {
           <div className="flex gap-2 justify-end p-[17.5px] pt-0">
             <WexDialog.Close asChild>
               <WexButton
-                intent="outline"
+                intent="secondary"
+                variant="outline"
                 onClick={() => {
                   resetForm();
                   setEditingDependentId(null);
@@ -1471,7 +1475,7 @@ export default function MyProfile() {
             </WexAlertDialog.Title>
             <WexAlertDialog.Cancel asChild>
               <WexButton
-                intent="ghost"
+                variant="ghost"
                 size="icon"
                 className="h-6 w-6 !border-0 !shadow-none !bg-transparent hover:!bg-wex-button-tertiary-hover-bg"
                 aria-label="Close"
@@ -1491,7 +1495,7 @@ export default function MyProfile() {
           {/* Footer */}
           <div className="flex gap-2 justify-end p-[17.5px] pt-0">
             <WexAlertDialog.Cancel asChild>
-              <WexButton intent="outline">
+              <WexButton intent="secondary" variant="outline">
                 Cancel
               </WexButton>
             </WexAlertDialog.Cancel>
@@ -1518,7 +1522,7 @@ export default function MyProfile() {
             </WexDialog.Title>
             <WexDialog.Close asChild>
               <WexButton
-                intent="ghost"
+                variant="ghost"
                 size="icon"
                 className="h-6 w-6 !border-0 !shadow-none !bg-transparent hover:!bg-wex-button-tertiary-hover-bg"
                 aria-label="Close"
@@ -1703,7 +1707,8 @@ export default function MyProfile() {
           <div className="flex gap-2 justify-end p-[17.5px] pt-0">
             <WexDialog.Close asChild>
               <WexButton
-                intent="outline"
+                intent="secondary"
+                variant="outline"
                 onClick={() => {
                   resetBeneficiaryForm();
                   setEditingBeneficiaryId(null);
@@ -1734,7 +1739,7 @@ export default function MyProfile() {
             </WexAlertDialog.Title>
             <WexAlertDialog.Cancel asChild>
               <WexButton
-                intent="ghost"
+                variant="ghost"
                 size="icon"
                 className="h-6 w-6 !border-0 !shadow-none !bg-transparent hover:!bg-wex-button-tertiary-hover-bg"
                 aria-label="Close"
@@ -1754,7 +1759,7 @@ export default function MyProfile() {
           {/* Footer */}
           <WexAlertDialog.Footer className="flex gap-2 justify-end p-[17.5px] pt-0">
             <WexAlertDialog.Cancel asChild>
-              <WexButton intent="outline">
+              <WexButton intent="secondary" variant="outline">
                 Cancel
               </WexButton>
             </WexAlertDialog.Cancel>
@@ -1799,7 +1804,7 @@ export default function MyProfile() {
                 </WexDialog.Title>
                 <WexDialog.Close asChild>
                   <WexButton
-                    intent="ghost"
+                    variant="ghost"
                     size="icon"
                     className="h-6 w-6 !border-0 !shadow-none !bg-transparent hover:!bg-wex-button-tertiary-hover-bg"
                     aria-label="Close"
@@ -1861,7 +1866,7 @@ export default function MyProfile() {
                                 `Resend in ${Math.floor(resendTimer / 60)}:${String(resendTimer % 60).padStart(2, "0")}`
                               ) : (
                                 <WexButton
-                                  intent="ghost"
+                                  variant="ghost"
                                   size="sm"
                                   className="h-auto p-0 text-sm text-[#243746] hover:underline"
                                   onClick={() => {
@@ -2029,7 +2034,7 @@ export default function MyProfile() {
                 <div>
                   {showVerificationCode && bankAccountStep === "step1" ? (
                     <WexButton
-                      intent="ghost"
+                      variant="ghost"
                       className="h-auto p-0 text-sm text-[#243746] hover:underline"
                       onClick={() => {
                         setShowVerificationCode(false);
@@ -2040,7 +2045,8 @@ export default function MyProfile() {
                     </WexButton>
                   ) : (
                     <WexButton
-                      intent="outline"
+                      intent="secondary"
+                      variant="outline"
                       onClick={() => {
                         if (bankAccountStep !== "step1") {
                           handleBankAccountBack();
@@ -2094,7 +2100,7 @@ export default function MyProfile() {
             </WexAlertDialog.Title>
             <WexAlertDialog.Cancel asChild>
               <WexButton
-                intent="ghost"
+                variant="ghost"
                 size="icon"
                 className="h-6 w-6 !border-0 !shadow-none !bg-transparent hover:!bg-wex-button-tertiary-hover-bg"
                 aria-label="Close"
@@ -2114,7 +2120,7 @@ export default function MyProfile() {
           {/* Footer */}
           <WexAlertDialog.Footer className="flex gap-2 justify-end p-[17.5px] pt-0">
             <WexAlertDialog.Cancel asChild>
-              <WexButton intent="outline">
+              <WexButton intent="secondary" variant="outline">
                 Cancel
               </WexButton>
             </WexAlertDialog.Cancel>

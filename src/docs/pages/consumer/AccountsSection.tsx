@@ -28,7 +28,8 @@ export function AccountsSection() {
             </h2>
             <div className="flex items-center gap-4">
               <WexButton 
-                intent="link" 
+                intent="primary"
+                variant="link"
                 size="md"
                 onClick={() => {
                   navigate("/account-overview");
@@ -61,7 +62,8 @@ export function AccountsSection() {
                       </p>
                     </div>
                     <WexButton
-                      intent="link"
+                      intent="primary"
+                      variant="link"
                       size="sm"
                       className="h-auto px-0 font-medium"
                       onClick={() => {
@@ -99,7 +101,8 @@ export function AccountsSection() {
                       </div>
                     </div>
                     <WexButton 
-                      intent="outline" 
+                      intent="primary" 
+                      variant="outline"
                       size="sm" 
                       className="w-full h-9 text-sm font-medium rounded-lg border-primary text-primary hover:bg-primary hover:text-white"
                     >
@@ -187,7 +190,8 @@ export function AccountsSection() {
                       </div>
                     </div>
                     <WexButton 
-                      intent="outline" 
+                      intent="primary" 
+                      variant="outline"
                       size="sm" 
                       className="w-full h-9 text-sm font-medium rounded-lg border-primary text-primary hover:bg-primary hover:text-white"
                     >
