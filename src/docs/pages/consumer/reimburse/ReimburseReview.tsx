@@ -68,7 +68,7 @@ const PlanCard = ({
           </p>
         </div>
         <WexButton
-          intent="ghost"
+          variant="ghost"
           size="sm"
           className="h-7 w-7 p-0"
           aria-label="Account information"
