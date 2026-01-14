@@ -174,34 +174,6 @@ export default function ReimburseMyself() {
     return "—";
   };
 
-  // Helper function to get plan card data by account value
-  const getPlanCardData = (accountValue: string) => {
-    const plans = {
-      "medical-fsa": {
-        title: "Medical FSA",
-        dateRange: "01/01/2026 - 12/31/2026",
-        balance: "$2,734.76",
-        finalFilingDate: "04/30/2027",
-        finalServiceDate: "12/31/2026",
-      },
-      "lifestyle-spending-2026": {
-        title: "Lifestyle Spending Account",
-        dateRange: "01/01/2026 - 12/31/2026",
-        balance: "$250.00",
-        finalFilingDate: "04/30/2027",
-        finalServiceDate: "12/31/2026",
-      },
-      "lifestyle-spending-2025": {
-        title: "Lifestyle Spending Account",
-        dateRange: "01/01/2025 - 12/31/2025",
-        balance: "$250.00",
-        finalFilingDate: "04/30/2026",
-        finalServiceDate: "12/31/2025",
-      },
-    };
-    return plans[accountValue as keyof typeof plans] || plans["medical-fsa"];
-  };
-
   // Helper component for plan cards
   const PlanCard = ({
     title,
@@ -229,7 +201,7 @@ export default function ReimburseMyself() {
             </p>
           </div>
           <WexButton
-            intent="ghost"
+            variant="ghost"
             size="sm"
             className="h-7 w-7 p-0"
             aria-label="Account information"
@@ -372,7 +344,7 @@ export default function ReimburseMyself() {
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <WexButton intent="ghost" onClick={() => navigate("/")}>
+              <WexButton variant="ghost" onClick={() => navigate("/")}>
                 Cancel
               </WexButton>
               <WexButton

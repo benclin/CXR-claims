@@ -159,7 +159,7 @@ export default function MobileUpload() {
                 />
                 <WexButton
                   type="button"
-                  intent="outline"
+                  variant="outline"
                   size="lg"
                   className="w-full h-16"
                   onClick={() => {
