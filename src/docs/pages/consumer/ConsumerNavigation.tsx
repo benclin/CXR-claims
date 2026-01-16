@@ -33,6 +33,20 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "file-text": FileText,
 };
 
+const languageOptions = [
+  "English (Default)",
+  "Español",
+  "Français",
+  "Traditional Chinese",
+  "Simplified Chinese",
+  "Japanese",
+  "Nederlands",
+  "Français canadien",
+  "Deutsch",
+  "Italiano",
+  "Português do Brasil",
+];
+
 /**
  * Consumer Experience Navigation Header
  * 
@@ -47,7 +61,7 @@ export function ConsumerNavigation() {
   const { logout } = useAuth();
   const [unreadCount, setUnreadCount] = useState<number>(getUnreadCount());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState("English (Default)");
   
   // Check if a nav item is currently active based on the URL
   const isActive = (href: string) => {
@@ -129,14 +143,14 @@ export function ConsumerNavigation() {
 
           <WexSheet.Content
             side="left"
-            className="w-[315px] p-0"
+            className="w-[315px] p-0 flex flex-col"
             aria-label="Mobile navigation"
           >
             <div className="flex items-center px-4 py-4">
               <span className="text-lg font-semibold text-foreground">Menu</span>
             </div>
 
-            <nav className="flex flex-col gap-1 px-2 py-3">
+            <nav className="flex flex-col gap-1 px-2 py-3 flex-1 overflow-y-auto">
               {navigationItems.map((item) => {
                 const Icon = iconMap[item.icon];
                 const active = isActive(item.href);
@@ -208,7 +222,7 @@ export function ConsumerNavigation() {
                     </WexAccordion.Trigger>
                     <WexAccordion.Content className="pb-0">
                       <div className="flex flex-col gap-2 px-2 py-2">
-                        {["English", "Español", "Français"].map((lang) => (
+                        {languageOptions.map((lang) => (
                           <WexSheet.Close asChild key={lang}>
                             <WexButton
                               variant={language === lang ? "solid" : "ghost"}
@@ -335,15 +349,30 @@ export function ConsumerNavigation() {
             </Link>
           </WexButton>
 
-          {/* Language Icon (desktop only; mobile in drawer) */}
-          <WexButton
-            variant="ghost"
-            size="icon"
-            className="hidden lg:inline-flex"
-            aria-label="Language"
-          >
-            <Languages className="h-5 w-5" />
-          </WexButton>
+          {/* Language Selector (desktop only; mobile in drawer) */}
+          <WexDropdownMenu>
+            <WexDropdownMenu.Trigger asChild>
+              <WexButton
+                variant="ghost"
+                size="icon"
+                className="hidden lg:inline-flex"
+                aria-label="Language"
+              >
+                <Languages className="h-5 w-5" />
+              </WexButton>
+            </WexDropdownMenu.Trigger>
+            <WexDropdownMenu.Content align="start">
+              {languageOptions.map((lang) => (
+                <WexDropdownMenu.Item
+                  key={lang}
+                  onClick={() => setLanguage(lang)}
+                  className={language === lang ? "bg-muted" : ""}
+                >
+                  {lang}
+                </WexDropdownMenu.Item>
+              ))}
+            </WexDropdownMenu.Content>
+          </WexDropdownMenu>
 
           <WexSeparator orientation="vertical" className="h-6" />
 
