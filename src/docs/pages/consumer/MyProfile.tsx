@@ -15,12 +15,14 @@ import { WexLabel } from "@/components/wex/wex-label";
 import { WexPopover } from "@/components/wex/wex-popover";
 import { WexCalendar } from "@/components/wex/wex-calendar";
 import { WexCheckbox } from "@/components/wex";
+import { WexBadge } from "@/components/wex/wex-badge";
+import { WexDropdownMenu } from "@/components/wex/wex-dropdown-menu";
 import { wexToast } from "@/components/wex/wex-toast";
 import { WexSidebar } from "@/components/wex/wex-sidebar";
 import { Stepper } from "./components/Stepper";
 import { ConsumerNavigation } from "./ConsumerNavigation";
 import emptyStateIllustration from "./img/empty-state-illustration.svg";
-import { Pencil, Info, Plus, Calendar, X, Trash2 } from "lucide-react";
+import { Pencil, Info, Plus, Calendar, X, Trash2, MoreVertical, Eye, RefreshCw, AlertCircle } from "lucide-react";
 
 type SubPage = "my-profile" | "dependents" | "beneficiaries" | "banking" | "debit-card" | "login-security" | "communication";
 
@@ -62,6 +64,22 @@ type BankAccount = {
   selectedDirectDepositOptions: string[]; // Array of selected plan years/accounts
 };
 
+type PurseStatus = {
+  accountName: string;
+  status: string;
+};
+
+type DebitCard = {
+  id: string;
+  cardholderName: string;
+  cardNumber: string; // Last 4 digits
+  fullCardNumber?: string; // Full card number for display in modal
+  status: "ready-to-activate" | "active";
+  expirationDate: string;
+  effectiveDate: string;
+  purseStatuses?: PurseStatus[]; // Purse status information
+};
+
 export default function MyProfile() {
   const personalName = "Emily Rose Smith";
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,6 +92,73 @@ export default function MyProfile() {
   
   // Banking state
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
+  
+  // Debit card state
+  const [debitCards, setDebitCards] = useState<DebitCard[]>([
+    {
+      id: "1",
+      cardholderName: "John Johnson",
+      cardNumber: "3522",
+      fullCardNumber: "1234 1234 1234 3522",
+      status: "ready-to-activate",
+      expirationDate: "10/31/2025",
+      effectiveDate: "10/23/2019",
+      purseStatuses: [
+        { accountName: "FSA 2021", status: "Suspended" },
+        { accountName: "HRA 2021", status: "Suspended" },
+        { accountName: "FSA", status: "Suspended" },
+        { accountName: "FSA 2018-2026", status: "Suspended" },
+      ],
+    },
+    {
+      id: "2",
+      cardholderName: "John Johnson",
+      cardNumber: "3455",
+      fullCardNumber: "1234 1234 1234 3455",
+      status: "active",
+      expirationDate: "10/31/2025",
+      effectiveDate: "10/23/2019",
+      purseStatuses: [
+        { accountName: "FSA 2021", status: "Suspended" },
+        { accountName: "HRA 2021", status: "Suspended" },
+        { accountName: "FSA", status: "Suspended" },
+        { accountName: "FSA 2018-2026", status: "Suspended" },
+      ],
+    },
+    {
+      id: "3",
+      cardholderName: "John Johnson",
+      cardNumber: "8412",
+      fullCardNumber: "1234 1234 1234 8414",
+      status: "active",
+      expirationDate: "10/31/2025",
+      effectiveDate: "10/23/2019",
+      purseStatuses: [
+        { accountName: "FSA 2021", status: "Suspended" },
+        { accountName: "HRA 2021", status: "Suspended" },
+        { accountName: "FSA", status: "Suspended" },
+        { accountName: "FSA 2018-2026", status: "Suspended" },
+      ],
+    },
+  ]);
+  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  
+  // Card details modal state
+  const [isCardDetailsModalOpen, setIsCardDetailsModalOpen] = useState(false);
+  const [selectedCardForDetails, setSelectedCardForDetails] = useState<DebitCard | null>(null);
+  
+  // Card activation authentication modal state
+  const [isActivationAuthModalOpen, setIsActivationAuthModalOpen] = useState(false);
+  const [activationVerificationMethod, setActivationVerificationMethod] = useState<"text" | "email" | "">("");
+  
+  // Verification code modal state
+  const [isVerificationCodeModalOpen, setIsVerificationCodeModalOpen] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationResendTimer, setVerificationResendTimer] = useState(0);
+  
+  // Card activation confirmation modal state
+  const [isActivateCardModalOpen, setIsActivateCardModalOpen] = useState(false);
+  const [cardBeingActivated, setCardBeingActivated] = useState<DebitCard | null>(null);
   
   // Modal state
   const [isAddDependentModalOpen, setIsAddDependentModalOpen] = useState(false);
@@ -161,6 +246,16 @@ export default function MyProfile() {
       setActiveSubPage("my-profile");
     }
   }, [searchParams]);
+
+  // Verification code resend timer countdown
+  useEffect(() => {
+    if (verificationResendTimer > 0) {
+      const timer = setTimeout(() => {
+        setVerificationResendTimer(verificationResendTimer - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [verificationResendTimer]);
 
   const handleSubPageChange = (subPage: SubPage) => {
     setActiveSubPage(subPage);
@@ -996,28 +1091,593 @@ export default function MyProfile() {
       case "debit-card":
         return (
           <>
-            <div className="pt-4 pb-2">
-              <div className="px-6 flex items-center">
-                <h2 className="text-2xl font-semibold text-gray-800">Debit Card</h2>
+            {/* Page Header */}
+            <div className="border-b border-[#e4e6e9] px-6 py-4">
+              <h2 className="text-2xl font-semibold text-[#243746] tracking-[-0.456px] leading-8">
+                Debit Card
+              </h2>
+            </div>
+            
+            {/* Description */}
+            <div className="px-6 py-6">
+              <p className="text-base text-[#243746] leading-6 tracking-[-0.221px]">
+                Manage your debit cards, activation, status, and replacements.
+              </p>
+            </div>
+            
+            {/* Debit Cards Grid */}
+            <div className="px-6 pb-6">
+              <div className="flex flex-col gap-6">
+                {/* Cards Row */}
+                <div className="flex gap-8 flex-wrap">
+                  {debitCards.map((card) => (
+                    <WexCard
+                      key={card.id}
+                      className="w-[325px] p-4 bg-white rounded-lg shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_-1px_rgba(0,0,0,0.1)]"
+                    >
+                      <div className="flex flex-col gap-2">
+                        {/* Card Header */}
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-base font-semibold text-[#1d2c38] tracking-[-0.176px] leading-6 whitespace-nowrap">
+                            {card.cardholderName}
+                          </h3>
+                          <WexDropdownMenu
+                            open={openDropdownId === card.id}
+                            onOpenChange={(open) =>
+                              setOpenDropdownId(open ? card.id : null)
+                            }
+                          >
+                            <WexDropdownMenu.Trigger asChild>
+                              <WexButton
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 p-0"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <MoreVertical className="h-3.5 w-3.5 text-[#243746]" />
+                              </WexButton>
+                            </WexDropdownMenu.Trigger>
+                            <WexDropdownMenu.Content align="end" className="w-[198px] min-w-[175px]">
+                              <WexDropdownMenu.Item
+                                className="flex items-center gap-2 px-3 py-2 cursor-pointer"
+                                onClick={() => {
+                                  setSelectedCardForDetails(card);
+                                  setIsCardDetailsModalOpen(true);
+                                  setOpenDropdownId(null);
+                                }}
+                              >
+                                <Eye className="h-3.5 w-3.5 text-[#7c858e]" />
+                                <span className="text-sm text-[#243746] leading-none">View Details</span>
+                              </WexDropdownMenu.Item>
+                              <WexDropdownMenu.Item className="flex items-center gap-2 px-3 py-2 cursor-pointer">
+                                <RefreshCw className="h-3.5 w-3.5 text-[#7c858e]" />
+                                <span className="text-sm text-[#243746] leading-none">Order Replacement</span>
+                              </WexDropdownMenu.Item>
+                            </WexDropdownMenu.Content>
+                          </WexDropdownMenu>
+                        </div>
+                        
+                        {/* Card Details */}
+                        <div className="flex flex-col gap-1">
+                          {/* Card Number and Status */}
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                              •••• {card.cardNumber}
+                            </span>
+                            <WexBadge
+                              intent={card.status === "ready-to-activate" ? "success" : "info"}
+                              size="sm"
+                              className="text-xs font-bold px-1.5 py-0.5 rounded-md"
+                            >
+                              {card.status === "ready-to-activate"
+                                ? "Ready to Activate"
+                                : "Active"}
+                            </WexBadge>
+                          </div>
+                          
+                          {/* Expiration Date */}
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                              Expires:
+                            </span>
+                            <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                              {card.expirationDate}
+                            </span>
+                          </div>
+                          
+                          {/* Effective Date */}
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                              Effective:
+                            </span>
+                            <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                              {card.effectiveDate}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {/* Action Button */}
+                        <div className="mt-2">
+                          {card.status === "ready-to-activate" ? (
+                            <WexButton
+                              intent="primary"
+                              className="w-full"
+                              onClick={() => {
+                                setCardBeingActivated(card);
+                                setIsActivationAuthModalOpen(true);
+                              }}
+                            >
+                              Activate
+                            </WexButton>
+                          ) : (
+                            <WexButton
+                              intent="destructive"
+                              variant="outline"
+                              className="w-full"
+                              onClick={() => {
+                                // Handle report lost/stolen
+                                wexToast.warning("Report lost/stolen initiated");
+                              }}
+                            >
+                              Report Lost/Stolen
+                            </WexButton>
+                          )}
+                        </div>
+                      </div>
+                    </WexCard>
+                  ))}
+                </div>
+                
+                {/* Informational Alert */}
+                <WexAlert
+                  intent="info"
+                  className="border border-[#bfdbfe] bg-[rgba(239,246,255,0.95)] rounded-md shadow-[0px_4px_8px_0px_rgba(2,5,10,0.04)]"
+                >
+                  <AlertCircle className="h-4 w-4 text-[#2563eb]" />
+                  <WexAlert.Description className="text-base text-[#0058a3] leading-6 tracking-[-0.176px]">
+                    <span className="font-normal">
+                      Request New Personal Identification Number (PIN) Toll Free Number:{" "}
+                    </span>
+                    <span className="font-semibold">(866) 898-9795</span>
+                  </WexAlert.Description>
+                </WexAlert>
               </div>
-              <WexSeparator className="mt-4" />
             </div>
-            <div className="flex flex-col items-center justify-center px-8 py-16">
-              <WexEmpty className="border-0 py-12">
-                <WexEmpty.Header>
-                  <WexEmpty.Media variant="default">
-                    <img 
-                      src={emptyStateIllustration} 
-                      alt="" 
-                      className="h-[191px] w-[235px]"
+            
+            {/* Card Details Modal */}
+            <WexDialog open={isCardDetailsModalOpen} onOpenChange={setIsCardDetailsModalOpen}>
+              <WexDialog.Content className="w-[400px] p-0 gap-6 [&>div:last-child]:hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between p-[17.5px] border-b border-[#edeff0]">
+                  <WexDialog.Title className="text-[17.5px] font-semibold text-[#243746] leading-normal">
+                    Card Details
+                  </WexDialog.Title>
+                  <WexDialog.Close asChild>
+                    <WexButton
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="Close"
+                    >
+                      <X className="h-3.5 w-3.5 text-[#515f6b]" />
+                    </WexButton>
+                  </WexDialog.Close>
+                </div>
+                
+                {/* Content */}
+                <div className="px-0 pb-6 flex flex-col items-start w-[400px] gap-6">
+                  {/* Card Details Section */}
+                  <div className="px-6 flex flex-col gap-2 w-full">
+                    {/* Status Badge */}
+                    {selectedCardForDetails && (
+                      <>
+                        <WexBadge intent="info" size="sm" className="w-fit">
+                          {selectedCardForDetails.status === "active" ? "Active" : "Ready to Activate"}
+                        </WexBadge>
+                        
+                        {/* Cardholder Name */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Cardholder Name:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {selectedCardForDetails.cardholderName}
+                          </span>
+                        </div>
+                        
+                        {/* Card Number */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Card Number:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {selectedCardForDetails.fullCardNumber || `•••• ${selectedCardForDetails.cardNumber}`}
+                          </span>
+                        </div>
+                        
+                        {/* Expiration Date */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Expires:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {selectedCardForDetails.expirationDate}
+                          </span>
+                        </div>
+                        
+                        {/* Effective Date */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Effective:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {selectedCardForDetails.effectiveDate}
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Purse Status Section */}
+                  {selectedCardForDetails && selectedCardForDetails.purseStatuses && (
+                    <div className="px-6 flex flex-col gap-2 w-full">
+                      <h3 className="text-sm font-semibold text-[#243746] tracking-[-0.084px] leading-6">
+                        Purse Status
+                      </h3>
+                      {selectedCardForDetails.purseStatuses.map((purseStatus, index) => (
+                        <div key={index} className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {purseStatus.accountName}:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {purseStatus.status}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </WexDialog.Content>
+            </WexDialog>
+            
+            {/* Card Activation Authentication Modal */}
+            <WexDialog open={isActivationAuthModalOpen} onOpenChange={setIsActivationAuthModalOpen}>
+              <WexDialog.Content className="w-[448px] p-0 gap-6 [&>div:last-child]:hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between p-[17.5px] border-b border-[#edeff0]">
+                  <WexDialog.Title className="text-[17.5px] font-semibold text-[#243746] leading-normal">
+                    Authentication
+                  </WexDialog.Title>
+                  <WexDialog.Close asChild>
+                    <WexButton
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="Close"
+                      onClick={() => {
+                        setActivationVerificationMethod("");
+                      }}
+                    >
+                      <X className="h-3.5 w-3.5 text-[#515f6b]" />
+                    </WexButton>
+                  </WexDialog.Close>
+                </div>
+                
+                {/* Content */}
+                <div className="px-0 pb-0 flex flex-col gap-6 w-[448px]">
+                  {/* Explanatory Text */}
+                  <div className="px-6 flex flex-col items-start justify-center">
+                    <p className="text-[17px] font-normal text-[#243746] tracking-[-0.221px] leading-6">
+                      Your protection is important to us. We need to take some extra steps to verify your identity. Choose how you'd like to receive a verification code.
+                    </p>
+                  </div>
+                  
+                  {/* Verification Method Selection */}
+                  <div className="px-6 flex flex-col gap-4">
+                    <WexRadioGroup
+                      value={activationVerificationMethod}
+                      onValueChange={(value) => setActivationVerificationMethod(value as "text" | "email")}
+                      className="flex flex-col gap-4"
+                    >
+                      <div className="flex items-center gap-2 p-4 border border-[#e4e6e9] rounded-[11px] hover:bg-[#f8f9fa]">
+                        <WexRadioGroup.Item value="text" id="verify-text-activation" />
+                        <WexLabel htmlFor="verify-text-activation" className="cursor-pointer flex-1 text-sm text-[#243746]">
+                          <span className="font-semibold">Text Message</span> at (***) ***-1111
+                        </WexLabel>
+                      </div>
+                      <div className="flex items-center gap-2 p-4 border border-[#e4e6e9] rounded-[11px] hover:bg-[#f8f9fa]">
+                        <WexRadioGroup.Item value="email" id="verify-email-activation" />
+                        <WexLabel htmlFor="verify-email-activation" className="cursor-pointer flex-1 text-sm text-[#243746]">
+                          <span className="font-semibold">Email</span> at my***m**@******.com
+                        </WexLabel>
+                      </div>
+                    </WexRadioGroup>
+                  </div>
+                </div>
+                
+                {/* Footer */}
+                <WexDialog.Footer className="flex gap-2 justify-end p-[17.5px] border-t border-[#edeff0]">
+                  <WexButton
+                    intent="secondary"
+                    variant="outline"
+                    onClick={() => {
+                      setIsActivationAuthModalOpen(false);
+                      setActivationVerificationMethod("");
+                    }}
+                  >
+                    Cancel
+                  </WexButton>
+                  <WexButton
+                    intent="primary"
+                    onClick={() => {
+                      if (activationVerificationMethod) {
+                        if (activationVerificationMethod === "text") {
+                          // Close authentication modal and open verification code modal
+                          setIsActivationAuthModalOpen(false);
+                          setIsVerificationCodeModalOpen(true);
+                          setVerificationResendTimer(45); // Start 45-second timer
+                        } else {
+                          // Handle email method - show toast for now
+                          wexToast.success("Verification code will be sent via email");
+                          setIsActivationAuthModalOpen(false);
+                          setActivationVerificationMethod("");
+                        }
+                      } else {
+                        wexToast.error("Please select a verification method");
+                      }
+                    }}
+                    disabled={!activationVerificationMethod}
+                  >
+                    Next
+                  </WexButton>
+                </WexDialog.Footer>
+              </WexDialog.Content>
+            </WexDialog>
+            
+            {/* Verification Code Modal */}
+            <WexDialog open={isVerificationCodeModalOpen} onOpenChange={setIsVerificationCodeModalOpen}>
+              <WexDialog.Content className="w-[448px] p-0 gap-6 [&>div:last-child]:hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between p-[17.5px] border-b border-[#edeff0]">
+                  <WexDialog.Title className="text-[17.5px] font-semibold text-[#243746] leading-normal">
+                    Authentication
+                  </WexDialog.Title>
+                  <WexDialog.Close asChild>
+                    <WexButton
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="Close"
+                      onClick={() => {
+                        setVerificationCode("");
+                        setVerificationResendTimer(0);
+                      }}
+                    >
+                      <X className="h-3.5 w-3.5 text-[#515f6b]" />
+                    </WexButton>
+                  </WexDialog.Close>
+                </div>
+                
+                {/* Content */}
+                <div className="px-0 pb-0 flex flex-col gap-6 w-[448px]">
+                  {/* Message Text */}
+                  <div className="px-6 flex flex-col items-start justify-center">
+                    <p className="text-[17px] font-normal text-[#243746] tracking-[-0.221px] leading-6">
+                      We sent a 6-digit verification code to (***) ***-1111.
+                    </p>
+                  </div>
+                  
+                  {/* Verification Code Input */}
+                  <div className="px-6 flex flex-col gap-2">
+                    <WexFloatLabel
+                      label="Verification Code"
+                      value={verificationCode}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "").slice(0, 6);
+                        setVerificationCode(value);
+                      }}
+                      maxLength={6}
+                      type="text"
+                      inputMode="numeric"
                     />
-                  </WexEmpty.Media>
-                  <WexEmpty.Title className="text-base font-normal text-[#243746]">
-                    No debit card information available
-                  </WexEmpty.Title>
-                </WexEmpty.Header>
-              </WexEmpty>
-            </div>
+                    
+                    {/* Resend Timer */}
+                    <p className="text-xs font-normal text-[#243746] leading-[21px]">
+                      {verificationResendTimer > 0
+                        ? `Resend in ${Math.floor(verificationResendTimer / 60)}:${String(verificationResendTimer % 60).padStart(2, "0")}`
+                        : ""}
+                    </p>
+                  </div>
+                  
+                  {/* Resend Code Button */}
+                  <div className="px-6">
+                    <WexButton
+                      intent="secondary"
+                      variant="outline"
+                      className="w-fit"
+                      onClick={() => {
+                        setVerificationResendTimer(45);
+                        wexToast.success("Verification code resent");
+                      }}
+                      disabled={verificationResendTimer > 0}
+                    >
+                      Resend Code
+                    </WexButton>
+                  </div>
+                </div>
+                
+                {/* Footer */}
+                <WexDialog.Footer className="flex gap-2 justify-end p-[17.5px] border-t border-[#edeff0]">
+                  <WexButton
+                    intent="secondary"
+                    variant="outline"
+                    onClick={() => {
+                      setIsVerificationCodeModalOpen(false);
+                      setVerificationCode("");
+                      setVerificationResendTimer(0);
+                    }}
+                  >
+                    Cancel
+                  </WexButton>
+                  <WexButton
+                    intent="primary"
+                    onClick={() => {
+                      if (verificationCode.length === 6) {
+                        // Close verification code modal and open activation confirmation modal
+                        setIsVerificationCodeModalOpen(false);
+                        setVerificationCode("");
+                        setVerificationResendTimer(0);
+                        setIsActivateCardModalOpen(true);
+                      } else {
+                        wexToast.error("Please enter a 6-digit verification code");
+                      }
+                    }}
+                    disabled={verificationCode.length !== 6}
+                  >
+                    Next
+                  </WexButton>
+                </WexDialog.Footer>
+              </WexDialog.Content>
+            </WexDialog>
+            
+            {/* Use a different method link */}
+            {isVerificationCodeModalOpen && (
+              <div className="absolute left-1/2 top-[392px] -translate-x-1/2 z-50">
+                <WexButton
+                  variant="ghost"
+                  className="text-[#243746] hover:underline h-auto p-0"
+                  onClick={() => {
+                    setIsVerificationCodeModalOpen(false);
+                    setVerificationCode("");
+                    setVerificationResendTimer(0);
+                    setIsActivationAuthModalOpen(true);
+                  }}
+                >
+                  Use a different method
+                </WexButton>
+              </div>
+            )}
+            
+            {/* Card Activation Confirmation Modal */}
+            <WexDialog open={isActivateCardModalOpen} onOpenChange={setIsActivateCardModalOpen}>
+              <WexDialog.Content className="w-[448px] p-0 gap-6 [&>div:last-child]:hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between p-[17.5px] border-b border-[#edeff0]">
+                  <WexDialog.Title className="text-[17.5px] font-semibold text-[#243746] leading-normal">
+                    Activate Card
+                  </WexDialog.Title>
+                  <WexDialog.Close asChild>
+                    <WexButton
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="Close"
+                    >
+                      <X className="h-3.5 w-3.5 text-[#515f6b]" />
+                    </WexButton>
+                  </WexDialog.Close>
+                </div>
+                
+                {/* Content */}
+                <div className="px-0 pb-0 flex flex-col gap-6 w-[448px]">
+                  {/* Cardholder Information */}
+                  <div className="px-6 flex flex-col gap-2">
+                    {cardBeingActivated && (
+                      <>
+                        {/* Cardholder Name */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Cardholder Name:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            {cardBeingActivated.cardholderName}
+                          </span>
+                        </div>
+                        
+                        {/* Card Number */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Card Number:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            x{cardBeingActivated.cardNumber}
+                          </span>
+                        </div>
+                        
+                        {/* Marital Status */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-[#515f6b] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Marital Status:
+                          </span>
+                          <span className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6 whitespace-nowrap">
+                            Single
+                          </span>
+                        </div>
+                        
+                        {/* Status Badge */}
+                        <WexBadge intent="success" size="sm" className="w-fit">
+                          Ready to Activate
+                        </WexBadge>
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Disclaimer Text */}
+                  <div className="px-6">
+                    <p className="text-sm text-[#1d2c38] tracking-[-0.084px] leading-6">
+                      By activating your card, you agree and consent that you have carefully read and understand the{" "}
+                      <WexButton
+                        variant="ghost"
+                        className="text-[#0058a3] hover:underline h-auto p-0 font-normal inline"
+                        onClick={() => {
+                          // Handle cardholder agreement link - can open in new tab or show modal
+                          wexToast.info("Cardholder agreement link clicked");
+                        }}
+                      >
+                        cardholder agreement
+                      </WexButton>
+                      . If you are activating your card prior to receiving it, please closely monitor your account notifications and transactions for any unauthorized activity.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Footer */}
+                <WexDialog.Footer className="flex gap-2 justify-end p-[17.5px] border-t border-[#edeff0]">
+                  <WexButton
+                    intent="secondary"
+                    variant="outline"
+                    onClick={() => {
+                      setIsActivateCardModalOpen(false);
+                      setCardBeingActivated(null);
+                    }}
+                  >
+                    Cancel
+                  </WexButton>
+                  <WexButton
+                    intent="primary"
+                    onClick={() => {
+                      if (cardBeingActivated) {
+                        // Update card status to active
+                        setDebitCards((prevCards) =>
+                          prevCards.map((card) =>
+                            card.id === cardBeingActivated.id
+                              ? { ...card, status: "active" as const }
+                              : card
+                          )
+                        );
+                        wexToast.success("Card successfully activated", {
+                          description: `Card number xxxx${cardBeingActivated.cardNumber} has been successfully activated`,
+                        });
+                        setIsActivateCardModalOpen(false);
+                        setCardBeingActivated(null);
+                      }
+                    }}
+                  >
+                    Activate
+                  </WexButton>
+                </WexDialog.Footer>
+              </WexDialog.Content>
+            </WexDialog>
           </>
         );
 
