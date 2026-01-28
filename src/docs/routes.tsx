@@ -2,6 +2,7 @@ import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import { DocsLayout } from "./layout/DocsLayout";
 import { ReimbursementProvider } from "./pages/consumer/reimburse/ReimbursementContext";
+import { ModalFlowWrapper } from "./pages/consumer/reimburse/components/ModalFlowWrapper";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { LightModeBoundary } from "./components/LightModeBoundary";
@@ -42,6 +43,8 @@ const ReimburseDocsPage = React.lazy(() => import("@/docs/pages/consumer/reimbur
 const ReimburseAnalyzePage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseAnalyze"));
 const ReimburseReviewPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseReview"));
 const ReimburseConfirmPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseConfirm"));
+const ReimburseWizardPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseWizard"));
+const ReimburseWizardSuccessPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseWizardSuccess"));
 const MobileUploadPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/MobileUpload"));
 
 // Login page - standalone route
@@ -197,7 +200,16 @@ export function DocsRoutes() {
         />
 
         {/* All other routes are protected */}
-        <Route index element={withConsumerLight(<ConsumerExperiencePage />)} />
+        <Route 
+          index 
+          element={
+            withConsumerLight(
+              <ReimbursementProvider>
+                <ConsumerExperiencePage />
+              </ReimbursementProvider>
+            )
+          } 
+        />
         
         {/* Standalone Account Overview route - bypasses DocsLayout */}
         <Route path="account-overview" element={withConsumerLight(<AccountOverviewPage />)} />
@@ -220,14 +232,18 @@ export function DocsRoutes() {
           element={
             withConsumerLight(
               <ReimbursementProvider>
-                <Routes>
-                  <Route index element={<ReimburseMyselfPage />} />
-                  <Route path="docs" element={<ReimburseDocsPage />} />
-                  <Route path="analyze" element={<ReimburseAnalyzePage />} />
-                  <Route path="review" element={<ReimburseReviewPage />} />
-                  <Route path="confirm" element={<ReimburseConfirmPage />} />
-                  <Route path="upload-mobile" element={<MobileUploadPage />} />
-                </Routes>
+                <ModalFlowWrapper>
+                  <Routes>
+                    <Route index element={<ReimburseMyselfPage />} />
+                    <Route path="wizard" element={<ReimburseWizardPage />} />
+                    <Route path="wizard/success" element={<ReimburseWizardSuccessPage />} />
+                    <Route path="docs" element={<ReimburseDocsPage />} />
+                    <Route path="analyze" element={<ReimburseAnalyzePage />} />
+                    <Route path="review" element={<ReimburseReviewPage />} />
+                    <Route path="confirm" element={<ReimburseConfirmPage />} />
+                    <Route path="upload-mobile" element={<MobileUploadPage />} />
+                  </Routes>
+                </ModalFlowWrapper>
               </ReimbursementProvider>
             )
           }

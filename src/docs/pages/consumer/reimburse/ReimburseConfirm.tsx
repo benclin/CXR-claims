@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ConsumerNavigation } from "../ConsumerNavigation";
 import { useReimbursement } from "./ReimbursementContext";
+import { getFlowById } from "./flow/registry";
+import { useReimburseFlowNav } from "./hooks/useReimburseFlowNav";
 import {
   WexButton,
   WexCard,
@@ -11,95 +13,33 @@ import {
   WexSeparator,
   WexLabel,
 } from "@/components/wex";
-import { Info, Pencil, ShoppingCart, CheckCircle2, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Pencil, ShoppingCart, CheckCircle2, X, ChevronDown, ChevronRight } from "lucide-react";
+import { AvailableBalanceSection, ProgressIndicator, ModeSelector } from "./components";
 
-// Helper function to get plan card data by account value
-const getPlanCardData = (accountValue: string) => {
-  const plans = {
-    "medical-fsa": {
-      title: "Medical FSA",
-      dateRange: "01/01/2026 - 12/31/2026",
-      balance: "$2,734.76",
-      finalFilingDate: "04/30/2027",
-      finalServiceDate: "12/31/2026",
-    },
-    "lifestyle-spending-2026": {
-      title: "Lifestyle Spending Account",
-      dateRange: "01/01/2026 - 12/31/2026",
-      balance: "$250.00",
-      finalFilingDate: "04/30/2027",
-      finalServiceDate: "12/31/2026",
-    },
-    "lifestyle-spending-2025": {
-      title: "Lifestyle Spending Account",
-      dateRange: "01/01/2025 - 12/31/2025",
-      balance: "$250.00",
-      finalFilingDate: "04/30/2026",
-      finalServiceDate: "12/31/2025",
-    },
-  };
-  return plans[accountValue as keyof typeof plans] || plans["medical-fsa"];
-};
-
-// Plan Card Component
-const PlanCard = ({
-  title,
-  dateRange,
-  balance,
-  finalFilingDate,
-  finalServiceDate,
+export default function ReimburseConfirm({
+  onModalClose,
 }: {
-  title: string;
-  dateRange: string;
-  balance: string;
-  finalFilingDate: string;
-  finalServiceDate: string;
-}) => (
-  <WexCard className="border border-border w-[325px] shrink-0">
-    <WexCard.Content className="p-4 space-y-2">
-      {/* Header with title, date range, and info icon */}
-      <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-0.5">
-          <p className="text-base font-semibold text-foreground leading-6 tracking-[-0.176px]">
-            {title}
-          </p>
-          <p className="text-[11px] font-normal text-muted-foreground leading-4 tracking-[0.055px]">
-            {dateRange}
-          </p>
-        </div>
-        <WexButton
-          variant="ghost"
-          size="sm"
-          className="h-7 w-7 p-0"
-          aria-label="Account information"
-        >
-          <Info className="h-3.5 w-3.5 text-muted-foreground" />
-        </WexButton>
-      </div>
-
-      {/* Balance and dates */}
-      <div className="flex flex-col gap-1 pt-2">
-        <div className="flex items-center">
-          <p className="text-xl font-bold text-foreground leading-8 tracking-[-0.34px]">
-            {balance}
-          </p>
-        </div>
-        <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-          <span className="text-muted-foreground">Final Filing Date:</span>
-          <span className="text-foreground">{finalFilingDate}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-          <span className="text-muted-foreground">Final Service Date:</span>
-          <span className="text-foreground">{finalServiceDate}</span>
-        </div>
-      </div>
-    </WexCard.Content>
-  </WexCard>
-);
-
-export default function ReimburseConfirm() {
+  onModalClose?: () => void;
+} = {}) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { state, updateState } = useReimbursement();
+  const { goBack } = useReimburseFlowNav();
+
+  const isModal = state.layoutModes.entryMode === "modal";
+
+  // Get layout modes from URL params or state
+  const layoutModes = useMemo(() => {
+    const modes = { ...state.layoutModes };
+    const progressMode = searchParams.get("progressMode");
+    
+    if (progressMode && ["none", "implicit", "stepper"].includes(progressMode)) {
+      modes.progressMode = progressMode as "none" | "implicit" | "stepper";
+    }
+    
+    return modes;
+  }, [state.layoutModes, searchParams]);
+  const activeFlow = useMemo(() => getFlowById(state.flowId), [state.flowId]);
   const [acceptedTerms, setAcceptedTerms] = useState(state.acceptedTerms || false);
   const [showSuccessBanner, setShowSuccessBanner] = useState(false);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
@@ -128,67 +68,38 @@ export default function ReimburseConfirm() {
   const amount = state.amount || "$150.00";
   const approvedAmount = amount;
 
-  return (
-    <div className="min-h-screen bg-[#F1FAFE]">
-      <ConsumerNavigation />
-
-      <div className="mx-auto max-w-[1440px] px-8 py-8">
-        <div className="mx-auto max-w-[1376px] space-y-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
-          </div>
-
-          {showSuccessBanner && (
-            <WexAlert intent="success" className="w-full">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-start gap-3 flex-1">
-                  <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
-                  <div className="flex-1">
-                    <div className="text-success font-semibold text-sm mb-1">Claim Approved!</div>
-                    <div className="text-foreground text-sm">
-                      Great news! Your claim has been approved. You will be paid out according to account setup.
-                    </div>
-                  </div>
+  // Middle content (scrollable area)
+  const middleContent = (
+    <>
+      {showSuccessBanner && (
+        <WexAlert intent="success" className="w-full">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
+              <div className="flex-1">
+                <div className="text-success font-semibold text-sm mb-1">Claim Approved!</div>
+                <div className="text-foreground text-sm">
+                  Great news! Your claim has been approved. You will be paid out according to account setup.
                 </div>
-                <WexButton
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 w-6 text-success hover:text-success hover:bg-success/10 shrink-0"
-                  onClick={() => setShowSuccessBanner(false)}
-                >
-                  <X className="h-4 w-4" />
-                </WexButton>
               </div>
-            </WexAlert>
-          )}
+            </div>
+            <WexButton
+              variant="ghost"
+              size="sm"
+              className="h-6 w-6 text-success hover:text-success hover:bg-success/10 shrink-0"
+              onClick={() => setShowSuccessBanner(false)}
+            >
+              <X className="h-4 w-4" />
+            </WexButton>
+          </div>
+        </WexAlert>
+      )}
 
-          <WexCard>
-            <WexCard.Content className="space-y-6 p-6">
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-                  Available Balance
-                </h2>
-                
-                {/* Selected Plan Card */}
-                {state.account && (() => {
-                  const planData = getPlanCardData(state.account);
-                  return (
-                    <div className="flex gap-6 items-start">
-                      <PlanCard
-                        title={planData.title}
-                        dateRange={planData.dateRange}
-                        balance={planData.balance}
-                        finalFilingDate={planData.finalFilingDate}
-                        finalServiceDate={planData.finalServiceDate}
-                      />
-                    </div>
-                  );
-                })()}
-              </div>
+      <AvailableBalanceSection selectedAccount={state.account} />
 
-              <WexSeparator />
+      <WexSeparator />
 
-              <div className="space-y-4">
+      <div className="space-y-4">
                 <h2 className="text-base font-semibold text-foreground">Transaction Summary</h2>
                 <div className="overflow-hidden rounded-md border">
                   <WexTable>
@@ -309,30 +220,90 @@ export default function ReimburseConfirm() {
                       </WexCard.Content>
                     </WexCard>
                   </div>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <WexButton intent="secondary" onClick={() => navigate("/reimburse/review")}>
-                      Previous
-                    </WexButton>
-                    <div className="flex gap-3">
-                      <WexButton variant="ghost">
-                        <ShoppingCart className="h-4 w-4" />
-                        Save for Later
-                      </WexButton>
-                      <WexButton variant="ghost" onClick={() => navigate("/")}>
-                        Cancel
-                      </WexButton>
-                      <WexButton intent="primary" disabled={!acceptedTerms} onClick={handleSubmit}>
-                        Submit
-                      </WexButton>
-                    </div>
-                  </div>
                 </>
               )}
+          </>
+        );
+
+  // Buttons (fixed at bottom)
+  const buttons = !showSuccessBanner ? (
+    <div className="flex items-center justify-between">
+      <WexButton intent="secondary" onClick={() => goBack("confirm")}>
+        Previous
+      </WexButton>
+      <div className="flex gap-3">
+        <WexButton variant="ghost">
+          <ShoppingCart className="h-4 w-4" />
+          Save for Later
+        </WexButton>
+        <WexButton 
+          variant="ghost" 
+          onClick={() => {
+            if (isModal && onModalClose) {
+              onModalClose();
+            } else {
+              navigate("/");
+            }
+          }}
+        >
+          Cancel
+        </WexButton>
+        <WexButton intent="primary" disabled={!acceptedTerms} onClick={handleSubmit}>
+          Submit
+        </WexButton>
+      </div>
+    </div>
+  ) : null;
+
+  // For modal mode, use fixed layout structure
+  if (isModal) {
+    return (
+      <div className="flex flex-col h-full max-h-[90vh]">
+        {/* Fixed header with title */}
+        <div className="flex-shrink-0 px-6 pt-6 pb-4">
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+        </div>
+        {/* Scrollable middle content */}
+        <div className="flex-1 overflow-y-auto px-6">
+          <div className="space-y-6 py-4">
+            {middleContent}
+          </div>
+        </div>
+        {/* Fixed footer with buttons */}
+        {buttons && (
+          <div className="flex-shrink-0 px-6 pt-4 pb-6 border-t">
+            {buttons}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // For fullpage mode, use original structure
+  return (
+    <div className="min-h-screen bg-[#F1FAFE]">
+      <ConsumerNavigation />
+
+      <div className="mx-auto max-w-[1440px] px-8 py-8">
+        <div className="mx-auto max-w-[1376px] space-y-8">
+          <div className="flex items-center justify-between">
+            <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+          </div>
+
+          <WexCard>
+            <WexCard.Content className="space-y-6 p-6">
+              <ProgressIndicator
+                mode={layoutModes.progressMode}
+                currentStep="confirm"
+                steps={activeFlow.getProgressSteps(state)}
+              />
+              {middleContent}
+              {buttons}
             </WexCard.Content>
           </WexCard>
         </div>
       </div>
+      <ModeSelector />
     </div>
   );
 }

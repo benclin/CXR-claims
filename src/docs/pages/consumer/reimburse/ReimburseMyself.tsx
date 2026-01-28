@@ -1,8 +1,18 @@
 import { type FormEvent, useMemo, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { ConsumerNavigation } from "../ConsumerNavigation";
 import { useReimbursement } from "./ReimbursementContext";
+import {
+  AvailableBalanceSection,
+  PlanSelector,
+  ProgressIndicator,
+  EntryWrapper,
+  AIStatusIndicator,
+  ModeSelector,
+} from "./components";
+import { getFlowById } from "./flow/registry";
+import { useReimburseFlowNav } from "./hooks/useReimburseFlowNav";
 import {
   WexButton,
   WexCard,
@@ -22,18 +32,69 @@ import {
   FileText,
   CalendarRange,
   Wallet,
-  Sparkles,
   Info,
   X,
 } from "lucide-react";
 
-export default function ReimburseMyself() {
+export default function ReimburseMyself({
+  skipEntryWrapper = false,
+  onModalClose,
+}: {
+  skipEntryWrapper?: boolean;
+  onModalClose?: () => void;
+} = {}) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { state, updateState } = useReimbursement();
+  const { goNext } = useReimburseFlowNav();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [variant, setVariant] = useState<"mvp" | "vision">(state.variant || "mvp");
   const [sessionId, setSessionId] = useState<string>("");
+
+  // Get variant from URL params or state
+  const variant = useMemo(() => {
+    const urlVariant = searchParams.get("variant");
+    if (urlVariant && ["mvp", "vision"].includes(urlVariant)) {
+      return urlVariant as "mvp" | "vision";
+    }
+    return state.variant || "mvp";
+  }, [searchParams, state.variant]);
+
+  // Sync variant from URL to state if needed
+  useEffect(() => {
+    const urlVariant = searchParams.get("variant");
+    if (urlVariant && ["mvp", "vision"].includes(urlVariant) && state.variant !== urlVariant) {
+      updateState({ variant: urlVariant as "mvp" | "vision" });
+    }
+  }, [searchParams, state.variant, updateState]);
+
+  // Get layout modes from URL params or state
+  const layoutModes = useMemo(() => {
+    const modes = { ...state.layoutModes };
+    
+    // Override with URL params if present
+    const entryMode = searchParams.get("entryMode");
+    const planSelectionMode = searchParams.get("planSelectionMode");
+    const progressMode = searchParams.get("progressMode");
+    const aiCommunication = searchParams.get("aiCommunication");
+    
+    if (entryMode && ["fullpage", "modal", "drawer"].includes(entryMode)) {
+      modes.entryMode = entryMode as "fullpage" | "modal" | "drawer";
+    }
+    if (planSelectionMode && ["dropdown", "cards"].includes(planSelectionMode)) {
+      modes.planSelectionMode = planSelectionMode as "dropdown" | "cards";
+    }
+    if (progressMode && ["none", "implicit", "stepper"].includes(progressMode)) {
+      modes.progressMode = progressMode as "none" | "implicit" | "stepper";
+    }
+    if (aiCommunication && ["minimal", "detailed", "prominent"].includes(aiCommunication)) {
+      modes.aiCommunication = aiCommunication as "minimal" | "detailed" | "prominent";
+    }
+    
+    return modes;
+  }, [state.layoutModes, searchParams]);
+
+  const activeFlow = useMemo(() => getFlowById(state.flowId), [state.flowId]);
 
   // Generate session ID on mount
   useEffect(() => {
@@ -174,151 +235,79 @@ export default function ReimburseMyself() {
     return "—";
   };
 
-  // Helper component for plan cards
-  const PlanCard = ({
-    title,
-    dateRange,
-    balance,
-    finalFilingDate,
-    finalServiceDate,
-  }: {
-    title: string;
-    dateRange: string;
-    balance: string;
-    finalFilingDate: string;
-    finalServiceDate: string;
-  }) => (
-    <WexCard className="border border-border w-[325px] shrink-0">
-      <WexCard.Content className="p-4 space-y-2">
-        {/* Header with title, date range, and info icon */}
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-0.5">
-            <p className="text-base font-semibold text-foreground leading-6 tracking-[-0.176px]">
-              {title}
-            </p>
-            <p className="text-[11px] font-normal text-muted-foreground leading-4 tracking-[0.055px]">
-              {dateRange}
-            </p>
-          </div>
-          <WexButton
-            variant="ghost"
-            size="sm"
-            className="h-7 w-7 p-0"
-            aria-label="Account information"
-          >
-            <Info className="h-3.5 w-3.5 text-muted-foreground" />
-          </WexButton>
-        </div>
 
-        {/* Balance and dates */}
-        <div className="flex flex-col gap-1 pt-2">
-          <div className="flex items-center">
-            <p className="text-xl font-bold text-foreground leading-8 tracking-[-0.34px]">
-              {balance}
-            </p>
-          </div>
-          <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-            <span className="text-muted-foreground">Final Filing Date:</span>
-            <span className="text-foreground">{finalFilingDate}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-            <span className="text-muted-foreground">Final Service Date:</span>
-            <span className="text-foreground">{finalServiceDate}</span>
-          </div>
-        </div>
-      </WexCard.Content>
-    </WexCard>
-  );
+  const renderMvp = () => {
+    const isModal = layoutModes.entryMode === "modal";
+    
+    // Middle content (scrollable area)
+    const isCardsMode = layoutModes.planSelectionMode === "cards";
+    
+    const middleContent = (
+      <>
+        {/* Only show Available Balance section when NOT in cards mode */}
+        {!isCardsMode && (
+          <>
+            <AvailableBalanceSection showAll={true} />
+            <WexSeparator />
+          </>
+        )}
 
-  const renderMvp = () => (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
-          Reimburse Myself
-        </h1>
-      </div>
-
-      <WexCard>
-        <WexCard.Content className="space-y-6 p-6">
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-              Available Balance
-            </h2>
-            
-            {/* Three Plan Cards in a row */}
-            <div className="flex flex-wrap gap-6 items-start">
-              <PlanCard
-                title="Medical FSA"
-                dateRange="01/01/2026 - 12/31/2026"
-                balance="$2,734.76"
-                finalFilingDate="04/30/2027"
-                finalServiceDate="12/31/2026"
-              />
-              <PlanCard
-                title="Lifestyle Spending Account"
-                dateRange="01/01/2026 - 12/31/2026"
-                balance="$250.00"
-                finalFilingDate="04/30/2027"
-                finalServiceDate="12/31/2026"
-              />
-              <PlanCard
-                title="Lifestyle Spending Account"
-                dateRange="01/01/2025 - 12/31/2025"
-                balance="$250.00"
-                finalFilingDate="04/30/2026"
-                finalServiceDate="12/31/2025"
-              />
-            </div>
-          </div>
-
-          <WexSeparator />
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-                Select Accounts
-              </h2>
-            </div>
-
-            <WexButton
-              intent="primary"
-              variant="link"
-              size="sm"
-              asChild
-            >
-              <a
-                href="https://www.wexinc.com/resources/benefits-toolkit/eligible-expenses/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                What's an eligible expense?
-              </a>
-            </WexButton>
-
-            <div className="space-y-4">
-              <div className="relative w-[320px]">
-                <WexSelect
-                  value={formData.account || undefined}
-                  onValueChange={(value) => handleChange("account", value)}
-                >
-                  <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.account ? "has-value" : ""}`}>
-                    <WexSelect.Value placeholder=" " />
-                  </WexSelect.Trigger>
-                  <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
-                    <WexSelect.Item value="medical-fsa">Medical FSA</WexSelect.Item>
-                    <WexSelect.Item value="lifestyle-spending-2026">Lifestyle Spending Account 2026</WexSelect.Item>
-                    <WexSelect.Item value="lifestyle-spending-2025">Lifestyle Spending Account 2025</WexSelect.Item>
-                  </WexSelect.Content>
-                </WexSelect>
-                <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-                  formData.account 
-                    ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-                    : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-                }`}>
-                  Pay from
-                </label>
+        <div className="space-y-4">
+          {!isCardsMode && (
+            <>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
+                  Select Accounts
+                </h2>
               </div>
 
+              <WexButton
+                intent="primary"
+                variant="link"
+                size="sm"
+                asChild
+              >
+                <a
+                  href="https://www.wexinc.com/resources/benefits-toolkit/eligible-expenses/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  What's an eligible expense?
+                </a>
+              </WexButton>
+            </>
+          )}
+
+          <div className="space-y-4">
+            <PlanSelector
+              mode={layoutModes.planSelectionMode}
+              value={formData.account}
+              onValueChange={(value) => handleChange("account", value)}
+              label={isCardsMode ? "Select where to pay from:" : "Pay from"}
+            />
+
+            {isCardsMode ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">
+                  Select where to pay to:
+                </label>
+                <div className="relative w-[320px]">
+                  <WexSelect
+                    value={formData.category || undefined}
+                    onValueChange={(value) => handleChange("category", value)}
+                  >
+                    <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.category ? "has-value" : ""}`}>
+                      <WexSelect.Value placeholder=" " />
+                    </WexSelect.Trigger>
+                    <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
+                      <WexSelect.Item value="me">Me</WexSelect.Item>
+                      <WexSelect.Item value="provider">Provider</WexSelect.Item>
+                      <WexSelect.Item value="dependent">Dependent</WexSelect.Item>
+                    </WexSelect.Content>
+                  </WexSelect>
+                </div>
+              </div>
+            ) : (
               <div className="relative w-[320px]">
                 <WexSelect
                   value={formData.category || undefined}
@@ -341,28 +330,94 @@ export default function ReimburseMyself() {
                   Pay to
                 </label>
               </div>
-            </div>
+            )}
+          </div>
+        </div>
+      </>
+    );
 
-            <div className="flex items-center justify-between pt-2">
-              <WexButton variant="ghost" onClick={() => navigate("/")}>
-                Cancel
-              </WexButton>
-              <WexButton
-                intent="primary"
-                onClick={() => {
-                  updateState({ variant: "mvp" });
-                  navigate("/reimburse/docs");
-                }}
-                disabled={!formData.account || !formData.category}
-              >
-                Next
-              </WexButton>
+    // Buttons (fixed at bottom)
+    const buttons = (
+      <div className="flex items-center justify-between">
+        <WexButton 
+          variant="ghost" 
+          onClick={() => {
+            if (layoutModes.entryMode === "modal" && onModalClose) {
+              onModalClose();
+            } else {
+              navigate("/");
+            }
+          }}
+        >
+          Cancel
+        </WexButton>
+        <WexButton
+          intent="primary"
+          onClick={() => {
+            updateState({ variant: "mvp" });
+            goNext("myself");
+          }}
+          disabled={!formData.account || !formData.category}
+        >
+          Next
+        </WexButton>
+      </div>
+    );
+
+    // For modal mode, use fixed layout structure
+    if (isModal) {
+      return (
+        <div className="flex flex-col h-full max-h-[90vh]">
+          {/* Fixed header with title */}
+          <div className="flex-shrink-0 px-6 pt-6 pb-4">
+            <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
+              Reimburse Myself
+            </h1>
+          </div>
+          {/* Scrollable middle content */}
+          <div className="flex-1 overflow-y-auto px-6">
+            <div className="space-y-6 py-4">
+              {middleContent}
             </div>
           </div>
-        </WexCard.Content>
-      </WexCard>
-    </div>
-  );
+          {/* Fixed footer with buttons */}
+          <div className="flex-shrink-0 px-6 pt-4 pb-6 border-t">
+            {buttons}
+          </div>
+        </div>
+      );
+    }
+
+    // For fullpage mode, use original structure
+    const content = (
+      <>
+        {middleContent}
+        {buttons}
+      </>
+    );
+
+    // For fullpage mode, render with card wrapper and title outside
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
+            Reimburse Myself
+          </h1>
+        </div>
+
+        <WexCard>
+          <WexCard.Content className="space-y-6 p-6">
+            <ProgressIndicator
+              mode={layoutModes.progressMode}
+              currentStep="myself"
+              steps={activeFlow.getProgressSteps(state)}
+            />
+            {content}
+          </WexCard.Content>
+        </WexCard>
+      </div>
+    );
+  };
 
   const renderVision = () => {
     const isFSA = formData.account.includes("fsa");
@@ -387,15 +442,12 @@ export default function ReimburseMyself() {
           </WexAlert>
         )}
 
-        {autoFillComplete && (
-          <WexAlert intent="info">
-            <CheckCircle2 className="h-4 w-4" />
-            <WexAlert.Title>Form auto-filled</WexAlert.Title>
-            <WexAlert.Description>
-              We extracted details from your receipt. Review and adjust as needed.
-            </WexAlert.Description>
-          </WexAlert>
-        )}
+        <AIStatusIndicator
+          mode={layoutModes.aiCommunication}
+          isAnalyzing={isAnalyzing}
+          isComplete={autoFillComplete}
+          extractedFieldsCount={autoFilledFields.size}
+        />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <WexCard className="lg:col-span-2">
@@ -813,8 +865,20 @@ export default function ReimburseMyself() {
     );
   };
 
-  return (
-    <>
+  // Render content based on entry mode
+  const renderContent = () => {
+    if (layoutModes.entryMode === "modal") {
+      // For modal mode, render just the form content without navigation or full-page wrapper
+      // The modal dialog already provides the white background and padding
+      return (
+        <>
+          {variant === "mvp" ? renderMvp() : renderVision()}
+        </>
+      );
+    }
+
+    // For fullpage and drawer modes, render with navigation
+    return (
       <div className="min-h-screen bg-[#F1FAFE]">
         <ConsumerNavigation />
 
@@ -824,34 +888,22 @@ export default function ReimburseMyself() {
           </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Floating variant switcher */}
-      <div className="pointer-events-none fixed bottom-6 right-6 z-40">
-        <div className="pointer-events-auto overflow-hidden rounded-full border bg-card shadow-lg shadow-foreground/10">
-          <div className="flex items-center gap-2 px-3 py-2">
-            <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              Mode
-            </div>
-            <WexSelect
-              value={variant}
-              onValueChange={(value) => {
-                const newVariant = value as "mvp" | "vision";
-                setVariant(newVariant);
-                updateState({ variant: newVariant });
-              }}
-            >
-              <WexSelect.Trigger className="h-8 w-32 border-none px-2">
-                <WexSelect.Value />
-              </WexSelect.Trigger>
-              <WexSelect.Content align="end">
-                <WexSelect.Item value="mvp">MVP</WexSelect.Item>
-                <WexSelect.Item value="vision">Vision</WexSelect.Item>
-              </WexSelect.Content>
-            </WexSelect>
-          </div>
-        </div>
-      </div>
+  const content = renderContent();
+
+  // If skipEntryWrapper is true (e.g., when already in a modal), render content directly
+  if (skipEntryWrapper) {
+    return <>{content}</>;
+  }
+
+  return (
+    <>
+      <EntryWrapper mode={layoutModes.entryMode}>
+        {content}
+      </EntryWrapper>
+      <ModeSelector />
     </>
   );
 }

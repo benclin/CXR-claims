@@ -42,11 +42,25 @@ export interface ReimbursementState {
   
   // Variant
   variant: "mvp" | "vision";
+
+  // Flow variant
+  flowId: string;
+  
+  // Layout variant modes
+  layoutModes: {
+    entryMode: "fullpage" | "modal" | "drawer";
+    planSelectionMode: "dropdown" | "cards";
+    progressMode: "none" | "implicit" | "stepper";
+    uploadLayout: "standard" | "compact" | "split";
+    reviewLayout: "form" | "summary" | "split";
+    aiCommunication: "minimal" | "detailed" | "prominent";
+  };
 }
 
 interface ReimbursementContextType {
   state: ReimbursementState;
   updateState: (updates: Partial<ReimbursementState>) => void;
+  updateLayoutModes: (updates: Partial<ReimbursementState["layoutModes"]>) => void;
   resetState: () => void;
 }
 
@@ -64,6 +78,15 @@ const initialState: ReimbursementState = {
   didDrive: "no",
   acceptedTerms: false,
   variant: "mvp",
+  flowId: "reimburse-linear-v1",
+  layoutModes: {
+    entryMode: "fullpage",
+    planSelectionMode: "dropdown",
+    progressMode: "none",
+    uploadLayout: "standard",
+    reviewLayout: "form",
+    aiCommunication: "minimal",
+  },
 };
 
 const ReimbursementContext = createContext<ReimbursementContextType | undefined>(undefined);
@@ -81,12 +104,19 @@ export function ReimbursementProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({ ...prev, ...updates }));
   };
 
+  const updateLayoutModes = (updates: Partial<ReimbursementState["layoutModes"]>) => {
+    setState((prev) => ({
+      ...prev,
+      layoutModes: { ...prev.layoutModes, ...updates },
+    }));
+  };
+
   const resetState = () => {
     setState(initialState);
   };
 
   return (
-    <ReimbursementContext.Provider value={{ state, updateState, resetState }}>
+    <ReimbursementContext.Provider value={{ state, updateState, updateLayoutModes, resetState }}>
       {children}
     </ReimbursementContext.Provider>
   );

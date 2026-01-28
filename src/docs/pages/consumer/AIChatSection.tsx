@@ -14,12 +14,20 @@ import { aiSuggestions } from "./mockData";
  * - Suggestion chips with light blue background
  * - Proper spacing: 24px padding, 16px gap between title/input, 12px gap between input/chips
  */
-export function AIChatSection() {
+export function AIChatSection({
+  onReimburseClick,
+}: {
+  onReimburseClick?: () => void;
+} = {}) {
   const navigate = useNavigate();
 
   const handleSuggestionClick = (suggestion: string) => {
     if (suggestion === "Reimburse Myself") {
-      navigate("/reimburse");
+      if (onReimburseClick) {
+        onReimburseClick();
+      } else {
+        navigate("/reimburse");
+      }
     } else if (suggestion === "Enroll in HSA") {
       navigate("/hsa-enrollment");
     }
