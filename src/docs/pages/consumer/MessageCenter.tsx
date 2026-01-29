@@ -1334,7 +1334,7 @@ export default function MessageCenter() {
 
                     {/* Desktop Table */}
                     <div className="hidden md:block flex-1 flex flex-col min-h-0">
-                      <div className="overflow-x-auto overflow-y-scroll flex-1" style={{ overflowY: 'scroll' }}>
+                      <div className="overflow-x-auto flex-1">
                         <WexTable>
                           {/* Table Header */}
                           <WexTable.Header>
@@ -1697,7 +1697,7 @@ export default function MessageCenter() {
                     {/* Right Panel - Detail View - Desktop Only */}
                     {selectedMessage && !isMobile && (
                       <div className="w-[400px] shrink-0 border-l border-wex-card-border bg-white rounded-br-2xl rounded-tr-2xl flex flex-col h-full">
-                        <div className="flex flex-col gap-3 p-6 flex-1 overflow-y-auto">
+                        <div className="flex flex-col gap-3 p-6 flex-1">
                           {/* Header with alert icon, subject, and close button */}
                           <div className="flex items-center justify-between gap-3">
                             <div className="flex items-center gap-3 flex-1 min-w-0">
