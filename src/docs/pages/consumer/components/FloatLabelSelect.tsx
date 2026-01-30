@@ -9,7 +9,6 @@ export interface FloatLabelSelectProps {
   label: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  placeholder?: string;
   disabled?: boolean;
   invalid?: boolean;
   size?: "sm" | "md" | "lg";
@@ -44,7 +43,6 @@ export function FloatLabelSelect({
   label,
   value,
   onValueChange,
-  placeholder,
   disabled = false,
   invalid = false,
   size = "md",
