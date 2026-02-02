@@ -37,6 +37,9 @@ const ResourcesPage = React.lazy(() => import("@/docs/pages/consumer/Resources")
 // Claims page - standalone route
 const ClaimsPage = React.lazy(() => import("@/docs/pages/consumer/Claims"));
 
+// Account Documents page - standalone route
+const AccountDocumentsPage = React.lazy(() => import("@/docs/pages/consumer/AccountDocuments"));
+
 // Reimbursement flow pages - standalone routes
 const ReimburseMyselfPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseMyself"));
 const ReimburseDocsPage = React.lazy(() => import("@/docs/pages/consumer/reimburse/ReimburseDocs"));
@@ -225,6 +228,9 @@ export function DocsRoutes() {
 
         {/* Standalone Claims route - bypasses DocsLayout */}
         <Route path="claims" element={withConsumerLight(<ClaimsPage />)} />
+
+        {/* Standalone Account Documents route - bypasses DocsLayout */}
+        <Route path="account-documents" element={withConsumerLight(<AccountDocumentsPage />)} />
 
         {/* Standalone Reimbursement flow routes - bypasses DocsLayout, wrapped with ReimbursementProvider */}
         <Route
