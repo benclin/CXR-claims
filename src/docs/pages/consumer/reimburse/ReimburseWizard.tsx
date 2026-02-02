@@ -53,6 +53,7 @@ export default function ReimburseWizard({
   const [uploadedFile, setUploadedFile] = useState<{ name: string; previewUrl?: string } | null>(null);
   const [isReading, setIsReading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadSkipped, setUploadSkipped] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const layoutModes = useMemo(() => {
@@ -130,6 +131,7 @@ export default function ReimburseWizard({
       setUploadedFile(null);
       return;
     }
+    setUploadSkipped(false);
     const isAllowed = file.type.startsWith("image/") || file.type === "application/pdf";
     if (!isAllowed) {
       setUploadError("We couldn't read that file. Please upload a photo or PDF receipt.");
@@ -154,6 +156,19 @@ export default function ReimburseWizard({
     setTimeout(() => setIsReading(false), 1200);
   };
 
+  const handleSkipUpload = () => {
+    setUploadSkipped(true);
+    setUploadedFile(null);
+    setUploadError(null);
+    setIsReading(false);
+    updateState({
+      uploadedFiles: [],
+      amount: "",
+      serviceDate: "",
+    });
+    handleNext();
+  };
+
   const selectedPlanData = getPlanCardData(state.account || "medical-fsa");
   const isNextDisabled = (() => {
     if (currentStep.id === "expenseType") {
@@ -163,7 +178,7 @@ export default function ReimburseWizard({
       return !uploadedFile;
     }
     if (currentStep.id === "review") {
-      return !state.amount || !state.serviceDate;
+      return !state.amount || !state.serviceDate || !uploadedFile;
     }
     return false;
   })();
@@ -347,7 +362,9 @@ export default function ReimburseWizard({
               ) : (
                 <div className="h-16 w-16 rounded border border-border bg-muted" />
               )}
-              <div className="text-foreground">{uploadedFile?.name || "No receipt uploaded"}</div>
+              <div className="text-foreground">
+                {uploadedFile?.name || (uploadSkipped ? "Receipt skipped" : "No receipt uploaded")}
+              </div>
             </div>
           </div>
         );
@@ -386,6 +403,7 @@ export default function ReimburseWizard({
           mode={layoutModes.progressMode}
           currentStep={currentStep.id}
           steps={activeFlow.getProgressSteps(state)}
+          skippedStepIds={uploadSkipped ? ["upload"] : []}
         />
         <WexCard>
           <WexCard.Header className="space-y-2">
@@ -409,6 +427,15 @@ export default function ReimburseWizard({
                 >
                   Submit reimbursement
                 </WexButton>
+              ) : currentStep.id === "upload" ? (
+                <div className="flex items-center gap-2">
+                  <WexButton variant="outline" onClick={handleSkipUpload}>
+                    Skip
+                  </WexButton>
+                  <WexButton onClick={handleNext} disabled={isNextDisabled}>
+                    {nextLabel}
+                  </WexButton>
+                </div>
               ) : (
                 <WexButton onClick={handleNext} disabled={isNextDisabled}>
                   {nextLabel}

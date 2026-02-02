@@ -25,7 +25,7 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     name: "MVP - Full Page Standard",
     description: "MVP variant with full page entry, standard layouts",
     variant: "mvp",
-    flowId: "reimburse-linear-v1",
+    flowId: "mvp-linear-v1",
     layoutModes: {
       entryMode: "fullpage",
       planSelectionMode: "dropdown",
@@ -40,7 +40,7 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     name: "MVP - Full Page with Stepper",
     description: "MVP variant with full page entry and stepper progress indicator",
     variant: "mvp",
-    flowId: "reimburse-linear-v1",
+    flowId: "mvp-linear-v1",
     layoutModes: {
       entryMode: "fullpage",
       planSelectionMode: "dropdown",
@@ -55,7 +55,7 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     name: "MVP - Full Page with Cards",
     description: "MVP variant with full page entry and card-based plan selection",
     variant: "mvp",
-    flowId: "reimburse-linear-v1",
+    flowId: "mvp-linear-v1",
     layoutModes: {
       entryMode: "fullpage",
       planSelectionMode: "cards",
@@ -70,7 +70,7 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     name: "MVP - Modal Standard",
     description: "MVP variant with modal entry, standard layouts",
     variant: "mvp",
-    flowId: "reimburse-linear-v1",
+    flowId: "mvp-linear-v1",
     layoutModes: {
       entryMode: "modal",
       planSelectionMode: "dropdown",

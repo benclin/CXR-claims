@@ -42,7 +42,7 @@ export interface ReimbursementState {
   
   // Variant
   variant: "mvp" | "vision";
-
+  
   // Flow variant
   flowId: string;
   
@@ -78,7 +78,7 @@ const initialState: ReimbursementState = {
   didDrive: "no",
   acceptedTerms: false,
   variant: "mvp",
-  flowId: "reimburse-linear-v1",
+  flowId: "mvp-linear-v1",
   layoutModes: {
     entryMode: "fullpage",
     planSelectionMode: "dropdown",

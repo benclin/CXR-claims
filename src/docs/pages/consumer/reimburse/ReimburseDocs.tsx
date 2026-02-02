@@ -83,7 +83,7 @@ export default function ReimburseDocs({
           <Info className="h-4 w-4 text-muted-foreground" />
         </div>
 
-        <div className={`rounded-lg border border-dashed bg-card p-6 ${isModal ? "w-full" : ""}`}>
+        <div className={`rounded-lg border border-dashed bg-card p-6 ${isModal ? "w-full" : "max-w-2xl mx-auto"}`}>
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-center">
               <WexButton intent="primary" className={isModal ? "w-full" : "min-w-[200px]"} onClick={handleMockUpload}>

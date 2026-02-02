@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 import type { FlowStep } from "../flow/types";
 
 /**
@@ -12,10 +12,12 @@ export function ProgressIndicator({
   mode,
   currentStep,
   steps,
+  skippedStepIds = [],
 }: {
   mode: "none" | "implicit" | "stepper";
   currentStep: string;
   steps: FlowStep[];
+  skippedStepIds?: string[];
 }) {
   if (mode === "none" || steps.length === 0) {
     return null;
@@ -43,20 +45,25 @@ export function ProgressIndicator({
       {steps.map((step, index) => {
         const isCompleted = index < currentStepIndex;
         const isCurrent = index === currentStepIndex;
+        const isSkipped = isCompleted && skippedStepIds.includes(step.id);
 
         return (
           <div key={step.id} className="flex items-center">
             <div className="flex items-center gap-2">
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors ${
-                  isCompleted
+                  isSkipped
+                    ? "border-muted bg-muted text-muted-foreground"
+                    : isCompleted
                     ? "border-primary bg-primary text-primary-foreground"
                     : isCurrent
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-muted bg-background text-muted-foreground"
                 }`}
               >
-                {isCompleted ? (
+                {isSkipped ? (
+                  <Minus className="h-4 w-4" />
+                ) : isCompleted ? (
                   <Check className="h-4 w-4" />
                 ) : (
                   <span className="text-xs font-semibold">{index + 1}</span>

@@ -35,6 +35,10 @@ export default function ReimburseAnalyze({
   }, [state.layoutModes, searchParams]);
 
   const activeFlow = useMemo(() => getFlowById(state.flowId), [state.flowId]);
+  const progressStepId = useMemo(
+    () => (activeFlow.steps.some((step) => step.id === "analyze") ? "analyze" : "review"),
+    [activeFlow.steps]
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -71,7 +75,7 @@ export default function ReimburseAnalyze({
         <div className="flex-shrink-0 px-6 pt-4 pb-6 border-t">
           <ProgressIndicator
             mode={layoutModes.progressMode}
-            currentStep="analyze"
+            currentStep={progressStepId}
             steps={activeFlow.getProgressSteps(state)}
           />
         </div>
@@ -93,7 +97,7 @@ export default function ReimburseAnalyze({
               <WexCard.Content className="space-y-6 p-8">
                 <ProgressIndicator
                   mode={layoutModes.progressMode}
-                  currentStep="analyze"
+                  currentStep={progressStepId}
                   steps={activeFlow.getProgressSteps(state)}
                 />
                 <AIStatusIndicator
