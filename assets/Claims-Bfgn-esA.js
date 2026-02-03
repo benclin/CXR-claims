@@ -1,0 +1,1 @@
+import{j as s,G as r,H as a}from"./index-urLV_LK0.js";import{U as o}from"./UnderConstruction-ROaEjaYy.js";function i(){return s.jsxs("div",{className:"min-h-screen bg-[#F1FAFE]",children:[s.jsx(r,{}),s.jsx("div",{className:"mx-auto max-w-[1440px] px-8 py-8",children:s.jsx(o,{})}),s.jsx(a,{})]})}export{i as default};
