@@ -1,0 +1,1 @@
+import{j as s,G as e,H as r}from"./index-BphMwMYP.js";import{U as a}from"./UnderConstruction-DNSKPc-Z.js";function t(){return s.jsxs("div",{className:"min-h-screen bg-[#F1FAFE]",children:[s.jsx(e,{}),s.jsx("main",{className:"w-full max-w-[1440px] mx-auto px-8 py-7",children:s.jsx(a,{})}),s.jsx(r,{})]})}export{t as default};
