@@ -368,22 +368,6 @@ export default function ReimburseWizard({
             </div>
           </div>
         );
-      case "confirm":
-        return (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-foreground">You’re all set</h2>
-              <p className="text-sm text-muted-foreground">
-                We’ve received your reimbursement request.
-              </p>
-            </div>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>• We’ll review your receipt within 1–2 business days.</li>
-              <li>• We’ll notify you if anything is missing.</li>
-              <li>• Approved reimbursements post to your account automatically.</li>
-            </ul>
-          </div>
-        );
       default:
         return null;
     }
