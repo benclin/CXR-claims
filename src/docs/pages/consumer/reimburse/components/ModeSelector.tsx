@@ -20,12 +20,21 @@ export function ModeSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const flowOptions = useMemo(() => Object.values(FLOW_REGISTRY), []);
   const isHome = location.pathname === "/" || location.pathname === "";
-  const visionHomePresets = useMemo(
+  const allHomePresets = useMemo(
     () =>
       [
-        getPresetById("vision-fullpage-stepper"),
+        // MVP fullpage presets
+        getPresetById("mvp-fullpage-standard"),
+        getPresetById("mvp-fullpage-cards"),
+        // MVP modal presets
+        getPresetById("mvp-modal-standard"),
+        getPresetById("mvp-modal-cards"),
+        // Vision fullpage presets
         getPresetById("vision-wizard-fullpage"),
-        getPresetById("vision-altsteps-fullpage"),
+        getPresetById("vision-fullpage-stepper"),
+        // Vision modal presets
+        getPresetById("vision-wizard-modal"),
+        getPresetById("vision-modal-stepper"),
       ].filter(
         (preset): preset is NonNullable<ReturnType<typeof getPresetById>> => Boolean(preset)
       ),
@@ -252,58 +261,121 @@ export function ModeSelector() {
                 </div>
               </div>
 
-              {/* Flow Selector - Only show for Vision mode when not on homepage */}
-              {state.variant === "vision" && !isHome ? (
+              {/* Entry Mode Selector - Toggle Buttons (Homepage only) */}
+              {isHome ? (
                 <div className="space-y-1.5">
-                  <WexLabel className="text-xs">Flow</WexLabel>
-                  <WexSelect
-                    value={state.flowId}
-                    onValueChange={handleFlowChange}
-                  >
-                    <WexSelect.Trigger className="w-full">
-                      <WexSelect.Value placeholder="Select flow" />
-                    </WexSelect.Trigger>
-                    <WexSelect.Content className="z-[200]">
-                      {flowOptions.map((flow) => (
-                        <WexSelect.Item key={flow.id} value={flow.id}>
-                          {flow.name}
-                        </WexSelect.Item>
-                      ))}
-                    </WexSelect.Content>
-                  </WexSelect>
-                </div>
-              ) : null}
-
-              {/* Vision Variant Options (Homepage only) */}
-              {isHome && state.variant === "vision" ? (
-                <div className="space-y-2">
-                  <WexLabel className="text-xs">Vision Variants</WexLabel>
-                  <div className="space-y-2">
-                    {visionHomePresets.map((preset) => {
-                      const isSelected = preset.flowId ? preset.flowId === state.flowId : false;
-                      return (
-                        <WexButton
-                          key={preset.id}
-                          variant={isSelected ? "solid" : "outline"}
-                          size="sm"
-                          className="w-full justify-start h-auto py-2"
-                          onClick={() => applyPreset(preset)}
-                        >
-                          <div className="text-left w-full">
-                            <div className="font-medium truncate">{preset.name}</div>
-                            <div className="text-xs text-muted-foreground line-clamp-2">
-                              {preset.description}
-                            </div>
-                          </div>
-                        </WexButton>
-                      );
-                    })}
+                  <WexLabel className="text-xs">Entry</WexLabel>
+                  <div className="flex items-center gap-2">
+                    <WexButton
+                      variant={state.layoutModes.entryMode === "fullpage" ? "solid" : "outline"}
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => handleEntryModeChange("fullpage")}
+                    >
+                      Full Page
+                    </WexButton>
+                    <WexButton
+                      variant={state.layoutModes.entryMode === "modal" ? "solid" : "outline"}
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => handleEntryModeChange("modal")}
+                    >
+                      Modal
+                    </WexButton>
                   </div>
                 </div>
               ) : null}
 
-              {/* Entry Mode Selector - Toggle Buttons */}
-              {relevantSettings.includes("entryMode") && !(isHome && state.variant === "vision") && (
+              {/* Preset Options (Homepage only) */}
+              {isHome ? (
+                <div className="space-y-2">
+                  <WexLabel className="text-xs">
+                    {state.variant === "mvp" ? "MVP" : "Vision"} Variants
+                  </WexLabel>
+                  <div className="space-y-2">
+                    {allHomePresets
+                      .filter(
+                        (preset) =>
+                          preset.variant === state.variant &&
+                          preset.layoutModes.entryMode === state.layoutModes.entryMode
+                      )
+                      .map((preset) => {
+                        const isSelected = 
+                          preset.variant === state.variant && 
+                          preset.layoutModes.entryMode === state.layoutModes.entryMode &&
+                          (preset.flowId ? preset.flowId === state.flowId : true) &&
+                          preset.layoutModes.planSelectionMode === state.layoutModes.planSelectionMode;
+                        
+                        return (
+                          <WexButton
+                            key={preset.id}
+                            variant={isSelected ? "solid" : "outline"}
+                            size="sm"
+                            className="w-full justify-start h-auto py-2"
+                            onClick={() => applyPreset(preset)}
+                          >
+                            <div className="text-left w-full">
+                              <div className="font-medium truncate">{preset.name}</div>
+                              <div className={`text-xs line-clamp-2 ${isSelected ? "text-white" : "text-muted-foreground"}`}>
+                                {preset.description}
+                              </div>
+                            </div>
+                          </WexButton>
+                        );
+                      })}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Mode Selector - Toggle Buttons (Non-homepage only) */}
+                  <div className="space-y-1.5">
+                    <WexLabel className="text-xs">Mode</WexLabel>
+                    <div className="flex items-center gap-2">
+                      <WexButton
+                        variant={state.variant === "mvp" ? "solid" : "outline"}
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => handleVariantChange("mvp")}
+                      >
+                        MVP
+                      </WexButton>
+                      <WexButton
+                        variant={state.variant === "vision" ? "solid" : "outline"}
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => handleVariantChange("vision")}
+                      >
+                        Vision
+                      </WexButton>
+                    </div>
+                  </div>
+
+                  {/* Flow Selector - Only show for Vision mode when not on homepage */}
+                  {state.variant === "vision" ? (
+                    <div className="space-y-1.5">
+                      <WexLabel className="text-xs">Flow</WexLabel>
+                      <WexSelect
+                        value={state.flowId}
+                        onValueChange={handleFlowChange}
+                      >
+                        <WexSelect.Trigger className="w-full">
+                          <WexSelect.Value placeholder="Select flow" />
+                        </WexSelect.Trigger>
+                        <WexSelect.Content className="z-[200]">
+                          {flowOptions.map((flow) => (
+                            <WexSelect.Item key={flow.id} value={flow.id}>
+                              {flow.name}
+                            </WexSelect.Item>
+                          ))}
+                        </WexSelect.Content>
+                      </WexSelect>
+                    </div>
+                  ) : null}
+                </>
+              )}
+
+              {/* Entry Mode Selector - Toggle Buttons (Non-homepage only) */}
+              {relevantSettings.includes("entryMode") && !isHome && (
                 <div className="space-y-1.5">
                   <WexLabel className="text-xs">Entry</WexLabel>
                   <div className="flex items-center gap-2">

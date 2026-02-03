@@ -22,8 +22,8 @@ export interface VariationPreset {
 export const VARIATION_PRESETS: VariationPreset[] = [
   {
     id: "mvp-fullpage-standard",
-    name: "MVP - Full Page Standard",
-    description: "MVP variant with full page entry, standard layouts",
+    name: "MVP 1 - Baseline Reskin",
+    description: "Current experience with small targeted improvements",
     variant: "mvp",
     flowId: "mvp-linear-v1",
     layoutModes: {
@@ -52,8 +52,8 @@ export const VARIATION_PRESETS: VariationPreset[] = [
   },
   {
     id: "mvp-fullpage-cards",
-    name: "MVP - Full Page with Cards",
-    description: "MVP variant with full page entry and card-based plan selection",
+    name: "MVP 2 - Enhanced",
+    description: "Current experience with greater change to each step",
     variant: "mvp",
     flowId: "mvp-linear-v1",
     layoutModes: {
@@ -67,8 +67,8 @@ export const VARIATION_PRESETS: VariationPreset[] = [
   },
   {
     id: "mvp-modal-standard",
-    name: "MVP - Modal Standard",
-    description: "MVP variant with modal entry, standard layouts",
+    name: "MVP 1 - Baseline Reskin",
+    description: "Current experience with small targeted improvements",
     variant: "mvp",
     flowId: "mvp-linear-v1",
     layoutModes: {
@@ -97,8 +97,8 @@ export const VARIATION_PRESETS: VariationPreset[] = [
   },
   {
     id: "vision-fullpage-stepper",
-    name: "Vision - Full Page with Stepper",
-    description: "Vision variant with full page entry and stepper progress indicator",
+    name: "Vision 2 - AI First Intake",
+    description: "Upload → extract → confirm → submit",
     variant: "vision",
     flowId: "reimburse-linear-v1",
     layoutModes: {
@@ -112,8 +112,8 @@ export const VARIATION_PRESETS: VariationPreset[] = [
   },
   {
     id: "vision-wizard-fullpage",
-    name: "Vision - Wizard Full Page",
-    description: "Vision wizard flow with full page entry and stepper progress indicator",
+    name: "Vision 1 - Guided Questionnaire",
+    description: "Progressive disclosure, step-by-step",
     variant: "vision",
     flowId: "vision-wizard-v1",
     layoutModes: {
@@ -126,13 +126,43 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     },
   },
   {
-    id: "vision-altsteps-fullpage",
-    name: "Vision - Alternate Steps Full Page",
-    description: "Vision alternate flow with upload-first step order",
-    variant: "vision",
-    flowId: "vision-alt-steps-v1",
+    id: "mvp-modal-cards",
+    name: "MVP 2 - Enhanced",
+    description: "Current experience with greater change to each step",
+    variant: "mvp",
+    flowId: "mvp-linear-v1",
     layoutModes: {
-      entryMode: "fullpage",
+      entryMode: "modal",
+      planSelectionMode: "cards",
+      progressMode: "none",
+      uploadLayout: "standard",
+      reviewLayout: "form",
+      aiCommunication: "minimal",
+    },
+  },
+  {
+    id: "vision-wizard-modal",
+    name: "Vision 1 - Guided Questionnaire",
+    description: "Progressive disclosure, step-by-step",
+    variant: "vision",
+    flowId: "vision-wizard-v1",
+    layoutModes: {
+      entryMode: "modal",
+      planSelectionMode: "dropdown",
+      progressMode: "stepper",
+      uploadLayout: "standard",
+      reviewLayout: "form",
+      aiCommunication: "minimal",
+    },
+  },
+  {
+    id: "vision-modal-stepper",
+    name: "Vision 2 - AI First Intake",
+    description: "Upload → extract → confirm → submit",
+    variant: "vision",
+    flowId: "reimburse-linear-v1",
+    layoutModes: {
+      entryMode: "modal",
       planSelectionMode: "dropdown",
       progressMode: "stepper",
       uploadLayout: "standard",

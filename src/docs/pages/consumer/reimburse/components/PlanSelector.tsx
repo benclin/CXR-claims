@@ -1,6 +1,7 @@
 import { WexSelect, WexRadioGroup } from "@/components/wex";
 import { PlanCard } from "./PlanCard";
 import { getAllPlans } from "./planData";
+import { FloatLabelSelect } from "../../components/FloatLabelSelect";
 
 /**
  * PlanSelector Component
@@ -22,27 +23,16 @@ export function PlanSelector({
 }) {
   if (mode === "dropdown") {
     return (
-      <div className="relative w-[320px]">
-        <WexSelect
+      <div className="w-[320px]">
+        <FloatLabelSelect
+          label={label}
           value={value || undefined}
           onValueChange={onValueChange}
         >
-          <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${value ? "has-value" : ""}`}>
-            <WexSelect.Value placeholder=" " />
-          </WexSelect.Trigger>
-          <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
-            <WexSelect.Item value="medical-fsa">Medical FSA</WexSelect.Item>
-            <WexSelect.Item value="lifestyle-spending-2026">Lifestyle Spending Account 2026</WexSelect.Item>
-            <WexSelect.Item value="lifestyle-spending-2025">Lifestyle Spending Account 2025</WexSelect.Item>
-          </WexSelect.Content>
-        </WexSelect>
-        <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-          value 
-            ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-            : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-        }`}>
-          {label}
-        </label>
+          <WexSelect.Item value="medical-fsa">Medical FSA</WexSelect.Item>
+          <WexSelect.Item value="lifestyle-spending-2026">Lifestyle Spending Account 2026</WexSelect.Item>
+          <WexSelect.Item value="lifestyle-spending-2025">Lifestyle Spending Account 2025</WexSelect.Item>
+        </FloatLabelSelect>
       </div>
     );
   }
