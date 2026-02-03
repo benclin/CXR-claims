@@ -421,8 +421,6 @@ export default function ReimburseMyself({
 
   // Vision 2 - AI First Intake Layout
   const renderVision2 = () => {
-    const isFSA = formData.account.includes("fsa");
-    const receiptRequired = isFSA && !manualEntryMode;
     const showFormFields = uploadedFile || manualEntryMode || isAnalyzing;
 
     const isAutoFilled = (field: string) => autoFilledFields.has(field);
