@@ -7,6 +7,7 @@
     "dev": "bash -c 'unset npm_config_prefix && export NVM_DIR=\"$HOME/.nvm\" && [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && (nvm use > /dev/null 2>&1 || true) && vite'",
     "dev:auto": "bash scripts/dev.sh",
     "build": "node scripts/build-tokens.cjs && tsc -b && vite build",
+    "build:bolt": "BASE_PATH=/ node scripts/build-tokens.cjs && BASE_PATH=/ tsc -b && BASE_PATH=/ vite build",
     "postbuild": "cp dist/index.html dist/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
