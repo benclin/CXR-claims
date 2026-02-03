@@ -13,7 +13,6 @@ import {
   WexSeparator,
   WexLabel,
   WexBadge,
-  WexTooltip,
 } from "@/components/wex";
 import { Info, Upload, X, FileText, Check, ChevronRight, Smartphone } from "lucide-react";
 import { AvailableBalanceSection, ProgressIndicator, ModeSelector } from "./components";

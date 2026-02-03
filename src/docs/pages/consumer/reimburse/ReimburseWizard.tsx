@@ -17,7 +17,7 @@ import { Baby, Car, Pill, Stethoscope, Upload } from "lucide-react";
 import { PlanCard } from "./components/PlanCard";
 import { getAllPlans, getPlanCardData } from "./components/planData";
 
-type WizardStepId = "expenseType" | "plan" | "upload" | "review";
+type WizardStepId = "expenseType" | "plan" | "upload" | "review" | "confirm";
 
 const wizardSteps: Array<{ id: WizardStepId; label: string }> = [
   { id: "expenseType", label: "Expense Type" },
