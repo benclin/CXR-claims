@@ -1,6 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ConsumerNavigation } from "../ConsumerNavigation";
 import { useReimbursement } from "./ReimbursementContext";
+import { getFlowById } from "./flow/registry";
+import { useReimburseFlowNav } from "./hooks/useReimburseFlowNav";
 import {
   WexButton,
   WexCard,
@@ -11,95 +14,38 @@ import {
   WexSeparator,
   WexAlert,
 } from "@/components/wex";
-import { Info, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+import { AvailableBalanceSection, ProgressIndicator, ModeSelector } from "./components";
 
-// Helper function to get plan card data by account value
-const getPlanCardData = (accountValue: string) => {
-  const plans = {
-    "medical-fsa": {
-      title: "Medical FSA",
-      dateRange: "01/01/2026 - 12/31/2026",
-      balance: "$2,734.76",
-      finalFilingDate: "04/30/2027",
-      finalServiceDate: "12/31/2026",
-    },
-    "lifestyle-spending-2026": {
-      title: "Lifestyle Spending Account",
-      dateRange: "01/01/2026 - 12/31/2026",
-      balance: "$250.00",
-      finalFilingDate: "04/30/2027",
-      finalServiceDate: "12/31/2026",
-    },
-    "lifestyle-spending-2025": {
-      title: "Lifestyle Spending Account",
-      dateRange: "01/01/2025 - 12/31/2025",
-      balance: "$250.00",
-      finalFilingDate: "04/30/2026",
-      finalServiceDate: "12/31/2025",
-    },
-  };
-  return plans[accountValue as keyof typeof plans] || plans["medical-fsa"];
-};
-
-// Plan Card Component
-const PlanCard = ({
-  title,
-  dateRange,
-  balance,
-  finalFilingDate,
-  finalServiceDate,
+export default function ReimburseReview({
+  onModalClose,
 }: {
-  title: string;
-  dateRange: string;
-  balance: string;
-  finalFilingDate: string;
-  finalServiceDate: string;
-}) => (
-  <WexCard className="border border-border w-[325px] shrink-0">
-    <WexCard.Content className="p-4 space-y-2">
-      {/* Header with title, date range, and info icon */}
-      <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-0.5">
-          <p className="text-base font-semibold text-foreground leading-6 tracking-[-0.176px]">
-            {title}
-          </p>
-          <p className="text-[11px] font-normal text-muted-foreground leading-4 tracking-[0.055px]">
-            {dateRange}
-          </p>
-        </div>
-        <WexButton
-          variant="ghost"
-          size="sm"
-          className="h-7 w-7 p-0"
-          aria-label="Account information"
-        >
-          <Info className="h-3.5 w-3.5 text-muted-foreground" />
-        </WexButton>
-      </div>
-
-      {/* Balance and dates */}
-      <div className="flex flex-col gap-1 pt-2">
-        <div className="flex items-center">
-          <p className="text-xl font-bold text-foreground leading-8 tracking-[-0.34px]">
-            {balance}
-          </p>
-        </div>
-        <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-          <span className="text-muted-foreground">Final Filing Date:</span>
-          <span className="text-foreground">{finalFilingDate}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-          <span className="text-muted-foreground">Final Service Date:</span>
-          <span className="text-foreground">{finalServiceDate}</span>
-        </div>
-      </div>
-    </WexCard.Content>
-  </WexCard>
-);
-
-export default function ReimburseReview() {
+  onModalClose?: () => void;
+} = {}) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { state, updateState } = useReimbursement();
+  const { goNext, goBack } = useReimburseFlowNav();
+
+  const isModal = state.layoutModes.entryMode === "modal";
+
+  // Get layout modes from URL params or state
+  const layoutModes = useMemo(() => {
+    const modes = { ...state.layoutModes };
+    const progressMode = searchParams.get("progressMode");
+    const reviewLayout = searchParams.get("reviewLayout");
+    
+    if (progressMode && ["none", "implicit", "stepper"].includes(progressMode)) {
+      modes.progressMode = progressMode as "none" | "implicit" | "stepper";
+    }
+    if (reviewLayout && ["form", "summary", "split"].includes(reviewLayout)) {
+      modes.reviewLayout = reviewLayout as "form" | "summary" | "split";
+    }
+    
+    return modes;
+  }, [state.layoutModes, searchParams]);
+
+  const activeFlow = useMemo(() => getFlowById(state.flowId), [state.flowId]);
 
   // Use extracted data or fallback to form data
   const extractedData = state.extractedData || {};
@@ -124,41 +70,14 @@ export default function ReimburseReview() {
     updateState({ didDrive: value });
   };
 
-  return (
-    <div className="min-h-screen bg-[#F1FAFE]">
-      <ConsumerNavigation />
+  // Middle content (scrollable area)
+  const middleContent = (
+    <>
+      <AvailableBalanceSection selectedAccount={state.account} />
 
-      <div className="mx-auto max-w-[1440px] px-8 py-8">
-        <div className="mx-auto max-w-[1376px] space-y-8">
-          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+      <WexSeparator />
 
-          <WexCard>
-            <WexCard.Content className="space-y-6 p-6">
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-                  Available Balance
-                </h2>
-                
-                {/* Selected Plan Card */}
-                {state.account && (() => {
-                  const planData = getPlanCardData(state.account);
-                  return (
-                    <div className="flex gap-6 items-start">
-                      <PlanCard
-                        title={planData.title}
-                        dateRange={planData.dateRange}
-                        balance={planData.balance}
-                        finalFilingDate={planData.finalFilingDate}
-                        finalServiceDate={planData.finalServiceDate}
-                      />
-                    </div>
-                  );
-                })()}
-              </div>
-
-              <WexSeparator />
-
-              <div className="space-y-4">
+      <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <h2 className="text-base font-semibold text-foreground">Uploaded document</h2>
                 </div>
@@ -265,48 +184,80 @@ export default function ReimburseReview() {
                   </div>
                 </div>
               </div>
+          </>
+        );
 
-              <WexSeparator />
+  // Buttons (fixed at bottom)
+  const buttons = (
+    <div className="flex items-center justify-between">
+      <WexButton 
+        variant="ghost" 
+        onClick={() => {
+          if (isModal && onModalClose) {
+            onModalClose();
+          } else {
+            navigate("/");
+          }
+        }}
+      >
+        Cancel
+      </WexButton>
+      <div className="flex gap-2">
+        <WexButton intent="secondary" onClick={() => goBack("review")}>
+          Previous
+        </WexButton>
+        <WexButton intent="primary" onClick={() => goNext("review")}>
+          Next
+        </WexButton>
+      </div>
+    </div>
+  );
 
-              <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-foreground">Extracted information</h3>
-                <WexCard>
-                  <WexCard.Content className="p-0">
-                    <div className="flex items-center justify-between px-4 py-3 text-sm">
-                      <span className="text-muted-foreground">Eligible Items</span>
-                      <span className="text-foreground">$150.00</span>
-                    </div>
-                    <WexSeparator />
-                    <div className="flex items-center justify-between px-4 py-3 text-sm">
-                      <span className="text-muted-foreground">Office Visit</span>
-                      <span className="text-foreground">$150.00</span>
-                    </div>
-                    <WexSeparator />
-                    <div className="flex items-center justify-between px-4 py-3 text-sm font-semibold text-foreground">
-                      <span>Total</span>
-                      <span>$150.00</span>
-                    </div>
-                  </WexCard.Content>
-                </WexCard>
-              </div>
+  // For modal mode, use fixed layout structure
+  if (isModal) {
+    return (
+      <div className="flex flex-col h-full max-h-[90vh]">
+        {/* Fixed header with title */}
+        <div className="flex-shrink-0 px-6 pt-6 pb-4">
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+        </div>
+        {/* Scrollable middle content */}
+        <div className="flex-1 overflow-y-auto px-6">
+          <div className="space-y-6 py-4">
+            {middleContent}
+          </div>
+        </div>
+        {/* Fixed footer with buttons */}
+        <div className="flex-shrink-0 px-6 pt-4 pb-6 border-t">
+          {buttons}
+        </div>
+      </div>
+    );
+  }
 
-              <div className="flex items-center justify-between pt-2">
-                <WexButton variant="ghost" onClick={() => navigate("/")}>
-                  Cancel
-                </WexButton>
-                <div className="flex gap-2">
-                  <WexButton intent="secondary" onClick={() => navigate("/reimburse/docs")}>
-                    Previous
-                  </WexButton>
-                  <WexButton intent="primary" onClick={() => navigate("/reimburse/confirm")}>
-                    Next
-                  </WexButton>
-                </div>
-              </div>
+  // For fullpage mode, use original structure
+  return (
+    <div className="min-h-screen bg-[#F1FAFE]">
+      <ConsumerNavigation />
+
+      <div className="mx-auto max-w-[1440px] px-8 py-8">
+        <div className="mx-auto max-w-[1376px] space-y-8">
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+
+          <WexCard>
+            <WexCard.Content className="space-y-6 p-6">
+              <ProgressIndicator
+                mode={layoutModes.progressMode}
+                currentStep="review"
+                steps={activeFlow.getProgressSteps(state)}
+              />
+              {middleContent}
+              {buttons}
             </WexCard.Content>
           </WexCard>
         </div>
       </div>
+      <ModeSelector />
     </div>
   );
 }

@@ -14,8 +14,20 @@ import { hsaAccountData, fsaAccountData } from "./mockData";
  * - HSA card: Total account value, cash, investments, contribute button
  * - FSA card: Available balance, time remaining, file claim button
  */
-export function AccountsSection() {
+export function AccountsSection({
+  onReimburseClick,
+}: {
+  onReimburseClick?: () => void;
+}) {
   const navigate = useNavigate();
+  
+  const handleReimburseClick = () => {
+    if (onReimburseClick) {
+      onReimburseClick();
+    } else {
+      navigate("/reimburse");
+    }
+  };
   
   return (
     <WexCard>
@@ -41,7 +53,7 @@ export function AccountsSection() {
               <WexButton 
                 intent="primary" 
                 size="md"
-                onClick={() => navigate("/reimburse")}
+                onClick={handleReimburseClick}
               >
                 Reimburse Myself
               </WexButton>

@@ -1,8 +1,19 @@
 import { type FormEvent, useMemo, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { ConsumerNavigation } from "../ConsumerNavigation";
 import { useReimbursement } from "./ReimbursementContext";
+import {
+  AvailableBalanceSection,
+  PlanSelector,
+  ProgressIndicator,
+  EntryWrapper,
+  AIStatusIndicator,
+  ModeSelector,
+} from "./components";
+import { getFlowById } from "./flow/registry";
+import { useReimburseFlowNav } from "./hooks/useReimburseFlowNav";
+import { FloatLabelSelect } from "../components/FloatLabelSelect";
 import {
   WexButton,
   WexCard,
@@ -22,18 +33,79 @@ import {
   FileText,
   CalendarRange,
   Wallet,
-  Sparkles,
   Info,
   X,
+  ChevronRight,
+  Smartphone,
 } from "lucide-react";
 
-export default function ReimburseMyself() {
+export default function ReimburseMyself({
+  skipEntryWrapper = false,
+  onModalClose,
+}: {
+  skipEntryWrapper?: boolean;
+  onModalClose?: () => void;
+} = {}) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { state, updateState } = useReimbursement();
+  const { goNext } = useReimburseFlowNav();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [variant, setVariant] = useState<"mvp" | "vision">(state.variant || "mvp");
   const [sessionId, setSessionId] = useState<string>("");
+
+  // Get variant from URL params or state
+  const variant = useMemo(() => {
+    const urlVariant = searchParams.get("variant");
+    if (urlVariant && ["mvp", "vision"].includes(urlVariant)) {
+      return urlVariant as "mvp" | "vision";
+    }
+    return state.variant || "mvp";
+  }, [searchParams, state.variant]);
+
+  // Sync variant from URL to state if needed
+  useEffect(() => {
+    const urlVariant = searchParams.get("variant");
+    if (urlVariant && ["mvp", "vision"].includes(urlVariant) && state.variant !== urlVariant) {
+      updateState({ variant: urlVariant as "mvp" | "vision" });
+    }
+  }, [searchParams, state.variant, updateState]);
+
+  // Get layout modes from URL params or state
+  const layoutModes = useMemo(() => {
+    const modes = { ...state.layoutModes };
+    
+    // Override with URL params if present
+    const entryMode = searchParams.get("entryMode");
+    const planSelectionMode = searchParams.get("planSelectionMode");
+    const progressMode = searchParams.get("progressMode");
+    const aiCommunication = searchParams.get("aiCommunication");
+    
+    if (entryMode && ["fullpage", "modal", "drawer"].includes(entryMode)) {
+      modes.entryMode = entryMode as "fullpage" | "modal" | "drawer";
+    }
+    if (planSelectionMode && ["dropdown", "cards"].includes(planSelectionMode)) {
+      modes.planSelectionMode = planSelectionMode as "dropdown" | "cards";
+    }
+    if (progressMode && ["none", "implicit", "stepper"].includes(progressMode)) {
+      modes.progressMode = progressMode as "none" | "implicit" | "stepper";
+    }
+    if (aiCommunication && ["minimal", "detailed", "prominent"].includes(aiCommunication)) {
+      modes.aiCommunication = aiCommunication as "minimal" | "detailed" | "prominent";
+    }
+    
+    return modes;
+  }, [state.layoutModes, searchParams]);
+
+  const activeFlow = useMemo(() => getFlowById(state.flowId), [state.flowId]);
+  
+  // Detect Vision 2 - AI First Intake flow
+  const isVision2 = useMemo(() => {
+    const flowId = state.flowId || activeFlow.id;
+    const isVision2Flow = flowId === "reimburse-linear-v1";
+    const isVisionVariant = variant === "vision";
+    return isVisionVariant && isVision2Flow;
+  }, [variant, state.flowId, activeFlow.id]);
 
   // Generate session ID on mount
   useEffect(() => {
@@ -174,197 +246,564 @@ export default function ReimburseMyself() {
     return "—";
   };
 
-  // Helper component for plan cards
-  const PlanCard = ({
-    title,
-    dateRange,
-    balance,
-    finalFilingDate,
-    finalServiceDate,
-  }: {
-    title: string;
-    dateRange: string;
-    balance: string;
-    finalFilingDate: string;
-    finalServiceDate: string;
-  }) => (
-    <WexCard className="border border-border w-[325px] shrink-0">
-      <WexCard.Content className="p-4 space-y-2">
-        {/* Header with title, date range, and info icon */}
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-0.5">
-            <p className="text-base font-semibold text-foreground leading-6 tracking-[-0.176px]">
-              {title}
-            </p>
-            <p className="text-[11px] font-normal text-muted-foreground leading-4 tracking-[0.055px]">
-              {dateRange}
-            </p>
-          </div>
-          <WexButton
-            variant="ghost"
-            size="sm"
-            className="h-7 w-7 p-0"
-            aria-label="Account information"
-          >
-            <Info className="h-3.5 w-3.5 text-muted-foreground" />
-          </WexButton>
-        </div>
 
-        {/* Balance and dates */}
-        <div className="flex flex-col gap-1 pt-2">
-          <div className="flex items-center">
-            <p className="text-xl font-bold text-foreground leading-8 tracking-[-0.34px]">
-              {balance}
-            </p>
-          </div>
-          <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-            <span className="text-muted-foreground">Final Filing Date:</span>
-            <span className="text-foreground">{finalFilingDate}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-sm leading-6 tracking-[-0.084px]">
-            <span className="text-muted-foreground">Final Service Date:</span>
-            <span className="text-foreground">{finalServiceDate}</span>
-          </div>
-        </div>
-      </WexCard.Content>
-    </WexCard>
-  );
+  const renderMvp = () => {
+    const isModal = layoutModes.entryMode === "modal";
+    
+    // Middle content (scrollable area)
+    const isCardsMode = layoutModes.planSelectionMode === "cards";
+    
+    const middleContent = (
+      <>
+        {/* Only show Available Balance section when NOT in cards mode */}
+        {!isCardsMode && (
+          <>
+            <AvailableBalanceSection showAll={true} />
+            <WexSeparator />
+          </>
+        )}
 
-  const renderMvp = () => (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
-          Reimburse Myself
-        </h1>
-      </div>
-
-      <WexCard>
-        <WexCard.Content className="space-y-6 p-6">
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-              Available Balance
-            </h2>
-            
-            {/* Three Plan Cards in a row */}
-            <div className="flex flex-wrap gap-6 items-start">
-              <PlanCard
-                title="Medical FSA"
-                dateRange="01/01/2026 - 12/31/2026"
-                balance="$2,734.76"
-                finalFilingDate="04/30/2027"
-                finalServiceDate="12/31/2026"
-              />
-              <PlanCard
-                title="Lifestyle Spending Account"
-                dateRange="01/01/2026 - 12/31/2026"
-                balance="$250.00"
-                finalFilingDate="04/30/2027"
-                finalServiceDate="12/31/2026"
-              />
-              <PlanCard
-                title="Lifestyle Spending Account"
-                dateRange="01/01/2025 - 12/31/2025"
-                balance="$250.00"
-                finalFilingDate="04/30/2026"
-                finalServiceDate="12/31/2025"
-              />
-            </div>
-          </div>
-
-          <WexSeparator />
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
-                Select Accounts
-              </h2>
-            </div>
-
-            <WexButton
-              intent="primary"
-              variant="link"
-              size="sm"
-              asChild
-            >
-              <a
-                href="https://www.wexinc.com/resources/benefits-toolkit/eligible-expenses/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                What's an eligible expense?
-              </a>
-            </WexButton>
-
-            <div className="space-y-4">
-              <div className="relative w-[320px]">
-                <WexSelect
-                  value={formData.account || undefined}
-                  onValueChange={(value) => handleChange("account", value)}
-                >
-                  <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.account ? "has-value" : ""}`}>
-                    <WexSelect.Value placeholder=" " />
-                  </WexSelect.Trigger>
-                  <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
-                    <WexSelect.Item value="medical-fsa">Medical FSA</WexSelect.Item>
-                    <WexSelect.Item value="lifestyle-spending-2026">Lifestyle Spending Account 2026</WexSelect.Item>
-                    <WexSelect.Item value="lifestyle-spending-2025">Lifestyle Spending Account 2025</WexSelect.Item>
-                  </WexSelect.Content>
-                </WexSelect>
-                <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-                  formData.account 
-                    ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-                    : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-                }`}>
-                  Pay from
-                </label>
+        <div className="space-y-4">
+          {!isCardsMode && (
+            <>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-foreground leading-8 tracking-[-0.34px]">
+                  Select Accounts
+                </h2>
               </div>
 
-              <div className="relative w-[320px]">
-                <WexSelect
+              <WexButton
+                intent="primary"
+                variant="link"
+                size="sm"
+                asChild
+              >
+                <a
+                  href="https://www.wexinc.com/resources/benefits-toolkit/eligible-expenses/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  What's an eligible expense?
+                </a>
+              </WexButton>
+            </>
+          )}
+
+          <div className="space-y-4">
+            <PlanSelector
+              mode={layoutModes.planSelectionMode}
+              value={formData.account}
+              onValueChange={(value) => handleChange("account", value)}
+              label={isCardsMode ? "Select where to pay from:" : "Pay from"}
+            />
+
+            {isCardsMode ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">
+                  Select where to pay to:
+                </label>
+                <div className="relative w-[320px]">
+                  <WexSelect
+                    value={formData.category || undefined}
+                    onValueChange={(value) => handleChange("category", value)}
+                  >
+                    <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.category ? "has-value" : ""}`}>
+                      <WexSelect.Value placeholder=" " />
+                    </WexSelect.Trigger>
+                    <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
+                      <WexSelect.Item value="me">Me</WexSelect.Item>
+                      <WexSelect.Item value="provider">Provider</WexSelect.Item>
+                      <WexSelect.Item value="dependent">Dependent</WexSelect.Item>
+                    </WexSelect.Content>
+                  </WexSelect>
+                </div>
+              </div>
+            ) : (
+              <div className="w-[320px]">
+                <FloatLabelSelect
+                  label="Pay to"
                   value={formData.category || undefined}
                   onValueChange={(value) => handleChange("category", value)}
                 >
-                  <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.category ? "has-value" : ""}`}>
-                    <WexSelect.Value placeholder=" " />
-                  </WexSelect.Trigger>
-                  <WexSelect.Content className="w-[var(--radix-select-trigger-width)]">
-                    <WexSelect.Item value="me">Me</WexSelect.Item>
-                    <WexSelect.Item value="provider">Provider</WexSelect.Item>
-                    <WexSelect.Item value="dependent">Dependent</WexSelect.Item>
-                  </WexSelect.Content>
-                </WexSelect>
-                <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-                  formData.category 
-                    ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-                    : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-                }`}>
-                  Pay to
-                </label>
+                  <WexSelect.Item value="me">Me</WexSelect.Item>
+                  <WexSelect.Item value="provider">Provider</WexSelect.Item>
+                  <WexSelect.Item value="dependent">Dependent</WexSelect.Item>
+                </FloatLabelSelect>
               </div>
-            </div>
+            )}
+          </div>
+        </div>
+      </>
+    );
 
-            <div className="flex items-center justify-between pt-2">
-              <WexButton variant="ghost" onClick={() => navigate("/")}>
-                Cancel
-              </WexButton>
-              <WexButton
-                intent="primary"
-                onClick={() => {
-                  updateState({ variant: "mvp" });
-                  navigate("/reimburse/docs");
-                }}
-                disabled={!formData.account || !formData.category}
-              >
-                Next
-              </WexButton>
+    // Buttons (fixed at bottom)
+    const buttons = (
+      <div className="flex items-center justify-between">
+        <WexButton 
+          variant="ghost" 
+          onClick={() => {
+            if (layoutModes.entryMode === "modal" && onModalClose) {
+              onModalClose();
+            } else {
+              navigate("/");
+            }
+          }}
+        >
+          Cancel
+        </WexButton>
+        <WexButton
+          intent="primary"
+          onClick={() => {
+            updateState({ variant: "mvp" });
+            goNext("myself");
+          }}
+          disabled={!formData.account || !formData.category}
+        >
+          Next
+        </WexButton>
+      </div>
+    );
+
+    // For modal mode, use fixed layout structure
+    if (isModal) {
+      return (
+        <div className="flex flex-col h-full max-h-[90vh]">
+          {/* Fixed header with title */}
+          <div className="flex-shrink-0 px-6 pt-6 pb-4">
+            <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
+              Reimburse Myself
+            </h1>
+          </div>
+          {/* Scrollable middle content */}
+          <div className="flex-1 overflow-y-auto px-6">
+            <div className="space-y-6 py-4">
+              {middleContent}
             </div>
           </div>
-        </WexCard.Content>
-      </WexCard>
-    </div>
-  );
+          {/* Fixed footer with buttons */}
+          <div className="flex-shrink-0 px-6 pt-4 pb-6 border-t">
+            {buttons}
+          </div>
+        </div>
+      );
+    }
+
+    // For fullpage mode, use original structure
+    const content = (
+      <>
+        {middleContent}
+        {buttons}
+      </>
+    );
+
+    // For fullpage mode, render with card wrapper and title outside
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">
+            Reimburse Myself
+          </h1>
+        </div>
+
+        <WexCard>
+          <WexCard.Content className="space-y-6 p-6">
+            <ProgressIndicator
+              mode={layoutModes.progressMode}
+              currentStep="myself"
+              steps={activeFlow.getProgressSteps(state)}
+            />
+            {content}
+          </WexCard.Content>
+        </WexCard>
+      </div>
+    );
+  };
+
+  // Vision 2 - AI First Intake Layout
+  const renderVision2 = () => {
+    const isFSA = formData.account.includes("fsa");
+    const receiptRequired = isFSA && !manualEntryMode;
+    const showFormFields = uploadedFile || manualEntryMode || isAnalyzing;
+
+    const isAutoFilled = (field: string) => autoFilledFields.has(field);
+
+    // Enhanced Upload Zone Component
+    const UploadZone = () => (
+      <div 
+        className="rounded-xl border-2 border-dashed border-muted-foreground/25 bg-muted/5 p-8 transition-colors hover:bg-muted/10 max-w-2xl mx-auto cursor-pointer"
+        onDragOver={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        onDrop={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const file = e.dataTransfer.files[0];
+          if (file) handleFileUpload(file);
+        }}
+        onClick={() => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*,.pdf";
+          input.onchange = (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0];
+            if (file) handleFileUpload(file);
+          };
+          input.click();
+        }}
+      >
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <Upload className="h-8 w-8 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold text-foreground">Click or drag to upload</h3>
+            <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+              Upload your receipt (PDF, JPG, or PNG) and our AI will pre-fill the details for you.
+            </p>
+          </div>
+          <div className="pt-2">
+            <WexButton 
+              intent="primary" 
+              size="lg" 
+              className="min-w-[200px]"
+              onClick={(e) => {
+                e.stopPropagation();
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "image/*,.pdf";
+                input.onchange = (e) => {
+                  const file = (e.target as HTMLInputElement).files?.[0];
+                  if (file) handleFileUpload(file);
+                };
+                input.click();
+              }}
+            >
+              Select File
+            </WexButton>
+          </div>
+        </div>
+      </div>
+    );
+
+    // Sidebar Component (Mobile Upload & Manual Entry)
+    const Sidebar = () => (
+      <div className="space-y-6">
+        {/* Mobile Upload Card */}
+        <div className="rounded-xl border bg-blue-50/50 p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Smartphone className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">Upload from mobile</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Receipt on your phone? Scan this code to sync instantly.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center bg-white p-4 rounded-xl border shadow-sm max-w-[200px] mx-auto">
+            {sessionId && typeof window !== "undefined" && (
+              <QRCodeSVG
+                value={`${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, "")}/reimburse/upload-mobile?session=${sessionId}`}
+                size={120}
+                level="H"
+                className="w-full h-auto"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Manual Entry Option */}
+        <button 
+          onClick={handleManualEntry}
+          className="w-full group flex items-center justify-between p-4 rounded-xl border bg-card hover:border-primary/50 hover:shadow-md transition-all text-left"
+        >
+          <div className="space-y-1">
+            <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">No receipt?</h3>
+            <p className="text-sm text-muted-foreground">Enter details manually</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        </button>
+      </div>
+    );
+
+    return (
+      <>
+        <div className="space-y-2">
+          <h1 className="text-[30px] font-bold leading-[40px] tracking-[-0.63px] text-foreground">Reimburse Myself</h1>
+          <h2 className="text-lg font-medium text-muted-foreground">
+            Tell us about your expense to get your money back faster.
+          </h2>
+        </div>
+
+        {submitted && (
+          <WexAlert intent="success">
+            <CheckCircle2 className="h-4 w-4" />
+            <WexAlert.Title>Reimbursement submitted</WexAlert.Title>
+            <WexAlert.Description>
+              We&apos;ve queued your reimbursement. You can track it from Claims or return home to continue browsing.
+            </WexAlert.Description>
+          </WexAlert>
+        )}
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Main Content Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {!showFormFields ? (
+              <UploadZone />
+            ) : (
+              <div className="space-y-6">
+                {/* Upload Status */}
+                {uploadedFile && (
+                  <div className="space-y-3">
+                    {isAnalyzing ? (
+                      <div className="flex items-center gap-3 rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
+                        <WexSpinner className="h-5 w-5 text-primary" />
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Analyzing receipt...</p>
+                          <p className="text-xs text-muted-foreground">Extracting details from your document</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between rounded-lg border-2 border-success/20 bg-success/5 p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-success/10">
+                            <CheckCircle2 className="h-5 w-5 text-success" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">{uploadedFile.name}</p>
+                            <p className="text-xs text-muted-foreground">{uploadedFile.size}</p>
+                          </div>
+                        </div>
+                        <WexButton
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleRemoveFile}
+                          className="h-8 w-8"
+                        >
+                          <X className="h-4 w-4" />
+                        </WexButton>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Form Fields */}
+                <WexCard>
+                  <form onSubmit={handleSubmit}>
+                    <WexCard.Content className="space-y-6 p-6">
+                      <div className="rounded-lg border bg-muted/30 p-6 space-y-6">
+                        {manualEntryMode && (
+                          <div className="flex items-center gap-2 pb-2 border-b">
+                            <FileText className="h-4 w-4 text-muted-foreground" />
+                            <WexLabel className="text-sm font-medium text-foreground">Manual entry</WexLabel>
+                          </div>
+                        )}
+
+                        {uploadedFile && !isAnalyzing && (
+                          <div className="flex items-center gap-2 pb-2 border-b">
+                            <CheckCircle2 className="h-4 w-4 text-primary" />
+                            <WexLabel className="text-sm font-medium text-foreground">Review and adjust</WexLabel>
+                          </div>
+                        )}
+
+                        <div className="space-y-4">
+                          <div className="relative">
+                            {isAutoFilled("account") && (
+                              <WexBadge intent="info" className="absolute -top-2 right-0 z-10 text-xs">
+                                AI-filled
+                              </WexBadge>
+                            )}
+                            <FloatLabelSelect
+                              label="Account"
+                              value={formData.account}
+                              onValueChange={(value) => handleChange("account", value)}
+                              className="pr-8"
+                            >
+                              <WexSelect.Item value="hsa">Health Savings Account (HSA)</WexSelect.Item>
+                              <WexSelect.Item value="healthcare-fsa">Healthcare FSA</WexSelect.Item>
+                              <WexSelect.Item value="dependent-care-fsa">Dependent Care FSA</WexSelect.Item>
+                            </FloatLabelSelect>
+                          </div>
+
+                          <div className="relative">
+                            {isAutoFilled("category") && (
+                              <WexBadge intent="info" className="absolute -top-2 right-0 z-10 text-xs">
+                                AI-filled
+                              </WexBadge>
+                            )}
+                            <FloatLabelSelect
+                              label="Expense type"
+                              value={formData.category}
+                              onValueChange={(value) => handleChange("category", value)}
+                              className="pr-8"
+                            >
+                              <WexSelect.Item value="medical">Medical</WexSelect.Item>
+                              <WexSelect.Item value="vision">Vision</WexSelect.Item>
+                              <WexSelect.Item value="dental">Dental</WexSelect.Item>
+                              <WexSelect.Item value="dependent-care">Dependent Care</WexSelect.Item>
+                            </FloatLabelSelect>
+                          </div>
+
+                          <div className="space-y-2">
+                            {isAutoFilled("provider") && (
+                              <WexBadge intent="info" className="text-xs mb-1">
+                                AI-filled
+                              </WexBadge>
+                            )}
+                            <WexFloatLabel
+                              label="Provider / Merchant"
+                              type="text"
+                              value={formData.provider}
+                              onChange={(e) => handleChange("provider", e.target.value)}
+                              leftIcon={<FileText className="h-4 w-4" />}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            {isAutoFilled("serviceDate") && (
+                              <WexBadge intent="info" className="text-xs mb-1">
+                                AI-filled
+                              </WexBadge>
+                            )}
+                            <WexFloatLabel
+                              label="Date of service"
+                              type="date"
+                              value={formData.serviceDate}
+                              onChange={(e) => handleChange("serviceDate", e.target.value)}
+                              leftIcon={<CalendarRange className="h-4 w-4" />}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            {isAutoFilled("amount") && (
+                              <WexBadge intent="info" className="text-xs mb-1">
+                                AI-filled
+                              </WexBadge>
+                            )}
+                            <WexFloatLabel
+                              label="Amount"
+                              type="number"
+                              step="0.01"
+                              value={formData.amount}
+                              onChange={(e) => handleChange("amount", e.target.value)}
+                              leftIcon={<Wallet className="h-4 w-4" />}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="relative">
+                          <WexSelect
+                            value={formData.paymentMethod}
+                            onValueChange={(value) => handleChange("paymentMethod", value)}
+                          >
+                            <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.paymentMethod ? "has-value" : ""}`}>
+                              <WexSelect.Value placeholder=" " />
+                            </WexSelect.Trigger>
+                            <WexSelect.Content>
+                              <WexSelect.Item value="direct-deposit">Direct deposit</WexSelect.Item>
+                              <WexSelect.Item value="check">Mailed check</WexSelect.Item>
+                              <WexSelect.Item value="hsa-card-reversal">HSA card reversal</WexSelect.Item>
+                            </WexSelect.Content>
+                          </WexSelect>
+                          <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
+                            formData.paymentMethod 
+                              ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
+                              : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
+                          }`}>
+                            Reimburse to
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-4">
+                        <WexButton type="button" variant="ghost" onClick={() => navigate("/")}>
+                          Cancel
+                        </WexButton>
+                        <WexButton type="submit" intent="primary" disabled={isSubmitting}>
+                          {isSubmitting ? "Submitting..." : "Submit"}
+                        </WexButton>
+                      </div>
+                    </WexCard.Content>
+                  </form>
+                </WexCard>
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar Area */}
+          <div className="lg:col-span-1">
+            {!showFormFields && <Sidebar />}
+          </div>
+        </div>
+
+        {/* Summary Sidebar - Always visible */}
+        <div className="mt-8">
+          <WexCard>
+            <WexCard.Header>
+              <WexCard.Title className="text-base">Summary</WexCard.Title>
+            </WexCard.Header>
+            <WexCard.Content className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Account</span>
+                <span className="text-sm font-medium">
+                  {showFormFields && formData.account ? getAccountLabel(formData.account) : "—"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Date</span>
+                <span className="text-sm font-medium">
+                  {showFormFields && formData.serviceDate
+                    ? (() => {
+                        const [year, month, day] = formData.serviceDate.split("-");
+                        return `${month}/${day}/${year}`;
+                      })()
+                    : "—"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Amount</span>
+                <span className="text-base font-semibold text-foreground">
+                  {showFormFields && formData.amount ? formattedAmount : "$0.00"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Method</span>
+                <span className="text-sm font-medium">
+                  {showFormFields && formData.paymentMethod
+                    ? formData.paymentMethod === "direct-deposit"
+                      ? "Direct deposit"
+                      : formData.paymentMethod === "check"
+                        ? "Check"
+                        : formData.paymentMethod === "hsa-card-reversal"
+                          ? "HSA reversal"
+                          : "—"
+                    : "—"}
+                </span>
+              </div>
+              <WexSeparator />
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <ShieldCheck className="h-3.5 w-3.5 text-success" />
+                <span>Smart checks enabled</span>
+              </div>
+            </WexCard.Content>
+          </WexCard>
+        </div>
+      </>
+    );
+  };
 
   const renderVision = () => {
+    // Use old layout for Vision 2, new layout for other Vision flows
+    if (isVision2) {
+      // Keep the original Vision layout for Vision 2
+    } else {
+      // Use new enhanced layout for Vision 1 (wizard) and other Vision flows
+      return renderVision2();
+    }
+
     const isFSA = formData.account.includes("fsa");
     const receiptRequired = isFSA && !manualEntryMode;
     const showFormFields = uploadedFile || manualEntryMode || isAnalyzing;
@@ -387,15 +826,12 @@ export default function ReimburseMyself() {
           </WexAlert>
         )}
 
-        {autoFillComplete && (
-          <WexAlert intent="info">
-            <CheckCircle2 className="h-4 w-4" />
-            <WexAlert.Title>Form auto-filled</WexAlert.Title>
-            <WexAlert.Description>
-              We extracted details from your receipt. Review and adjust as needed.
-            </WexAlert.Description>
-          </WexAlert>
-        )}
+        <AIStatusIndicator
+          mode={layoutModes.aiCommunication}
+          isAnalyzing={isAnalyzing}
+          isComplete={autoFillComplete}
+          extractedFieldsCount={autoFilledFields.size}
+        />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <WexCard className="lg:col-span-2">
@@ -571,26 +1007,16 @@ export default function ReimburseMyself() {
                               AI-filled
                             </WexBadge>
                           )}
-                          <WexSelect
+                          <FloatLabelSelect
+                            label="Account"
                             value={formData.account}
                             onValueChange={(value) => handleChange("account", value)}
+                            className="pr-8"
                           >
-                            <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.account ? "has-value" : ""}`}>
-                              <WexSelect.Value placeholder=" " />
-                            </WexSelect.Trigger>
-                            <WexSelect.Content>
-                              <WexSelect.Item value="hsa">Health Savings Account (HSA)</WexSelect.Item>
-                              <WexSelect.Item value="healthcare-fsa">Healthcare FSA</WexSelect.Item>
-                              <WexSelect.Item value="dependent-care-fsa">Dependent Care FSA</WexSelect.Item>
-                            </WexSelect.Content>
-                          </WexSelect>
-                          <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-                            formData.account 
-                              ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-                              : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-                          }`}>
-                            Account
-                          </label>
+                            <WexSelect.Item value="hsa">Health Savings Account (HSA)</WexSelect.Item>
+                            <WexSelect.Item value="healthcare-fsa">Healthcare FSA</WexSelect.Item>
+                            <WexSelect.Item value="dependent-care-fsa">Dependent Care FSA</WexSelect.Item>
+                          </FloatLabelSelect>
                           <WexTooltip>
                             <WexTooltip.Trigger asChild>
                               <Info className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground cursor-help z-10" />
@@ -607,27 +1033,17 @@ export default function ReimburseMyself() {
                               AI-filled
                             </WexBadge>
                           )}
-                          <WexSelect
+                          <FloatLabelSelect
+                            label="Expense type"
                             value={formData.category}
                             onValueChange={(value) => handleChange("category", value)}
+                            className="pr-8"
                           >
-                            <WexSelect.Trigger className={`h-14 w-full pt-5 pb-2 ${formData.category ? "has-value" : ""}`}>
-                              <WexSelect.Value placeholder=" " />
-                            </WexSelect.Trigger>
-                            <WexSelect.Content>
-                              <WexSelect.Item value="medical">Medical</WexSelect.Item>
-                              <WexSelect.Item value="vision">Vision</WexSelect.Item>
-                              <WexSelect.Item value="dental">Dental</WexSelect.Item>
-                              <WexSelect.Item value="dependent-care">Dependent Care</WexSelect.Item>
-                            </WexSelect.Content>
-                          </WexSelect>
-                          <label className={`absolute pointer-events-none origin-top-left transition-all duration-200 ease-out left-3 text-sm ${
-                            formData.category 
-                              ? "top-2 scale-75 -translate-y-2.5 text-wex-floatlabel-label-focus-fg" 
-                              : "top-4 scale-100 translate-y-0 text-wex-floatlabel-label-fg"
-                          }`}>
-                            Expense type
-                          </label>
+                            <WexSelect.Item value="medical">Medical</WexSelect.Item>
+                            <WexSelect.Item value="vision">Vision</WexSelect.Item>
+                            <WexSelect.Item value="dental">Dental</WexSelect.Item>
+                            <WexSelect.Item value="dependent-care">Dependent Care</WexSelect.Item>
+                          </FloatLabelSelect>
                           <WexTooltip>
                             <WexTooltip.Trigger asChild>
                               <Info className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground cursor-help z-10" />
@@ -813,8 +1229,20 @@ export default function ReimburseMyself() {
     );
   };
 
-  return (
-    <>
+  // Render content based on entry mode
+  const renderContent = () => {
+    if (layoutModes.entryMode === "modal") {
+      // For modal mode, render just the form content without navigation or full-page wrapper
+      // The modal dialog already provides the white background and padding
+      return (
+        <>
+          {variant === "mvp" ? renderMvp() : renderVision()}
+        </>
+      );
+    }
+
+    // For fullpage and drawer modes, render with navigation
+    return (
       <div className="min-h-screen bg-[#F1FAFE]">
         <ConsumerNavigation />
 
@@ -824,34 +1252,22 @@ export default function ReimburseMyself() {
           </div>
         </div>
       </div>
+    );
+  };
 
-      {/* Floating variant switcher */}
-      <div className="pointer-events-none fixed bottom-6 right-6 z-40">
-        <div className="pointer-events-auto overflow-hidden rounded-full border bg-card shadow-lg shadow-foreground/10">
-          <div className="flex items-center gap-2 px-3 py-2">
-            <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              Mode
-            </div>
-            <WexSelect
-              value={variant}
-              onValueChange={(value) => {
-                const newVariant = value as "mvp" | "vision";
-                setVariant(newVariant);
-                updateState({ variant: newVariant });
-              }}
-            >
-              <WexSelect.Trigger className="h-8 w-32 border-none px-2">
-                <WexSelect.Value />
-              </WexSelect.Trigger>
-              <WexSelect.Content align="end">
-                <WexSelect.Item value="mvp">MVP</WexSelect.Item>
-                <WexSelect.Item value="vision">Vision</WexSelect.Item>
-              </WexSelect.Content>
-            </WexSelect>
-          </div>
-        </div>
-      </div>
+  const content = renderContent();
+
+  // If skipEntryWrapper is true (e.g., when already in a modal), render content directly
+  if (skipEntryWrapper) {
+    return <>{content}</>;
+  }
+
+  return (
+    <>
+      <EntryWrapper mode={layoutModes.entryMode}>
+        {content}
+      </EntryWrapper>
+      <ModeSelector />
     </>
   );
 }

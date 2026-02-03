@@ -8,12 +8,20 @@ import { quickLinksData } from "./mockData";
  * 
  * Displays quick action links in a pill-style button layout
  */
-export function QuickLinksSection() {
+export function QuickLinksSection({
+  onReimburseClick,
+}: {
+  onReimburseClick?: () => void;
+}) {
   const navigate = useNavigate();
 
   const handleLinkClick = (label: string) => {
     if (label === "Reimburse Myself") {
-      navigate("/reimburse");
+      if (onReimburseClick) {
+        onReimburseClick();
+      } else {
+        navigate("/reimburse");
+      }
     }
     // Add other navigation handlers here as needed
   };
